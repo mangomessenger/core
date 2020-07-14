@@ -16,6 +16,7 @@ class AuthRequestResource extends JsonResource
     {
         return [
             'phone' => $this->phone,
+            'country_code' => $this->country_code,
             'code' => $this->code,
             'is_new' => $this->is_new,
             'timeout' => $this->timeout,

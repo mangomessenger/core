@@ -12,6 +12,6 @@ class AuthRequest extends Model
      * @var array
      */
     protected $fillable = [
-        'phone', 'code', 'timeout', 'is_new',
+        'phone', 'country_code', 'code', 'timeout', 'is_new',
     ];
 }

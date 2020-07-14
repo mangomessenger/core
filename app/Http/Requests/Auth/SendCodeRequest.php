@@ -26,7 +26,20 @@ class SendCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required',
+            'phone' => 'required|phone:country_code|numeric',
+            'country_code'    => 'required_with:phone',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'phone' => 'The :attribute field contains an invalid phone number.',
         ];
     }
 }

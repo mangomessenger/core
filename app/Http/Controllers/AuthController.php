@@ -43,6 +43,7 @@ class AuthController extends Controller
 
         return new AuthRequestResource(AuthRequest::create([
             'phone' => $request->get('phone'),
+            'country_code' => $request->get('country_code'),
             'code' => 22222,// $code
             'timeout' => self::CODE_SEND_TIMEOUT,
             'is_new' => $user === NULL ? true : false,
