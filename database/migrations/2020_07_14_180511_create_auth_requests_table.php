@@ -14,9 +14,10 @@ class CreateAuthRequestsTable extends Migration
     public function up()
     {
         Schema::create('auth_requests', function (Blueprint $table) {
-            $table->id();
             $table->string("phone");
             $table->integer("code");
+            $table->boolean("is_new");
+            $table->integer("timeout");
             $table->timestamps();
         });
     }

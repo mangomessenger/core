@@ -2,10 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -72,6 +70,10 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
+        if ($exception instanceof ApiException){
+            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'status' => $exception->getCode()]);
+        }
+
         return $this->customApiResponse($exception);
     }
 
@@ -87,23 +89,38 @@ class Handler extends ExceptionHandler
 
         switch ($statusCode) {
             case 401:
-                $response['message'] = 'Unauthorized';
+                $response['type'] = 'UNAUTHORIZED';
+                $response['message'] = 'Authentication is required and has failed or has not yet been provided';
                 break;
             case 403:
-                $response['message'] = 'Forbidden';
+                $response['type'] = 'FORBIDDEN';
+                $response['message'] = 'The request was understood by the server, but the server is refusing action.';
                 break;
             case 404:
-                $response['message'] = 'Not Found';
+                $response['type'] = 'NOT_FOUND';
+                $response['message'] = 'The requested resource could not be found but may be available in the future.';
                 break;
             case 405:
-                $response['message'] = 'Method Not Allowed';
+                $response['type'] = 'METHOD_NOT_ALLOWED';
+                $response['message'] = 'A request method is not supported for the requested resource.';
                 break;
             case 422:
+                $response['type'] = 'PAYLOAD_INVALID';
                 $response['message'] = $exception->original['message'];
                 $response['errors'] = $exception->original['errors'];
                 break;
+            case 429:
+                $response['type'] = 'TOO_MANY_ATTEMPTS';
+                $response['message'] = $exception->getMessage();
+                break;
+            case 500:
+                $response['type'] = 'INTERNAL';
+                $response['message'] = 'Whoops, looks like something went wrong';
+                break;
+
             default:
-                $response['message'] = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();
+                $response['type'] = 'UNEXPECTED_ERROR';
+                $response['message'] = $exception->getMessage();
                 break;
         }
 
