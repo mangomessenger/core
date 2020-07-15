@@ -15,7 +15,7 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['TYPE_SELF', 'TYPE_USER', 'TYPE_CHAT'])->default('TYPE_USER');
+            $table->enum('type', \App\Chat::TYPES)->default('TYPE_USER');
             $table->timestamps();
         });
     }

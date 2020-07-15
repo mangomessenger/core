@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AuthRequest;
+use App\Chat;
 use App\Exceptions\TestException;
 use App\Exceptions\TimeoutException;
 use App\Http\Requests\Auth\SendCodeRequest;

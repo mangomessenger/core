@@ -7,7 +7,7 @@ class TimeoutException extends ApiException
     private const TYPE = "TIMEOUT_WAIT_";
     private int $timeout;
 
-    public $code = 222;
+    public $code = 420;
 
     public function __construct($message = "", int $timeout = 0)
     {
