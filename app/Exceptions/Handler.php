@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
         switch ($statusCode) {
             case 401:
                 $response['type'] = 'UNAUTHORIZED';
-                $response['message'] = 'Authentication is required and has failed or has not yet been provided';
+                $response['message'] = 'Authentication is required and has failed or has not yet been provided.';
                 break;
             case 403:
                 $response['type'] = 'FORBIDDEN';
@@ -105,7 +105,7 @@ class Handler extends ExceptionHandler
                 $response['message'] = 'A request method is not supported for the requested resource.';
                 break;
             case 422:
-                $response['type'] = 'PAYLOAD_INVALID';
+                $response['type'] = 'INVALID_PAYLOAD';
                 $response['message'] = $exception->original['message'];
                 $response['errors'] = $exception->original['errors'];
                 break;
