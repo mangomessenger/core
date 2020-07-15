@@ -46,7 +46,8 @@ class AuthService implements ApiService
         }
 
         //Generating code
-        $code = rand(10000, 99999);
+        //        $code = rand(10000, 99999);
+        $code = 22222;
         //        CodeService::sendCode($request->get('phone'));
 
         return AuthRequest::create([
