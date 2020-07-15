@@ -7,17 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class AuthRequestResource extends JsonResource
 {
     /**
-     * Confirmation code
+     * AuthRequestResource constructor.
      *
-     * @var int $code
+     * @param $resource
      */
-    private int $code;
-
-    public function __construct($resource, $code)
+    public function __construct($resource)
     {
         parent::__construct($resource);
-
-        $this->code = $code;
     }
 
     /**
