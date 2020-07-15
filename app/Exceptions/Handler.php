@@ -71,6 +71,10 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
+        if ($exception instanceof InvalidPayloadException){
+            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'errors' => $exception->getErrors(),'status' => $exception->getCode()]);
+        }
+
         if ($exception instanceof ApiException){
             return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'status' => $exception->getCode()]);
         }

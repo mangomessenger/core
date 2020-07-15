@@ -14,4 +14,13 @@ class Session extends Model
     protected $fillable = [
         'user_id', 'access_token',
     ];
+
+
+    /**
+     * Get the user record associated with the session.
+     */
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
 }

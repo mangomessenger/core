@@ -4,22 +4,23 @@ namespace App\Services\Auth;
 
 use App\AuthRequest;
 use App\Services\ModelService;
+use App\User;
 
-class AuthRequestService extends ModelService
+class UserService extends ModelService
 {
-    protected AuthRequest $model;
+    protected User $model;
 
     /**
      * AuthRequestService constructor.
      *
-     * @param AuthRequest $error
+     * @param User $user
      */
-    public function __construct(AuthRequest $error)
+    public function __construct(User $user)
     {
-        $this->model = $error;
+        $this->model = $user;
     }
 
-    public function findByPhone(string $phoneNumber, string $countryCode): ?AuthRequest
+    public function findByPhone(string $phoneNumber, string $countryCode): ?User
     {
         return $this->model->where('phone_number', $phoneNumber)
             ->where('country_code', $countryCode)

@@ -14,11 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 
 Route::prefix('auth')->group(function (){
     Route::post('sendCode', 'AuthController@sendCode');
+    Route::post('signUp', 'AuthController@signUp');
 });

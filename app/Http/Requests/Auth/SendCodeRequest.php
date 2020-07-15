@@ -37,7 +37,7 @@ class SendCodeRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone_number' => 'The :attribute field contains an invalid phone number.',
+            'phone' => 'The :attribute field contains an invalid phone number.',
         ];
     }
 }
