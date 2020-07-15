@@ -24,10 +24,10 @@ class AuthService implements ApiService
     public function sendCode(array $data, int $timeout): AuthRequest
     {
         //Retrieving user
-        $user = \App\User::firstWhere('phone', $data['phone']);
+        $user = \App\User::firstWhere('phone', $data['phone_number']);
 
         //Retrieving auth request
-        $authRequest = AuthRequest::firstWhere('phone', $data['phone']);
+        $authRequest = AuthRequest::firstWhere('phone_number', $data['phone_number']);
 
         //Checking if phone number had auth attempt before
         if ($authRequest !== NULL) {
@@ -51,7 +51,7 @@ class AuthService implements ApiService
         //        CodeService::sendCode($request->get('phone'));
 
         return AuthRequest::create([
-            'phone' => $data['phone'],
+            'phone_number' => $data['phone_number'],
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
             'timeout' => $timeout,

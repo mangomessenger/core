@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\Rule;
 
 class SendCodeRequest extends FormRequest
 {
@@ -26,7 +24,7 @@ class SendCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|phone:country_code|numeric',
+            'phone_number' => 'required|phone:country_code|numeric',
             'country_code'    => 'required_with:phone',
         ];
     }
@@ -39,7 +37,7 @@ class SendCodeRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone' => 'The :attribute field contains an invalid phone number.',
+            'phone_number' => 'The :attribute field contains an invalid phone number.',
         ];
     }
 }
