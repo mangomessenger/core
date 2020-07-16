@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::prefix('auth')->group(function (){
+Route::prefix('auth')->group(function () {
     Route::middleware('throttle:1,2')->group(function () {
         Route::post('sendCode', 'AuthController@sendCode');
     });
@@ -28,8 +28,5 @@ Route::prefix('auth')->group(function (){
 });
 
 Route::middleware('auth-api')->get('/test', function (Request $request) {
-        return \Illuminate\Support\Facades\Auth::user();
-    });
-Route::get('/', function () {
-    return;
+    return \Illuminate\Support\Facades\Auth::user();
 });

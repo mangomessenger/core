@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -57,7 +58,7 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 //        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 //        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,

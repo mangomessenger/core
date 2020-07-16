@@ -2,26 +2,16 @@
 
 namespace App\Exceptions;
 
-class TimeoutException extends ApiException
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Throwable;
+
+class TimeoutException extends ThrottleRequestsException
 {
-    private const TYPE = "TIMEOUT_WAIT_";
-    private int $timeout;
+    public $timeout;
 
-    public $code = 420;
-
-    public function __construct($message = "", int $timeout = 0)
+    public function __construct($message = null, Throwable $previous = null, array $headers = [], $code = 0, $timeout = 0)
     {
         $this->timeout = $timeout;
-        $this->type = self::TYPE . $timeout;
-
-        parent::__construct($message, $this->code, null);
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type . $this->timeout;
+        parent::__construct($message, $previous, $headers, $code);
     }
 }

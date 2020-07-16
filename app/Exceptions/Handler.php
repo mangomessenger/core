@@ -115,7 +115,7 @@ class Handler extends ExceptionHandler
                 $response['errors'] = $exception->original['errors'];
                 break;
             case 429:
-                $response['type'] = 'TOO_MANY_ATTEMPTS';
+                $response['type'] = 'FLOOD_TIMEOUT_' . $exception->timeout;
                 $response['message'] = $exception->getMessage();
                 break;
             case 500:
