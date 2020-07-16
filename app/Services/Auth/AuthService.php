@@ -61,6 +61,8 @@ class AuthService implements ApiService
     }
 
     /**
+     * Registration in Messenger
+     *
      * @param array $data
      * @return Session
      * @throws Exception
@@ -83,4 +85,22 @@ class AuthService implements ApiService
         });
     }
 
+    /**
+     * Login in Messenger
+     *
+     * @param array $data
+     * @return Session
+     * @throws Exception
+     */
+    public function signIn(array $data): Session
+    {
+        $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
+
+        $this->authRequestService->findByPhone($data['phone_number'], $data['country_code'])->delete();
+
+        return Session::create([
+            'user_id' => $user->id,
+            'access_token' => sha1(random_bytes(100)) . sha1(random_bytes(100)),
+        ]);
+    }
 }

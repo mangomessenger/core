@@ -3,13 +3,13 @@
 namespace App\Http\Requests\Auth;
 
 use App\Exceptions\Auth\AuthRequestExpiredException;
+use App\Rules\Auth\OccupiedPhone;
 use App\Rules\Auth\PhoneCodeValid;
-use App\Rules\Auth\UnoccupiedPhone;
 use App\Rules\Auth\PhoneCodeHashValid;
 use App\Services\Auth\AuthRequestService;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignUpRequest extends FormRequest
+class SignInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,10 +37,9 @@ class SignUpRequest extends FormRequest
             'phone_number' => [
                 'required',
                 'phone:country_code',
-                new UnoccupiedPhone($this->country_code),
+                new OccupiedPhone($this->country_code),
             ],
             'country_code' => 'required_with:phone',
-            'name' => 'required|max:100',
             'phone_code_hash' => [
                 'required',
                 'max:255',
@@ -50,10 +49,6 @@ class SignUpRequest extends FormRequest
                 'required',
                 'digits:5',
                 new PhoneCodeValid($authRequest),
-            ],
-            'terms_of_service_accepted' => [
-                'required',
-                'accepted',
             ],
         ];
     }

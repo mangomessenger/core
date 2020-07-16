@@ -24,4 +24,5 @@ Route::prefix('auth')->group(function (){
         Route::post('sendCode', 'AuthController@sendCode');
     });
     Route::post('signUp', 'AuthController@signUp');
+    Route::post('signIn', 'AuthController@signIn');
 });

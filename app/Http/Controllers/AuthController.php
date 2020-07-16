@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\TermsOfServiceNotAcceptedException;
 use App\Http\Requests\Auth\SendCodeRequest;
+use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
 use App\Http\Resources\AuthRequestResource;
 use App\Http\Resources\SessionResource;
@@ -59,4 +60,16 @@ class AuthController extends Controller
         return new SessionResource($session);
     }
 
+    /**
+     * Sending a code.
+     * @param SignInRequest $request
+     * @return SessionResource
+     * @throws Exception
+     */
+    public function signIn(SignInRequest $request)
+    {
+        $session = $this->authService->signIn($request->validated());
+
+        return new SessionResource($session);
+    }
 }
