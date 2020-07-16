@@ -64,10 +64,10 @@ class AuthService implements ApiService
      * Registration in Messenger
      *
      * @param array $data
-     * @return Session
+     * @return array
      * @throws Exception
      */
-    public function signUp(array $data): Session
+    public function signUp(array $data): array
     {
         $this->authRequestService->findByPhone($data['phone_number'], $data['country_code'])->delete();
 
@@ -78,10 +78,13 @@ class AuthService implements ApiService
                 'country_code' => $data['country_code'],
             ]);
 
-            return Session::create([
-                'user_id' => $user->id,
-                'access_token' => sha1(random_bytes(100)) . sha1(random_bytes(100)),
-            ]);
+            return [
+                'session' => Session::create([
+                    'user_id' => $user->id,
+                    'access_token_hash' => hash('sha256', (($accessToken = $user->id . '|' . sha1(random_bytes(100)) . sha1(random_bytes(100))))),
+                ]),
+                'access_token' => $accessToken,
+            ];
         });
     }
 
@@ -92,15 +95,18 @@ class AuthService implements ApiService
      * @return Session
      * @throws Exception
      */
-    public function signIn(array $data): Session
+    public function signIn(array $data): array
     {
         $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
 
         $this->authRequestService->findByPhone($data['phone_number'], $data['country_code'])->delete();
 
-        return Session::create([
-            'user_id' => $user->id,
-            'access_token' => sha1(random_bytes(100)) . sha1(random_bytes(100)),
-        ]);
+        return [
+            'session' => Session::create([
+                'user_id' => $user->id,
+                'access_token_hash' => hash('sha256', (($accessToken = $user->id . '|' . sha1(random_bytes(100)) . sha1(random_bytes(100))))),
+            ]),
+            'access_token' => $accessToken,
+        ];
     }
 }

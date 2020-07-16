@@ -6,6 +6,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SessionResource extends JsonResource
 {
+    private string $accessToken;
+
+    public function __construct($resource, string $accessToken)
+    {
+        parent::__construct($resource);
+
+        $this->accessToken = $accessToken;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -15,7 +24,7 @@ class SessionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'access_token' => $this->access_token,
+            'access_token' => $this->accessToken,
             'user' => new UserResource($this->user),
         ];
     }
