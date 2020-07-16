@@ -26,3 +26,7 @@ Route::prefix('auth')->group(function (){
     Route::post('signUp', 'AuthController@signUp');
     Route::post('signIn', 'AuthController@signIn');
 });
+
+Route::middleware('auth-api')->get('/test', function (Request $request) {
+        return \Illuminate\Support\Facades\Auth::user();
+    });
