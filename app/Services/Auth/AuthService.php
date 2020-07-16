@@ -41,43 +41,22 @@ class AuthService implements ApiService
      *
      * @return AuthRequest
      *
-     * @throws TimeoutException
+     * @throws Exception
      */
     public function sendCode(array $data, int $timeout): AuthRequest
     {
-        //Retrieving user
-        $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
-
         //Retrieving auth request
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
+        if (!is_null($authRequest)) $authRequest->delete();
 
-        //Checking if phone number had auth attempt before
-        if (!is_null($authRequest)) {
-            $expireTime = $authRequest->created_at->addSeconds($timeout);
-            $now = Carbon::now();
-
-            // Checks if auth request is in timeout
-            if ($expireTime > $now) {
-                $timeout = $now->diffInSeconds($expireTime);
-
-                throw new TimeoutException("A wait of {$timeout} seconds is required.", $timeout);
-            } else {
-                //Deletes auth request if one exists
-                $authRequest->delete();
-            }
-        }
-
-        //Generating code
-        //        $code = rand(10000, 99999);
         $code = 22222;
-        //        CodeService::sendCode($request->get('phone'));
 
         return AuthRequest::create([
             'phone_number' => $data['phone_number'],
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
             'timeout' => $timeout,
-            'is_new' => $user === NULL,
+            'is_new' => !$this->userService->existsByPhone($data['phone_number'], $data['country_code']),
         ]);
     }
 

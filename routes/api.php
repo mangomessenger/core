@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('auth')->group(function (){
-    Route::post('sendCode', 'AuthController@sendCode');
+    Route::middleware('throttle:1,2')->group(function () {
+        Route::post('sendCode', 'AuthController@sendCode');
+    });
     Route::post('signUp', 'AuthController@signUp');
 });

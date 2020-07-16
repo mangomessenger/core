@@ -25,4 +25,11 @@ class AuthRequestService extends ModelService
             ->where('country_code', $countryCode)
             ->first();
     }
+
+    public function existsByPhone(string $phoneNumber, string $countryCode): bool
+    {
+        return $this->model->where('phone_number', $phoneNumber)
+            ->where('country_code', $countryCode)
+            ->exists();
+    }
 }

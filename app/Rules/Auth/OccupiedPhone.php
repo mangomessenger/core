@@ -3,6 +3,7 @@
 namespace App\Rules\Auth;
 
 use App\Exceptions\Auth\PhoneNumberUnoccupiedException;
+use App\User;
 use Illuminate\Contracts\Validation\Rule;
 
 class OccupiedPhone implements Rule
@@ -25,11 +26,12 @@ class OccupiedPhone implements Rule
      * @param string $attribute
      * @param mixed $value
      * @return bool
+     * @throws PhoneNumberUnoccupiedException
      */
     public function passes($attribute, $value)
     {
-        if (is_null(\App\User::where('phone_number', $value)
-            ->where('country_code', $this->countryCode)->first())) {
+        if (!User::where('phone_number', $value)
+            ->where('country_code', $this->countryCode)->exists()) {
             throw new PhoneNumberUnoccupiedException();
         } else return true;
     }
