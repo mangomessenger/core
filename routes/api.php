@@ -25,7 +25,7 @@ Route::prefix('auth')->group(function () {
     });
     Route::post('signUp', 'AuthController@signUp');
     Route::post('signIn', 'AuthController@signIn');
-    Route::get('token', 'AuthController@token');
+    Route::post('refresh-tokens', 'AuthController@refreshTokens');
 });
 
 Route::middleware('jwt-auth')->get('/test', function (Request $request) {

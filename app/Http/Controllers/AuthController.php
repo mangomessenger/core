@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\JWT\FingerprintInvalidException;
+use App\Exceptions\JWT\RefreshTokenInvalidException;
+use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\SendCodeRequest;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
 use App\Http\Resources\AuthRequestResource;
 use App\Http\Resources\SessionResource;
+use App\Http\Resources\TokensResource;
 use App\Services\Auth\AuthService;
 use Exception;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
@@ -74,12 +79,17 @@ class AuthController extends Controller
 
     /**
      * Sending a code.
-     * @throws Exception
+     *
+     * @param RefreshTokenRequest $request
+     * @return TokensResource
+     *
+     * @throws FingerprintInvalidException
+     * @throws RefreshTokenInvalidException
      */
-    public function token()
+    public function refreshTokens(RefreshTokenRequest $request)
     {
-        $token = auth()->login(\App\User::first());
+        $result = $this->authService->refreshTokens($request->validated());
 
-        return $token;
+        return new TokensResource($result['session'], $result['access_token']);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Services\Auth;
 
 use App\AuthRequest;
+use App\Exceptions\JWT\FingerprintInvalidException;
+use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Services\ApiService;
 use App\Session;
 use App\User;
@@ -170,6 +172,51 @@ class AuthService implements ApiService
         return [
             'session' => Session::create([
                 'user_id' => $user->id,
+                'refresh_token' => RefreshTokenGenerator::generate(),
+                'fingerprint' => $fingerprint,
+                'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
+            ]),
+            'access_token' => $accessToken,
+        ];
+    }
+
+    /**
+     * Refreshes tokens.
+     *
+     * @param array $data
+     * @return array
+     *
+     * @throws FingerprintInvalidException
+     * @throws RefreshTokenInvalidException
+     * @throws Exception
+     */
+    public function refreshTokens(array $data): array
+    {
+        // Obtaining current session by refresh_token
+        // to delete refresh it
+        $session = Session::firstWhere('refresh_token', $data['refresh_token']);
+
+        // If session does not exist we return
+        // REFRESH_TOKEN_INVALID error
+        if (is_null($session)) throw new RefreshTokenInvalidException();
+
+        // Saving fingerprint from obtained session
+        $fingerprint = $session->fingerprint;
+
+        // We invalidate current session
+        $session->delete();
+
+        // If fingerprints differentiate we return
+        // FINGERPRINT_INVALID error
+        // Note: Session is already invalidated
+        if ($fingerprint !== $data['fingerprint']) throw new FingerprintInvalidException();
+
+        // We obtain new access token
+        $accessToken = auth()->login(User::find($session->user_id));
+
+        return [
+            'session' => Session::create([
+                'user_id' => $session->user_id,
                 'refresh_token' => RefreshTokenGenerator::generate(),
                 'fingerprint' => $fingerprint,
                 'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
