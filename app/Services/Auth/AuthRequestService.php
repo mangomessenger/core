@@ -19,13 +19,23 @@ class AuthRequestService extends ModelService
         $this->model = $error;
     }
 
-    public function findByPhone(string $phoneNumber, string $countryCode): ?AuthRequest
+    /**
+     * @param string|null $phoneNumber
+     * @param string|null $countryCode
+     * @return AuthRequest|null
+     */
+    public function findByPhone(?string $phoneNumber, ?string $countryCode): ?AuthRequest
     {
         return $this->model->where('phone_number', $phoneNumber)
             ->where('country_code', $countryCode)
             ->first();
     }
 
+    /**
+     * @param string $phoneNumber
+     * @param string $countryCode
+     * @return bool
+     */
     public function existsByPhone(string $phoneNumber, string $countryCode): bool
     {
         return $this->model->where('phone_number', $phoneNumber)

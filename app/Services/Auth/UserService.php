@@ -20,13 +20,23 @@ class UserService extends ModelService
         $this->model = $user;
     }
 
-    public function findByPhone(string $phoneNumber, string $countryCode): ?User
+    /**
+     * @param string|null $phoneNumber
+     * @param string|null $countryCode
+     * @return User|null
+     */
+    public function findByPhone(?string $phoneNumber, ?string $countryCode): ?User
     {
         return $this->model->where('phone_number', $phoneNumber)
             ->where('country_code', $countryCode)
             ->first();
     }
 
+    /**
+     * @param string $phoneNumber
+     * @param string $countryCode
+     * @return bool
+     */
     public function existsByPhone(string $phoneNumber, string $countryCode): bool
     {
         return $this->model->where('phone_number', $phoneNumber)
