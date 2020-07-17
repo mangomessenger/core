@@ -2,11 +2,15 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Exceptions\JWT\JWTTokenAbsentException;
+use App\Exceptions\JWT\JWTTokenExpiredException;
+use App\Exceptions\JWT\JWTTokenInvalidException;
+use App\Exceptions\JWT\JWTUserNotFoundException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+use Closure;
+use Illuminate\Http\Request;
 
 class JWTAuthenticate extends BaseMiddleware
 {
@@ -17,42 +21,27 @@ class JWTAuthenticate extends BaseMiddleware
      * @param Closure $next
      * @param null $optional
      * @return mixed
+     * @throws JWTTokenAbsentException
+     * @throws JWTTokenInvalidException
+     * @throws JWTTokenExpiredException
+     * @throws JWTUserNotFoundException
      */
     public function handle($request, Closure $next, $optional = null)
     {
         $this->auth->setRequest($request);
 
         try {
-            if (! $user = $this->auth->parseToken('token')->authenticate()) {
-                return $this->respondError('JWT error: User not found');
+            if (!$user = $this->auth->parseToken('token')->authenticate()) {
+                throw new JWTUserNotFoundException();
             }
-        } catch (\Exception $e) {
-            return $this->respondError('JWT error: Token has expired');
+        } catch (TokenExpiredException $e) {
+            throw new JWTTokenExpiredException();
         } catch (TokenInvalidException $e) {
-            return $this->respondError('JWT error: Token is invalid');
-        } catch (JWTException $e) {
-            if ($optional === null) {
-                return $this->respondError('JWT error: Token is absent');
-            }
+            throw new JWTTokenInvalidException();
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            if ($optional === null) throw new JWTTokenAbsentException();
         }
 
         return $next($request);
-
-    }
-
-    /**
-     * Respond with json error message.
-     *
-     * @param $message
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondError($message)
-    {
-        return response()->json([
-            'errors' => [
-                'message' => $message,
-                'status_code' => 401
-            ]
-        ], 401);
     }
 }
