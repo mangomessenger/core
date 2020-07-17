@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,7 +32,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -43,11 +45,11 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param Throwable $exception
+     * @return Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($request, Throwable $exception)
     {
@@ -71,11 +73,11 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
-        if ($exception instanceof InvalidPayloadException){
-            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'errors' => $exception->getErrors(),'status' => $exception->getCode()]);
+        if ($exception instanceof InvalidPayloadException) {
+            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'errors' => $exception->getErrors(), 'status' => $exception->getCode()]);
         }
 
-        if ($exception instanceof ApiException){
+        if ($exception instanceof ApiException) {
             return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'status' => $exception->getCode()]);
         }
 
