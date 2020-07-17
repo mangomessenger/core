@@ -69,9 +69,9 @@ class SignInRequest extends FormRequest
     {
         return [
             'phone' => 'The :attribute field contains an invalid phone number.',
-            '*.required' => 'The :attribute field is required',
+            '*.required' => 'The :attribute field is required.',
             'phone_code.digits' => ':Attribute must have an exact length of :digits.',
-            'phone_code_hash.max' => ':Attribute maximum length is :max',
+            'phone_code_hash.max' => ':Attribute maximum length is :max.',
         ];
     }
 }

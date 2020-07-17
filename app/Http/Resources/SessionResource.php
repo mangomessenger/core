@@ -24,8 +24,9 @@ class SessionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'access_token' => $this->accessToken,
             'user' => new UserResource($this->user),
+            'access_token' => $this->accessToken,
+            'refresh_token' => $this->refresh_token,
         ];
     }
 }
