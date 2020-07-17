@@ -18,6 +18,7 @@ class CreateAuthRequestsTable extends Migration
             $table->string("phone_number");
             $table->string("country_code");
             $table->string("phone_code_hash");
+            $table->string("fingerprint");
             $table->boolean("is_new");
             $table->integer("timeout");
             $table->timestamps();
