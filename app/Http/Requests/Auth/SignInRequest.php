@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use App\Exceptions\Auth\AuthRequestExpiredException;
+use App\Exceptions\PhoneCountryCodeEmptyException;
+use App\Exceptions\PhoneNumberEmptyException;
 use App\Rules\Auth\OccupiedPhone;
 use App\Rules\Auth\PhoneCodeValid;
 use App\Rules\Auth\PhoneCodeHashValid;
@@ -27,9 +29,14 @@ class SignInRequest extends FormRequest
      * @param AuthRequestService $authRequestService
      * @return array
      * @throws AuthRequestExpiredException
+     * @throws PhoneNumberEmptyException
+     * @throws PhoneCountryCodeEmptyException
      */
     public function rules(AuthRequestService $authRequestService)
     {
+        if (is_null($this->phone_number)) throw new PhoneNumberEmptyException();
+        if (is_null($this->country_code)) throw new PhoneCountryCodeEmptyException();
+
         $authRequest = $authRequestService->findByPhone($this->phone_number, $this->country_code);
         if (is_null($authRequest)) throw new AuthRequestExpiredException();
 
@@ -62,6 +69,9 @@ class SignInRequest extends FormRequest
     {
         return [
             'phone' => 'The :attribute field contains an invalid phone number.',
+            '*.required' => 'The :attribute field is required',
+            'phone_code.digits' => ':Attribute must have an exact length of :digits.',
+            'phone_code_hash.max' => ':Attribute maximum length is :max',
         ];
     }
 }

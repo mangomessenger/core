@@ -24,7 +24,7 @@ class SendCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => 'required|phone:country_code|numeric',
+            'phone_number' => 'required|phone:country_code',
             'country_code'    => 'required_with:phone',
         ];
     }
@@ -38,6 +38,7 @@ class SendCodeRequest extends FormRequest
     {
         return [
             'phone' => 'The :attribute field contains an invalid phone number.',
+            'phone_number.required' => 'The :attribute field is required',
         ];
     }
 }
