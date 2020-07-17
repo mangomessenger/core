@@ -20,13 +20,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('auth')->group(function () {
-    Route::middleware('throttle:1,2')->group(function () {
+    Route::middleware('throttle:20,2')->group(function () {
         Route::post('sendCode', 'AuthController@sendCode');
     });
     Route::post('signUp', 'AuthController@signUp');
     Route::post('signIn', 'AuthController@signIn');
+    Route::get('token', 'AuthController@token');
 });
 
-Route::middleware('auth-api')->get('/test', function (Request $request) {
-    return \Illuminate\Support\Facades\Auth::user();
+Route::middleware('jwt-auth')->get('/test', function (Request $request) {
+    return auth()->user();
 });

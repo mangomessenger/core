@@ -3,11 +3,6 @@
 namespace App\Services\Auth;
 
 use App\AuthRequest;
-use App\Exceptions\Auth\AuthRequestExpiredException;
-use App\Exceptions\InvalidPayloadException;
-use App\Exceptions\Auth\PhoneNumberOccupiedException;
-use App\Exceptions\TimeoutException;
-use App\Http\Resources\SessionResource;
 use App\Services\ApiService;
 use App\Session;
 use App\User;
@@ -78,10 +73,11 @@ class AuthService implements ApiService
                 'country_code' => $data['country_code'],
             ]);
 
+            $accessToken = auth()->login($user);
+
             return [
                 'session' => Session::create([
                     'user_id' => $user->id,
-                    'access_token_hash' => hash('sha256', (($accessToken = $user->id . '|' . sha1(random_bytes(100)) . sha1(random_bytes(100))))),
                 ]),
                 'access_token' => $accessToken,
             ];
@@ -101,10 +97,11 @@ class AuthService implements ApiService
 
         $this->authRequestService->findByPhone($data['phone_number'], $data['country_code'])->delete();
 
+        $accessToken = auth()->login($user);
+
         return [
             'session' => Session::create([
                 'user_id' => $user->id,
-                'access_token_hash' => hash('sha256', (($accessToken = $user->id . '|' . sha1(random_bytes(100)) . sha1(random_bytes(100))))),
             ]),
             'access_token' => $accessToken,
         ];
