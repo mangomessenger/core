@@ -16,7 +16,9 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-//            $table->string("access_token_hash")->unique();
+            $table->string("refresh_token")->unique();
+            $table->longText("fingerprint");
+            $table->timestamp("expires_in");
             $table->timestamps();
         });
     }
