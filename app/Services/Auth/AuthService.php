@@ -33,6 +33,12 @@ class AuthService implements ApiService
     private UserService $userService;
 
     /**
+     * Auth request lifetime in DAYS.
+     *
+     * @var int REFRESH_TOKEN_LIFETIME
+     */
+    public const AUTH_REQUEST_LIFETIME = 1; // 1 Day
+    /**
      * Refresh token lifetime in DAYS.
      *
      * @var int REFRESH_TOKEN_LIFETIME

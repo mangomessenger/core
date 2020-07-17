@@ -5,8 +5,12 @@ namespace App\Console;
 use App\AuthRequest;
 use App\Chat;
 use App\Message;
+use App\Services\Auth\AuthService;
+use App\Session;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -30,11 +34,17 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        ###> Daily deletion of auth requests ###
+        ###> Deletion of expired auth requests ###
         $schedule->call(function () {
-            AuthRequest::where('updated_at', '<', Carbon::now()->subDays(1))->delete();
+            AuthRequest::where('updated_at', '<', Carbon::now()->subDays(AuthService::AUTH_REQUEST_LIFETIME))->delete();
+        })->everySixHours();
+        ###< Deletion of expired auth requests ###
+
+        ###> Deletion of expired refresh tokens ###
+        $schedule->call(function () {
+            Session::where('expires_in', '<', Carbon::now()->subDays(AuthService::REFRESH_TOKEN_LIFETIME))->delete();
         })->daily();
-        ###< Daily deletion of auth requests ###
+        ###< Deletion of expired refresh tokens ###
     }
 
     /**
