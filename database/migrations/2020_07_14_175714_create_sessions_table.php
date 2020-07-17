@@ -17,7 +17,7 @@ class CreateSessionsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string("refresh_token")->unique();
-            $table->longText("fingerprint");
+            $table->string("fingerprint");
             $table->timestamp("expires_in");
             $table->timestamps();
         });
