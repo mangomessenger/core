@@ -123,10 +123,12 @@ class AuthService implements ApiService
         // security checks
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
 
-        if (is_null($authRequest)) throw new AuthRequestExpiredException();
+        if (is_null($authRequest)) {
+            throw new AuthRequestExpiredException();
+        }
 
         if ($this->userService
-            ->existsByPhone($data['phone_number'], $data['country_code'])){
+            ->existsByPhone($data['phone_number'], $data['country_code'])) {
             throw new PhoneNumberOccupiedException();
         }
 
@@ -175,13 +177,14 @@ class AuthService implements ApiService
      * @throws PhoneNumberUnoccupiedException
      * @throws PhoneCodeHashInvalidException
      * @throws PhoneCodeInvalidException
+     * @throws AuthRequestExpiredException
      */
     public function signIn(array $data): array
     {
         // We obtain user in order to create session for him
         $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
 
-        if (is_null($user)){
+        if (is_null($user)) {
             throw new PhoneNumberUnoccupiedException();
         }
 
@@ -189,6 +192,8 @@ class AuthService implements ApiService
         // and to store fingerprint in session table for further
         // security checks
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
+
+        if (is_null($authRequest)) throw new AuthRequestExpiredException();
 
         if ($authRequest->phone_code_hash !== $data['phone_code_hash']) {
             throw new PhoneCodeHashInvalidException();

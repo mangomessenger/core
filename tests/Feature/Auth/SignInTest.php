@@ -73,4 +73,106 @@ class SignInTest extends TestCase
                 'status',
             ]);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_signin_returns_phone_number_unoccupied()
+    {
+        $user = factory(User::class)->make();
+
+        $authRequest = AuthRequest::create([
+            'phone_number' => $user->phone_number,
+            'country_code' => $user->country_code,
+            'phone_code_hash' => Hash::make(22222),
+            'fingerprint' => Str::random(25),
+            'timeout' => 120,
+            'is_new' => true,
+        ]);
+
+        $this->json('POST', 'auth/signIn', [
+            'phone_number' => $authRequest->phone_number,
+            'country_code' => $authRequest->country_code,
+            'phone_code_hash' => $authRequest->phone_code_hash,
+            'phone_code' => 22222,
+        ])
+            ->assertStatus(400)
+            ->assertJson([
+                'type' => 'PHONE_NUMBER_UNOCCUPIED',
+            ])->assertJsonStructure([
+                'type',
+                'message',
+                'status',
+            ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_signin_returns_phone_code_hash_invalid()
+    {
+        $user = factory(User::class)->create();
+
+        $authRequest = AuthRequest::create([
+            'phone_number' => $user->phone_number,
+            'country_code' => $user->country_code,
+            'phone_code_hash' => Hash::make(22222),
+            'fingerprint' => Str::random(25),
+            'timeout' => 120,
+            'is_new' => true,
+        ]);
+
+        $this->json('POST', 'auth/signIn', [
+            'phone_number' => $authRequest->phone_number,
+            'country_code' => $authRequest->country_code,
+            'phone_code_hash' => $authRequest->phone_code_hash . Str::random(5),
+            'phone_code' => 22222,
+        ])
+            ->assertStatus(400)
+            ->assertJson([
+                'type' => 'PHONE_CODE_HASH_INVALID',
+            ])->assertJsonStructure([
+                'type',
+                'message',
+                'status',
+            ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_signin_returns_phone_code_invalid()
+    {
+        $user = factory(User::class)->create();
+
+        $authRequest = AuthRequest::create([
+            'phone_number' => $user->phone_number,
+            'country_code' => $user->country_code,
+            'phone_code_hash' => Hash::make(22222),
+            'fingerprint' => Str::random(25),
+            'timeout' => 120,
+            'is_new' => true,
+        ]);
+
+        $this->json('POST', 'auth/signIn', [
+            'phone_number' => $authRequest->phone_number,
+            'country_code' => $authRequest->country_code,
+            'phone_code_hash' => $authRequest->phone_code_hash,
+            'phone_code' => 22221,
+        ])
+            ->assertStatus(400)
+            ->assertJson([
+                'type' => 'PHONE_CODE_INVALID',
+            ])->assertJsonStructure([
+                'type',
+                'message',
+                'status',
+            ]);
+    }
 }

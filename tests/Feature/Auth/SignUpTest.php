@@ -117,7 +117,7 @@ class SignUpTest extends TestCase
      *
      * @return void
      */
-    public function test_signup_returns_phone_number_unoccupied()
+    public function test_signup_returns_phone_number_occupied()
     {
         $user = factory(User::class)->create();
 
