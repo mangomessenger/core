@@ -53,7 +53,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-//        return parent::render($request, $exception);
+        if (config('app.debug')) {
+            return parent::render($request, $exception);
+        }
         return $this->handleApiException($request, $exception);
     }
 
@@ -129,11 +131,6 @@ class Handler extends ExceptionHandler
                 $response['type'] = 'UNEXPECTED_ERROR';
                 $response['message'] = $exception->getMessage();
                 break;
-        }
-
-        if (config('app.debug')) {
-            $response['trace'] = $exception->getTrace();
-            $response['code'] = $exception->getCode();
         }
 
         $response['status'] = $statusCode;

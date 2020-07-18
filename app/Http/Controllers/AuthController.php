@@ -61,7 +61,7 @@ class AuthController extends Controller
      */
     public function signUp(SignUpRequest $request)
     {
-        $result = $this->authService->signUp($request->validated());
+        $result = $this->authService->signUp($request->validated(), $request);
 
         return new SessionResource($result['session'], $result['access_token']);
     }
@@ -74,7 +74,7 @@ class AuthController extends Controller
      */
     public function signIn(SignInRequest $request)
     {
-        $result = $this->authService->signIn($request->validated());
+        $result = $this->authService->signIn($request->validated(), $request);
 
         return new SessionResource($result['session'], $result['access_token']);
     }
@@ -90,7 +90,7 @@ class AuthController extends Controller
      */
     public function refreshTokens(RefreshTokenRequest $request)
     {
-        $result = $this->authService->refreshTokens($request->validated());
+        $result = $this->authService->refreshTokens($request->validated(), $request);
 
         return new TokensResource($result['session'], $result['access_token']);
     }

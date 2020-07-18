@@ -13,6 +13,7 @@ use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Services\ApiService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -118,14 +119,15 @@ class AuthService implements ApiService
      * Registration in Messenger.
      *
      * @param array $data
+     * @param Request $request
      * @return array
      *
      * @throws AuthRequestExpiredException
-     * @throws PhoneNumberOccupiedException
      * @throws PhoneCodeHashInvalidException
      * @throws PhoneCodeInvalidException
+     * @throws PhoneNumberOccupiedException
      */
-    public function signUp(array $data): array
+    public function signUp(array $data, Request $request): array
     {
         // We obtain auth request to delete it before sign in
         // and to store fingerprint in session table for further
@@ -163,7 +165,7 @@ class AuthService implements ApiService
         // to store it after successful sign in
         $authRequest->delete();
 
-        return DB::transaction(function () use ($data, $fingerprint) {
+        return DB::transaction(function () use ($request, $data, $fingerprint) {
             $user = $this->userService->create([
                 'name' => $data['name'],
                 'phone_number' => $data['phone_number'],
@@ -177,6 +179,8 @@ class AuthService implements ApiService
                     'user_id' => $user->id,
                     'fingerprint' => $fingerprint,
                     'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
+                    'ua' => $request->userAgent(),
+                    'ip' => $request->ip(),
                 ]),
                 'access_token' => $accessToken,
             ];
@@ -187,14 +191,15 @@ class AuthService implements ApiService
      * Sign in into Messenger.
      *
      * @param array $data
+     * @param Request $request
      * @return array
      *
-     * @throws PhoneNumberUnoccupiedException
+     * @throws AuthRequestExpiredException
      * @throws PhoneCodeHashInvalidException
      * @throws PhoneCodeInvalidException
-     * @throws AuthRequestExpiredException
+     * @throws PhoneNumberUnoccupiedException
      */
-    public function signIn(array $data): array
+    public function signIn(array $data, Request $request): array
     {
         // We obtain user in order to create session for him
         $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
@@ -242,6 +247,8 @@ class AuthService implements ApiService
                 'user_id' => $user->id,
                 'fingerprint' => $fingerprint,
                 'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
+                'ua' => $request->userAgent(),
+                'ip' => $request->ip(),
             ]),
             'access_token' => $accessToken,
         ];
@@ -251,13 +258,13 @@ class AuthService implements ApiService
      * Refreshes tokens.
      *
      * @param array $data
+     * @param Request $request
      * @return array
      *
      * @throws FingerprintInvalidException
      * @throws RefreshTokenInvalidException
-     * @throws Exception
      */
-    public function refreshTokens(array $data): array
+    public function refreshTokens(array $data, Request $request): array
     {
         // Obtaining current session by refresh_token
         // to delete refresh it
@@ -286,6 +293,8 @@ class AuthService implements ApiService
                 'user_id' => $session->user_id,
                 'fingerprint' => $fingerprint,
                 'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
+                'ua' => $request->userAgent(),
+                'ip' => $request->ip(),
             ]),
             'access_token' => $accessToken,
         ];

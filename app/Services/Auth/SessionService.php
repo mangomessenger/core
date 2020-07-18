@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\Services\ModelService;
 use App\Session;
 use App\Utils\RefreshTokenGenerator;
+use Illuminate\Http\Request;
 
 class SessionService extends ModelService
 {
@@ -23,6 +24,7 @@ class SessionService extends ModelService
     /**
      * @param array $input
      * @return mixed
+     * @throws \Exception
      */
     public function create(array $input)
     {

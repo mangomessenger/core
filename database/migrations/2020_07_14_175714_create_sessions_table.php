@@ -19,6 +19,8 @@ class CreateSessionsTable extends Migration
             $table->string("refresh_token")->unique();
             $table->string("fingerprint");
             $table->timestamp("expires_in");
+            $table->string("ua")->nullable();
+            $table->string("ip")->nullable();
             $table->timestamps();
         });
     }
