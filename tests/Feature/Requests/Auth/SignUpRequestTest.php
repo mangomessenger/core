@@ -48,7 +48,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_country_code_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
                     'phone_code' => $faker->randomNumber(5),
@@ -58,7 +58,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_name_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'phone_code_hash' => Str::random(25),
                     'phone_code' => $faker->randomNumber(5),
@@ -68,7 +68,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_phone_code_hash_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code' => $faker->randomNumber(5),
@@ -78,7 +78,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_phone_code_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -88,7 +88,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_terms_of_service_accepted_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -98,7 +98,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_number_is_invalid' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(5),
+                    'phone_number' => "093{$faker->randomNumber(5)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -109,7 +109,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_number_is_not_numeric' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => Str::random(10),
+                    'phone_number' => "093{$faker->randomNumber(6)}s",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -120,7 +120,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_country_code_is_invalid' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => Str::random(5),
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -131,7 +131,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_name_has_more_than_100_characters' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(101),
                     'phone_code_hash' => Str::random(25),
@@ -142,7 +142,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_code_hash_has_more_than_255_characters' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(256),
@@ -153,7 +153,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_code_is_more_than_5_digits' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -164,7 +164,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_phone_code_is_less_than_5_digits' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -175,7 +175,7 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_terms_of_service_are_not_accepted' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -186,7 +186,7 @@ class SignUpRequestTest extends TestCase
             'request_should_pass_when_correct_data_is_provided' => [
                 'passed' => true,
                 'data' => [
-                    'phone_number' => $faker->randomNumber(9),
+                    'phone_number' => "093{$faker->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
