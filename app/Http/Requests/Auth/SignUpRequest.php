@@ -27,7 +27,6 @@ class SignUpRequest extends FormRequest
             'phone_number' => [
                 'required',
                 'phone:country_code',
-                'numeric'
             ],
             'country_code' => 'required_with:phone',
             'name' => 'required|max:100',

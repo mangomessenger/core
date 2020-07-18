@@ -85,7 +85,9 @@ class AuthService implements ApiService
 
         // If auth request exists we delete it
         // because we are going to create new one
-        if (!is_null($authRequest)) $authRequest->delete();
+        if (!is_null($authRequest)) {
+            $authRequest->delete();
+        }
 
         //Generating confirmation code
         $code = 22222;
