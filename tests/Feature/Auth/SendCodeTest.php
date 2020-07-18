@@ -22,7 +22,7 @@ class SendCodeTest extends TestCase
      *
      * @return void
      */
-    public function test_sendcode_returns_session_on_success()
+    public function test_sendcode_returns_auth_request_on_success()
     {
         $payload = [
             'phone_number' => '933123123',
