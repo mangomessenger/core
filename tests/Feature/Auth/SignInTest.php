@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Tests\TestCase;
 
 class SignInTest extends TestCase
@@ -29,7 +30,7 @@ class SignInTest extends TestCase
         $user = factory(User::class)->create();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -84,7 +85,7 @@ class SignInTest extends TestCase
         $user = factory(User::class)->make();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -118,7 +119,7 @@ class SignInTest extends TestCase
         $user = factory(User::class)->create();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -152,7 +153,7 @@ class SignInTest extends TestCase
         $user = factory(User::class)->create();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),

@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 /**
  * Class AuthService
@@ -93,7 +94,7 @@ class AuthService implements ApiService
 
         // Creating auth request instance
         return AuthRequest::create([
-            'phone_number' => $data['phone_number'],
+            'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
             'fingerprint' => $data['fingerprint'],
@@ -150,7 +151,7 @@ class AuthService implements ApiService
         return DB::transaction(function () use ($data, $fingerprint) {
             $user = User::create([
                 'name' => $data['name'],
-                'phone_number' => $data['phone_number'],
+                'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
                 'country_code' => $data['country_code'],
             ]);
 

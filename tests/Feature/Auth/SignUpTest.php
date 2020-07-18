@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Tests\TestCase;
 
 class SignUpTest extends TestCase
@@ -28,9 +29,11 @@ class SignUpTest extends TestCase
      */
     public function test_signup_returns_session_on_success()
     {
+        $user = factory(User::class)->make();
+
         $authRequest = AuthRequest::create([
-            'phone_number' => "093{$this->randomNumber(7)}",
-            'country_code' => 'UA',
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
+            'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
             'timeout' => 120,
@@ -86,7 +89,7 @@ class SignUpTest extends TestCase
         $user = factory(User::class)->make();
 
         $authRequest = AuthRequest::make([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -122,7 +125,7 @@ class SignUpTest extends TestCase
         $user = factory(User::class)->create();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -158,7 +161,7 @@ class SignUpTest extends TestCase
         $user = factory(User::class)->make();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
@@ -194,7 +197,7 @@ class SignUpTest extends TestCase
         $user = factory(User::class)->make();
 
         $authRequest = AuthRequest::create([
-            'phone_number' => $user->phone_number,
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),

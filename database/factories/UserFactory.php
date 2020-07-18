@@ -5,6 +5,7 @@
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
     $randomNumber = \Tests\TestCase::randomNumber(7);
     return [
         'name' => Str::random(10),
-        'phone_number' => "093{$randomNumber}",
+        'phone_number' => PhoneNumber::make("093{$randomNumber}", 'UA')->formatE164(),
         'country_code' => 'UA',
     ];
 });

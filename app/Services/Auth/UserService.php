@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\AuthRequest;
 use App\Services\ModelService;
 use App\User;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class UserService extends ModelService
 {
@@ -27,8 +28,9 @@ class UserService extends ModelService
      */
     public function findByPhone(?string $phoneNumber, ?string $countryCode): ?User
     {
-        return $this->model->where('phone_number', $phoneNumber)
-            ->where('country_code', $countryCode)
+        return $this->model
+            ->where('phone_number', PhoneNumber::make($phoneNumber, $countryCode)
+                ->formatE164())
             ->first();
     }
 
@@ -39,8 +41,9 @@ class UserService extends ModelService
      */
     public function existsByPhone(string $phoneNumber, string $countryCode): bool
     {
-        return $this->model->where('phone_number', $phoneNumber)
-            ->where('country_code', $countryCode)
+        return $this->model
+            ->where('phone_number', PhoneNumber::make($phoneNumber, $countryCode)
+                ->formatE164())
             ->exists();
     }
 }
