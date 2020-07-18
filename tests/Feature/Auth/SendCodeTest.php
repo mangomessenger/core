@@ -14,7 +14,7 @@ class SendCodeTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Artisan::call('db:seed');
+        Artisan::call('migrate:fresh');
     }
 
     /**

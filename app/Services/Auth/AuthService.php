@@ -3,6 +3,10 @@
 namespace App\Services\Auth;
 
 use App\AuthRequest;
+use App\Exceptions\Auth\AuthRequestExpiredException;
+use App\Exceptions\Auth\PhoneCodeHashInvalidException;
+use App\Exceptions\Auth\PhoneCodeInvalidException;
+use App\Exceptions\Auth\PhoneNumberOccupiedException;
 use App\Exceptions\JWT\FingerprintInvalidException;
 use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Services\ApiService;
@@ -113,6 +117,21 @@ class AuthService implements ApiService
         // and to store fingerprint in session table for further
         // security checks
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
+
+        if (is_null($authRequest)) throw new AuthRequestExpiredException();
+
+        if ($this->userService
+            ->existsByPhone($data['phone_number'], $data['country_code'])){
+            throw new PhoneNumberOccupiedException();
+        }
+
+        if ($authRequest->phone_code_hash !== $data['phone_code_hash']) {
+            throw new PhoneCodeHashInvalidException();
+        }
+
+        if (!Hash::check($data['phone_code'], $authRequest->phone_code_hash)) {
+            throw new PhoneCodeInvalidException();
+        }
 
         // Saving fingerprint from auth request
         $fingerprint = $authRequest->fingerprint;
