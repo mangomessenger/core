@@ -4,12 +4,11 @@ namespace App\Exceptions\JWT;
 
 use App\Exceptions\ApiException;
 
-class JWTTokenAbsentException extends ApiException
+class UserNotFoundException extends ApiException
 {
-    public $type = "TOKEN_ABSENT";
+    public $type = "TOKEN_USER_NOT_FOUND";
     /** @var string  */
-    public $message = "Token is absent.";
+    public $message = "Token user not found.";
     /** @var int $code */
     public $code = 401;
 }
-

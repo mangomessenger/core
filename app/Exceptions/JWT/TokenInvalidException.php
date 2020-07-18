@@ -4,11 +4,11 @@ namespace App\Exceptions\JWT;
 
 use App\Exceptions\ApiException;
 
-class JWTTokenExpiredException extends ApiException
+class TokenInvalidException extends ApiException
 {
-    public $type = "TOKEN_EXPIRED";
+    public $type = "TOKEN_INVALID";
     /** @var string  */
-    public $message = "Token has expired.";
+    public $message = "Token is invalid.";
     /** @var int $code */
     public $code = 401;
 }
