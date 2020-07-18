@@ -2,12 +2,6 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Exceptions\Auth\AuthRequestExpiredException;
-use App\Exceptions\PhoneCountryCodeEmptyException;
-use App\Exceptions\PhoneNumberEmptyException;
-use App\Rules\Auth\OccupiedPhone;
-use App\Rules\Auth\PhoneCodeValid;
-use App\Rules\Auth\PhoneCodeHashValid;
 use App\Services\Auth\AuthRequestService;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,13 +20,9 @@ class SignInRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param AuthRequestService $authRequestService
      * @return array
-     * @throws AuthRequestExpiredException
-     * @throws PhoneNumberEmptyException
-     * @throws PhoneCountryCodeEmptyException
      */
-    public function rules(AuthRequestService $authRequestService)
+    public function rules()
     {
         return [
             'phone_number' => [

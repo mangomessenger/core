@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Services\Auth\AuthRequestService;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class SignUpRequest extends FormRequest
 {
@@ -21,7 +19,6 @@ class SignUpRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param AuthRequestService $authRequestService
      * @return array
      */
     public function rules()
