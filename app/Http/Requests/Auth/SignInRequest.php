@@ -34,28 +34,19 @@ class SignInRequest extends FormRequest
      */
     public function rules(AuthRequestService $authRequestService)
     {
-        if (is_null($this->phone_number)) throw new PhoneNumberEmptyException();
-        if (is_null($this->country_code)) throw new PhoneCountryCodeEmptyException();
-
-        $authRequest = $authRequestService->findByPhone($this->phone_number, $this->country_code);
-        if (is_null($authRequest)) throw new AuthRequestExpiredException();
-
         return [
             'phone_number' => [
                 'required',
                 'phone:country_code',
-                new OccupiedPhone($this->country_code),
             ],
             'country_code' => 'required_with:phone',
             'phone_code_hash' => [
                 'required',
                 'max:255',
-                new PhoneCodeHashValid($authRequest),
             ],
             'phone_code' => [
                 'required',
                 'digits:5',
-                new PhoneCodeValid($authRequest),
             ],
         ];
     }
