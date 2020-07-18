@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof ApiException) {
-            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'status' => $exception->getCode()]);
+            return response()->json(['type' => $exception->type, 'message' => $exception->getMessage(), 'status' => $exception->getCode()], $exception->getCode());
         }
 
         return $this->customApiResponse($exception);
