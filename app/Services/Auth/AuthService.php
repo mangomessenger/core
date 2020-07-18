@@ -110,7 +110,11 @@ class AuthService implements ApiService
      *
      * @param array $data
      * @return array
-     * @throws Exception
+     *
+     * @throws AuthRequestExpiredException
+     * @throws PhoneNumberOccupiedException
+     * @throws PhoneCodeHashInvalidException
+     * @throws PhoneCodeInvalidException
      */
     public function signUp(array $data): array
     {
@@ -167,7 +171,10 @@ class AuthService implements ApiService
      *
      * @param array $data
      * @return array
-     * @throws Exception
+     *
+     * @throws PhoneNumberUnoccupiedException
+     * @throws PhoneCodeHashInvalidException
+     * @throws PhoneCodeInvalidException
      */
     public function signIn(array $data): array
     {
