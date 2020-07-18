@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\JWT\FingerprintInvalidException;
 use App\Exceptions\JWT\RefreshTokenInvalidException;
+use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\SendCodeRequest;
 use App\Http\Requests\Auth\SignInRequest;
@@ -13,6 +14,7 @@ use App\Http\Resources\SessionResource;
 use App\Http\Resources\TokensResource;
 use App\Services\Auth\AuthService;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
@@ -91,5 +93,20 @@ class AuthController extends Controller
         $result = $this->authService->refreshTokens($request->validated());
 
         return new TokensResource($result['session'], $result['access_token']);
+    }
+
+    /**
+     * Logout from session.
+     *
+     * @param LogoutRequest $request
+     * @return JsonResponse
+     *
+     * @throws RefreshTokenInvalidException
+     */
+    public function logout(LogoutRequest $request)
+    {
+        $this->authService->logout($request->validated());
+
+        return response()->json(true, 200);
     }
 }

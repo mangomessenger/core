@@ -224,4 +224,24 @@ class AuthService implements ApiService
             'access_token' => $accessToken,
         ];
     }
+
+    /**
+     * Logout from session
+     *
+     * @param array $data
+     * @return void
+     * @throws RefreshTokenInvalidException
+     */
+    public function logout(array $data): void
+    {
+        // Obtaining current session by refresh_token
+        $session = Session::firstWhere('refresh_token', $data['refresh_token']);
+
+        // If session does not exist we return
+        // REFRESH_TOKEN_INVALID error
+        if (is_null($session)) throw new RefreshTokenInvalidException();
+
+        // We invalidate current session
+        $session->delete();
+    }
 }
