@@ -28,4 +28,9 @@ abstract class ModelService implements ApiService
     {
         return $this->find($id)->update($input);
     }
+
+    public function firstWhere(string $column, string $value)
+    {
+        return $this->model->firstWhere($column, $value);
+    }
 }

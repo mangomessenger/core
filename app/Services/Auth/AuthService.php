@@ -41,6 +41,13 @@ class AuthService implements ApiService
     private UserService $userService;
 
     /**
+     * UserService instance
+     *
+     * @var SessionService
+     */
+    private SessionService $sessionService;
+
+    /**
      * Auth request lifetime in DAYS.
      *
      * @var int REFRESH_TOKEN_LIFETIME
@@ -58,12 +65,15 @@ class AuthService implements ApiService
      *
      * @param AuthRequestService $authRequestService
      * @param UserService $userService
+     * @param SessionService $sessionService
      */
     public function __construct(AuthRequestService $authRequestService,
-                                UserService $userService)
+                                UserService $userService,
+                                SessionService $sessionService)
     {
         $this->authRequestService = $authRequestService;
         $this->userService = $userService;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -95,7 +105,7 @@ class AuthService implements ApiService
         //Here we should send code via sms or via messenger
 
         // Creating auth request instance
-        return AuthRequest::create([
+        return $this->authRequestService->create([
             'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
@@ -151,7 +161,7 @@ class AuthService implements ApiService
         $authRequest->delete();
 
         return DB::transaction(function () use ($data, $fingerprint) {
-            $user = User::create([
+            $user = $this->userService->create([
                 'name' => $data['name'],
                 'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
                 'country_code' => $data['country_code'],
@@ -160,7 +170,7 @@ class AuthService implements ApiService
             $accessToken = auth()->login($user);
 
             return [
-                'session' => Session::create([
+                'session' => $this->sessionService->create([
                     'user_id' => $user->id,
                     'refresh_token' => RefreshTokenGenerator::generate(),
                     'fingerprint' => $fingerprint,
@@ -217,7 +227,7 @@ class AuthService implements ApiService
         $accessToken = auth()->login($user);
 
         return [
-            'session' => Session::create([
+            'session' => $this->sessionService->create([
                 'user_id' => $user->id,
                 'refresh_token' => RefreshTokenGenerator::generate(),
                 'fingerprint' => $fingerprint,
@@ -241,7 +251,7 @@ class AuthService implements ApiService
     {
         // Obtaining current session by refresh_token
         // to delete refresh it
-        $session = Session::firstWhere('refresh_token', $data['refresh_token']);
+        $session = $this->sessionService->firstWhere('refresh_token', $data['refresh_token']);
 
         // If session does not exist we return
         // REFRESH_TOKEN_INVALID error
@@ -259,10 +269,10 @@ class AuthService implements ApiService
         if ($fingerprint !== $data['fingerprint']) throw new FingerprintInvalidException();
 
         // We obtain new access token
-        $accessToken = auth()->login(User::find($session->user_id));
+        $accessToken = auth()->login($this->userService->find($session->user_id));
 
         return [
-            'session' => Session::create([
+            'session' => $this->sessionService->create([
                 'user_id' => $session->user_id,
                 'refresh_token' => RefreshTokenGenerator::generate(),
                 'fingerprint' => $fingerprint,
@@ -282,7 +292,7 @@ class AuthService implements ApiService
     public function logout(array $data): void
     {
         // Obtaining current session by refresh_token
-        $session = Session::firstWhere('refresh_token', $data['refresh_token']);
+        $session = $this->sessionService->firstWhere('refresh_token', $data['refresh_token']);
 
         // If session does not exist we return
         // REFRESH_TOKEN_INVALID error
