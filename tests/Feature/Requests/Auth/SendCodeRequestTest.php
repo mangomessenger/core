@@ -93,7 +93,7 @@ class SendCodeRequestTest extends TestCase
     {
         $this->assertEquals(
             $shouldPass,
-            $this->validate($mockedRequestData, '')
+            $this->validate($mockedRequestData)
         );
     }
 
