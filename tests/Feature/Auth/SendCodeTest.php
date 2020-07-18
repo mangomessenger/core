@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\AuthRequest;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
@@ -41,6 +42,33 @@ class SendCodeTest extends TestCase
             ])->assertJsonStructure([
                 'phone_code_hash',
             ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_sendcode_deletes_previous_attempt()
+    {
+        $authRequest = factory(AuthRequest::class)->create();
+
+        $this->json('POST', 'auth/sendCode', [
+            'phone_number' => $authRequest->phone_number,
+            'country_code' => $authRequest->country_code,
+            'fingerprint' => Str::random(25),
+        ])
+            ->assertStatus(201)
+            ->assertJson([
+                'phone_number' => $authRequest->phone_number,
+                'country_code' => $authRequest->country_code,
+                'is_new' => true,
+                'timeout' => 120,
+            ])->assertJsonStructure([
+                'phone_code_hash',
+            ]);
+
+        $this->assertNull(AuthRequest::find($authRequest->id));
     }
 
     /**
