@@ -106,7 +106,7 @@ class AuthService implements ApiService
 
         // Creating auth request instance
         return $this->authRequestService->create([
-            'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
+            'phone_number' => $data['phone_number'],
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
             'fingerprint' => $data['fingerprint'],
@@ -163,7 +163,7 @@ class AuthService implements ApiService
         return DB::transaction(function () use ($data, $fingerprint) {
             $user = $this->userService->create([
                 'name' => $data['name'],
-                'phone_number' => PhoneNumber::make($data['phone_number'], $data['country_code'])->formatE164(),
+                'phone_number' => $data['phone_number'],
                 'country_code' => $data['country_code'],
             ]);
 
@@ -172,7 +172,6 @@ class AuthService implements ApiService
             return [
                 'session' => $this->sessionService->create([
                     'user_id' => $user->id,
-                    'refresh_token' => RefreshTokenGenerator::generate(),
                     'fingerprint' => $fingerprint,
                     'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
                 ]),
@@ -229,7 +228,6 @@ class AuthService implements ApiService
         return [
             'session' => $this->sessionService->create([
                 'user_id' => $user->id,
-                'refresh_token' => RefreshTokenGenerator::generate(),
                 'fingerprint' => $fingerprint,
                 'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
             ]),
@@ -274,7 +272,6 @@ class AuthService implements ApiService
         return [
             'session' => $this->sessionService->create([
                 'user_id' => $session->user_id,
-                'refresh_token' => RefreshTokenGenerator::generate(),
                 'fingerprint' => $fingerprint,
                 'expires_in' => Carbon::now()->addDays(self::REFRESH_TOKEN_LIFETIME),
             ]),

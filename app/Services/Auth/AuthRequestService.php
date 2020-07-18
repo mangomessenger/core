@@ -45,4 +45,15 @@ class AuthRequestService extends ModelService
                 ->formatE164())
             ->exists();
     }
+
+    /**
+     * @param array $input
+     * @return mixed
+     */
+    public function create(array $input)
+    {
+        $input['phone_number'] = PhoneNumber::make($input['phone_number'], $input['country_code'])->formatE164();
+
+        return $this->model->create($input);
+    }
 }

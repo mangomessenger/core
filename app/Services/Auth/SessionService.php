@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Services\ModelService;
 use App\Session;
+use App\Utils\RefreshTokenGenerator;
 
 class SessionService extends ModelService
 {
@@ -19,4 +20,16 @@ class SessionService extends ModelService
         $this->model = $user;
     }
 
+    /**
+     * @param array $input
+     * @return mixed
+     */
+    public function create(array $input)
+    {
+        if (!isset($input['refresh_token'])) {
+            $input['refresh_token'] = RefreshTokenGenerator::generate();
+        }
+
+        return $this->model->create($input);
+    }
 }
