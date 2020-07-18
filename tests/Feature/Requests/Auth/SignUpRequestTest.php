@@ -14,12 +14,6 @@ class SignUpRequestTest extends TestCase
 {
     use RefreshDatabase, DatabaseMigrations;
 
-    /** @var array $rules */
-    private $rules;
-
-    /** @var Validator $validator */
-    private $validator;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -192,36 +186,5 @@ class SignUpRequestTest extends TestCase
                 ]
             ]
         ];
-    }
-
-    /**
-     * @param int $digits
-     * @return int
-     */
-    function randomNumber(int $digits) {
-        $min = pow(10, $digits - 1);
-        $max = pow(10, $digits) - 1;
-        return mt_rand($min, $max);
-    }
-
-    /**
-     * @test
-     * @dataProvider validationProvider
-     * @param bool $shouldPass
-     * @param array $mockedRequestData
-     */
-    public function validation_results_as_expected($shouldPass, $mockedRequestData)
-    {
-        $this->assertEquals(
-            $shouldPass,
-            $this->validate($mockedRequestData)
-        );
-    }
-
-    protected function validate($mockedRequestData)
-    {
-        return $this->validator
-            ->make($mockedRequestData, $this->rules)
-            ->passes();
     }
 }
