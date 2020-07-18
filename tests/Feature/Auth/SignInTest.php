@@ -80,6 +80,40 @@ class SignInTest extends TestCase
      *
      * @return void
      */
+    public function test_signin_returns_auth_request_expired()
+    {
+        $user = factory(User::class)->create();
+
+        $authRequest = AuthRequest::make([
+            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
+            'country_code' => $user->country_code,
+            'phone_code_hash' => Hash::make(22222),
+            'fingerprint' => Str::random(25),
+            'timeout' => 120,
+            'is_new' => true,
+        ]);
+
+        $this->json('POST', 'auth/signIn', [
+            'phone_number' => $authRequest->phone_number,
+            'country_code' => $authRequest->country_code,
+            'phone_code_hash' => $authRequest->phone_code_hash,
+            'phone_code' => 22222,
+        ])
+            ->assertStatus(400)
+            ->assertJson([
+                'type' => 'AUTH_REQUEST_EXPIRED',
+            ])->assertJsonStructure([
+                'type',
+                'message',
+                'status',
+            ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
     public function test_signin_returns_phone_number_unoccupied()
     {
         $user = factory(User::class)->make();
