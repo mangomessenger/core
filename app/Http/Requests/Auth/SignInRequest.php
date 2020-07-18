@@ -28,6 +28,7 @@ class SignInRequest extends FormRequest
             'phone_number' => [
                 'required',
                 'phone:country_code',
+                'numeric'
             ],
             'country_code' => 'required_with:phone',
             'phone_code_hash' => [
