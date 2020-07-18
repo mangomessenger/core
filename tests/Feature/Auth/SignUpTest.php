@@ -29,16 +29,7 @@ class SignUpTest extends TestCase
      */
     public function test_signup_returns_session_on_success()
     {
-        $user = factory(User::class)->make();
-
-        $authRequest = AuthRequest::create([
-            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
-            'country_code' => $user->country_code,
-            'phone_code_hash' => Hash::make(22222),
-            'fingerprint' => Str::random(25),
-            'timeout' => 120,
-            'is_new' => true,
-        ]);
+        $authRequest = factory(AuthRequest::class)->create();
 
         $this->json('POST', 'auth/signUp', [
             'phone_number' => $authRequest->phone_number,
@@ -86,23 +77,14 @@ class SignUpTest extends TestCase
      */
     public function test_signup_returns_auth_request_expired()
     {
-        $user = factory(User::class)->make();
-
-        $authRequest = AuthRequest::make([
-            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
-            'country_code' => $user->country_code,
-            'phone_code_hash' => Hash::make(22222),
-            'fingerprint' => Str::random(25),
-            'timeout' => 120,
-            'is_new' => true,
-        ]);
+        $authRequest = factory(AuthRequest::class)->make();
 
         $this->json('POST', 'auth/signUp', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
             'name' => 'Donald',
-            'phone_code' => 22221,
+            'phone_code' => 22222,
             'terms_of_service_accepted' => true,
         ])
             ->assertStatus(400)
@@ -158,16 +140,7 @@ class SignUpTest extends TestCase
      */
     public function test_signup_returns_phone_code_hash_invalid()
     {
-        $user = factory(User::class)->make();
-
-        $authRequest = AuthRequest::create([
-            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
-            'country_code' => $user->country_code,
-            'phone_code_hash' => Hash::make(22222),
-            'fingerprint' => Str::random(25),
-            'timeout' => 120,
-            'is_new' => true,
-        ]);
+        $authRequest = factory(AuthRequest::class)->create();
 
         $this->json('POST', 'auth/signUp', [
             'phone_number' => $authRequest->phone_number,
@@ -194,16 +167,7 @@ class SignUpTest extends TestCase
      */
     public function test_signup_returns_phone_code_invalid()
     {
-        $user = factory(User::class)->make();
-
-        $authRequest = AuthRequest::create([
-            'phone_number' => PhoneNumber::make($user->phone_number, $user->country_code)->formatE164(),
-            'country_code' => $user->country_code,
-            'phone_code_hash' => Hash::make(22222),
-            'fingerprint' => Str::random(25),
-            'timeout' => 120,
-            'is_new' => true,
-        ]);
+        $authRequest = factory(AuthRequest::class)->create();
 
         $this->json('POST', 'auth/signUp', [
             'phone_number' => $authRequest->phone_number,
