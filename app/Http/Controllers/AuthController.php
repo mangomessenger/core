@@ -107,6 +107,6 @@ class AuthController extends Controller
     {
         $this->authService->logout($request->validated());
 
-        return response()->json(true, 200);
+        return response()->json([], 204);
     }
 }
