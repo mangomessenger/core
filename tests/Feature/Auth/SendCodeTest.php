@@ -25,9 +25,9 @@ class SendCodeTest extends TestCase
     public function test_sendcode_returns_auth_request_on_success()
     {
         $payload = [
-            'phone_number' => '933123123',
+            'phone_number' => "093{$this->randomNumber(7)}",
             'country_code' => 'UA',
-            'fingerprint' => '1111111111'
+            'fingerprint' => Str::random(25),
         ];
 
         $this->json('POST', 'auth/sendCode', $payload)
