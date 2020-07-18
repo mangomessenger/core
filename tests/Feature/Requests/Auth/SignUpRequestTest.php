@@ -31,9 +31,6 @@ class SignUpRequestTest extends TestCase
 
     public function validationProvider()
     {
-        /* WithFaker trait doesn't work in the dataProvider */
-        $faker = Factory::create( Factory::DEFAULT_LOCALE);
-
         return [
             'request_should_fail_when_no_phone_number_is_provided' => [
                 'passed' => false,
@@ -41,44 +38,44 @@ class SignUpRequestTest extends TestCase
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_no_country_code_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_no_name_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_no_phone_code_hash_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_no_phone_code_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
@@ -88,113 +85,123 @@ class SignUpRequestTest extends TestCase
             'request_should_fail_when_no_terms_of_service_accepted_is_provided' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                 ]
             ],
             'request_should_fail_when_phone_number_is_invalid' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(5)}",
+                    'phone_number' => "093{$this->randomNumber(5)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_phone_number_is_not_numeric' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(6)}s",
+                    'phone_number' => "093{$this->randomNumber(6)}s",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_phone_country_code_is_invalid' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => Str::random(5),
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_name_has_more_than_100_characters' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(101),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_phone_code_hash_has_more_than_255_characters' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(256),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_phone_code_is_more_than_5_digits' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(6),
+                    'phone_code' => $this->randomNumber(6),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_phone_code_is_less_than_5_digits' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(4),
+                    'phone_code' => $this->randomNumber(4),
                     'terms_of_service_accepted' => true,
                 ]
             ],
             'request_should_fail_when_terms_of_service_are_not_accepted' => [
                 'passed' => false,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => false,
                 ]
             ],
             'request_should_pass_when_correct_data_is_provided' => [
                 'passed' => true,
                 'data' => [
-                    'phone_number' => "093{$faker->randomNumber(7)}",
+                    'phone_number' => "093{$this->randomNumber(7)}",
                     'country_code' => 'UA',
                     'name' => Str::random(25),
                     'phone_code_hash' => Str::random(25),
-                    'phone_code' => $faker->randomNumber(5),
+                    'phone_code' => $this->randomNumber(5),
                     'terms_of_service_accepted' => true,
                 ]
             ]
         ];
+    }
+
+    /**
+     * @param int $digits
+     * @return int
+     */
+    function randomNumber(int $digits) {
+        $min = pow(10, $digits - 1);
+        $max = pow(10, $digits) - 1;
+        return mt_rand($min, $max);
     }
 
     /**
