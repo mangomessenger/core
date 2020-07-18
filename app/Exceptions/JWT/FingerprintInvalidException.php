@@ -10,5 +10,5 @@ class FingerprintInvalidException extends ApiException
     /** @var string  */
     public $message = "Fingerprint is invalid.";
     /** @var int $code */
-    public $code = 401;
+    public $code = 400;
 }

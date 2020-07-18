@@ -10,5 +10,5 @@ class UserNotFoundException extends ApiException
     /** @var string  */
     public $message = "Token user not found.";
     /** @var int $code */
-    public $code = 401;
+    public $code = 400;
 }
