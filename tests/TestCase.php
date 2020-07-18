@@ -20,7 +20,7 @@ abstract class TestCase extends BaseTestCase
      * @param int $digits
      * @return int
      */
-    function randomNumber(int $digits) {
+    static function randomNumber(int $digits) {
         $min = pow(10, $digits - 1);
         $max = pow(10, $digits) - 1;
         return mt_rand($min, $max);

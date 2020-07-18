@@ -6,7 +6,6 @@ use App\AuthRequest;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -18,7 +17,6 @@ class SignInTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Artisan::call('migrate:fresh');
     }
 
     /**
@@ -28,11 +26,7 @@ class SignInTest extends TestCase
      */
     public function test_signin_returns_session_on_success()
     {
-        $user = User::create([
-            'name' => 'Donald',
-            'phone_number' => "093{$this->randomNumber(7)}",
-            'country_code' => 'UA',
-        ]);
+        $user = factory(User::class)->create();
 
         $authRequest = AuthRequest::create([
             'phone_number' => $user->phone_number,
@@ -53,7 +47,7 @@ class SignInTest extends TestCase
             ->assertJson([
                 'user' => [
                     'id' => 1,
-                    'name' => 'Donald'
+                    'name' => $user->name,
                 ]
             ])->assertJsonStructure([
                 'access_token',
