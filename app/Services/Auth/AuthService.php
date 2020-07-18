@@ -11,14 +11,10 @@ use App\Exceptions\Auth\PhoneNumberUnoccupiedException;
 use App\Exceptions\JWT\FingerprintInvalidException;
 use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Services\ApiService;
-use App\Session;
-use App\User;
-use App\Utils\RefreshTokenGenerator;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Propaganistas\LaravelPhone\PhoneNumber;
 
 /**
  * Class AuthService
@@ -136,22 +132,29 @@ class AuthService implements ApiService
         // security checks
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
 
-        if (is_null($authRequest)) {
-            throw new AuthRequestExpiredException();
-        }
-
+        ##> Validation ##
+        // Check for auth request expiration
         if ($this->userService
             ->existsByPhone($data['phone_number'], $data['country_code'])) {
             throw new PhoneNumberOccupiedException();
         }
 
+        // Check if phone number is occupied
+        if (is_null($authRequest)) {
+            throw new AuthRequestExpiredException();
+        }
+
+        // Check if phone_code_hash is the same
         if ($authRequest->phone_code_hash !== $data['phone_code_hash']) {
             throw new PhoneCodeHashInvalidException();
         }
 
+        // Check if the phone_code is correct using
+        // phone_code_hash
         if (!Hash::check($data['phone_code'], $authRequest->phone_code_hash)) {
             throw new PhoneCodeInvalidException();
         }
+        ##< Validation ##
 
         // Saving fingerprint from auth request
         $fingerprint = $authRequest->fingerprint;
@@ -196,24 +199,33 @@ class AuthService implements ApiService
         // We obtain user in order to create session for him
         $user = $this->userService->findByPhone($data['phone_number'], $data['country_code']);
 
-        if (is_null($user)) {
-            throw new PhoneNumberUnoccupiedException();
-        }
-
         // We obtain auth request to delete it before sign in
         // and to store fingerprint in session table for further
         // security checks
         $authRequest = $this->authRequestService->findByPhone($data['phone_number'], $data['country_code']);
 
-        if (is_null($authRequest)) throw new AuthRequestExpiredException();
+        ##> Validation ##
+        // Check if phone number is occupied
+        if (is_null($user)) {
+            throw new PhoneNumberUnoccupiedException();
+        }
 
+        // Check for auth request expiration
+        if (is_null($authRequest)) {
+            throw new AuthRequestExpiredException();
+        }
+
+        // Check if phone_code_hash is the same
         if ($authRequest->phone_code_hash !== $data['phone_code_hash']) {
             throw new PhoneCodeHashInvalidException();
         }
 
+        // Check if the phone_code is correct using
+        // phone_code_hash
         if (!Hash::check($data['phone_code'], $authRequest->phone_code_hash)) {
             throw new PhoneCodeInvalidException();
         }
+        ##< Validation ##
 
         // Saving fingerprint from auth request
         $fingerprint = $authRequest->fingerprint;
