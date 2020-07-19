@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Chat;
 use App\Http\Resources\ChatCollection;
 use App\Services\Chat\ChatService;
 use Illuminate\Http\Request;

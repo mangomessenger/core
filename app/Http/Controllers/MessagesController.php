@@ -30,7 +30,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Sending a message in chat
      *
      * @param SendMessageRequest $sendMessageRequest
      * @return MessageResource
@@ -45,6 +45,12 @@ class MessagesController extends Controller
         return new MessageResource($message);
     }
 
+    /**
+     * Getting all messages by chat
+     *
+     * @param GetMessagesRequest $request
+     * @return MessageCollection
+     */
     public function getMessages(GetMessagesRequest $request)
     {
         $validRequest = $request->validated();
