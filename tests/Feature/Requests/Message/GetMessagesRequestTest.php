@@ -7,7 +7,6 @@ use App\Http\Requests\Message\GetMessagesRequest;
 use App\Message;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class GetMessagesRequestTest extends TestCase
