@@ -115,11 +115,6 @@ class RefreshTokensTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_requires_payload()
     {
         $this->json('POST', 'auth/signIn')

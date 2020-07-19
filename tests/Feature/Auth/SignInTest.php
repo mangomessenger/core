@@ -19,12 +19,6 @@ class SignInTest extends TestCase
     {
         parent::setUp();
     }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_returns_session_on_success()
     {
         $user = factory(User::class)->create();
@@ -56,11 +50,6 @@ class SignInTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_requires_payload()
     {
         $this->json('POST', 'auth/signIn')
@@ -75,11 +64,6 @@ class SignInTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_returns_auth_request_expired()
     {
         $user = factory(User::class)->create();
@@ -109,11 +93,6 @@ class SignInTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_returns_phone_number_unoccupied()
     {
         $user = factory(User::class)->make();
@@ -143,11 +122,6 @@ class SignInTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_returns_phone_code_hash_invalid()
     {
         $user = factory(User::class)->create();
@@ -177,11 +151,6 @@ class SignInTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signin_returns_phone_code_invalid()
     {
         $user = factory(User::class)->create();
