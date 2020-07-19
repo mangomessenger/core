@@ -16,6 +16,8 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->enum('type', \App\Chat::TYPES)->default('TYPE_USER');
+            $table->foreignId('user1_id')->constrained('users');
+            $table->foreignId('user2_id')->constrained('users');
             $table->timestamps();
         });
     }

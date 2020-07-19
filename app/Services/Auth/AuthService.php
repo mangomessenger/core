@@ -240,7 +240,7 @@ class AuthService implements ApiService
         $authRequest->delete();
 
         // Login user and after that obtain JWT access token
-        $accessToken = auth()->login($user);
+        $accessToken = auth()->setTTL(1440)->login($user);
 
         return [
             'session' => $this->sessionService->create([

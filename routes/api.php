@@ -29,6 +29,10 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', 'AuthController@logout');
 });
 
-Route::middleware('jwt-auth')->get('/test', function (Request $request) {
-    return auth()->user();
+Route::middleware('jwt-auth')->prefix('messages')->group(function (){
+    Route::get('/test', function (Request $request) {
+        return auth()->user();
+    });
+
+    Route::post('/', 'MessagesController@sendMessage');
 });

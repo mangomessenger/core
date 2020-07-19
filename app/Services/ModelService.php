@@ -58,4 +58,15 @@ abstract class ModelService implements ApiService
     {
         return $this->model->firstWhere($column, $value);
     }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function exists(int $id): bool
+    {
+        return $this->model
+            ->where('id', $id)
+            ->exists();
+    }
 }
