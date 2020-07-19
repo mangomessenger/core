@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Message\ChatTypeInvalidException;
+use App\Exceptions\Message\DestinationInvalidException;
 use App\Http\Requests\Message\SendMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Services\Message\MessageService;
@@ -31,6 +33,9 @@ class MessagesController extends Controller
      *
      * @param SendMessageRequest $sendMessageRequest
      * @return MessageResource
+     *
+     * @throws ChatTypeInvalidException
+     * @throws DestinationInvalidException
      */
     public function sendMessage(SendMessageRequest $sendMessageRequest)
     {
