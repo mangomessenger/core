@@ -22,11 +22,6 @@ class SendMessageTest extends TestCase
         Artisan::call('migrate:fresh');
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_send_message_returns_204_on_success()
     {
         $user = factory(User::class)->create();
@@ -44,11 +39,6 @@ class SendMessageTest extends TestCase
             ->assertStatus(201);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_send_message_returns_chat_type_invalid()
     {
         $user = factory(User::class)->create();
@@ -73,11 +63,6 @@ class SendMessageTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_send_message_returns_destination_invalid()
     {
         $user = factory(User::class)->create();
@@ -102,11 +87,6 @@ class SendMessageTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_send_message_requires_payload()
     {
         $user = factory(User::class)->create();
@@ -126,11 +106,6 @@ class SendMessageTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_send_message_needs_token()
     {
         $user = factory(User::class)->create();

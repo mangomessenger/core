@@ -50,11 +50,6 @@ class LogoutTest extends TestCase
             ->assertStatus(204);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_logout_requires_payload()
     {
         $this->json('POST', 'auth/logout')

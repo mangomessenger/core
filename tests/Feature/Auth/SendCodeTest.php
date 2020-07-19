@@ -19,11 +19,6 @@ class SendCodeTest extends TestCase
         Artisan::call('migrate:fresh');
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_sendcode_returns_auth_request_on_success()
     {
         $payload = [
@@ -44,11 +39,6 @@ class SendCodeTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_sendcode_deletes_previous_attempt()
     {
         $authRequest = factory(AuthRequest::class)->create();
@@ -71,11 +61,6 @@ class SendCodeTest extends TestCase
         $this->assertNull(AuthRequest::find($authRequest->id));
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_sendcode_requires_payload()
     {
         $this->json('POST', 'auth/sendCode')
