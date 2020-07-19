@@ -29,6 +29,7 @@ class GetMessagesRequest extends FormRequest
     {
         return [
             'chat_id' => 'required|exists:chats,id',
+            'message_id' => 'exists:messages,id'
         ];
     }
 

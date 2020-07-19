@@ -107,12 +107,21 @@ class MessageService extends ModelService
 
     /**
      * @param int $chat_id
+     * @param int|null $messageId
      * @return mixed
      */
-    public function getMessages(int $chat_id): Collection
+    public function getMessages(int $chat_id, int $messageId = null): Collection
     {
-        return $this->model
-            ->where('chat_id', $chat_id)
-            ->get();
+        if (is_null($messageId)){
+            return $this->model
+                ->where('chat_id', $chat_id)
+                ->get();
+        }
+        else {
+            return $this->model
+                ->where('chat_id', $chat_id)
+                ->where('id', '>', $messageId)
+                ->get();
+        }
     }
 }

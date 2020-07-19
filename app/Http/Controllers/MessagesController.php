@@ -47,7 +47,9 @@ class MessagesController extends Controller
 
     public function getMessages(GetMessagesRequest $request)
     {
-        $messages = $this->messageService->getMessages($request->validated()['chat_id']);
+        $validRequest = $request->validated();
+
+        $messages = $this->messageService->getMessages($validRequest['chat_id'], $validRequest['message_id'] ?? null);
 
         return new MessageCollection($messages);
     }
