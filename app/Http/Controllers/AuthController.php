@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Auth\AuthRequestExpiredException;
+use App\Exceptions\Auth\PhoneCodeHashInvalidException;
+use App\Exceptions\Auth\PhoneCodeInvalidException;
+use App\Exceptions\Auth\PhoneNumberOccupiedException;
+use App\Exceptions\Auth\PhoneNumberUnoccupiedException;
 use App\Exceptions\JWT\FingerprintInvalidException;
 use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Http\Requests\Auth\LogoutRequest;
@@ -57,7 +62,11 @@ class AuthController extends Controller
      * Sending a code.
      * @param SignUpRequest $request
      * @return SessionResource
-     * @throws Exception
+     *
+     * @throws AuthRequestExpiredException
+     * @throws PhoneCodeHashInvalidException
+     * @throws PhoneCodeInvalidException
+     * @throws PhoneNumberOccupiedException
      */
     public function signUp(SignUpRequest $request)
     {
@@ -70,7 +79,11 @@ class AuthController extends Controller
      * Sending a code.
      * @param SignInRequest $request
      * @return SessionResource
-     * @throws Exception
+     *
+     * @throws AuthRequestExpiredException
+     * @throws PhoneCodeHashInvalidException
+     * @throws PhoneCodeInvalidException
+     * @throws PhoneNumberUnoccupiedException
      */
     public function signIn(SignInRequest $request)
     {
