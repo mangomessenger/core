@@ -19,7 +19,7 @@ class ChatResource extends JsonResource
             "type" => $this->type,
             "user1_id" => $this->user1_id,
             "user2_id" => $this->user2_id,
-            "updated_at" => $this->updated_at,
+            "updated_at" => $this->updated_at->timestamp,
         ];
     }
 }
