@@ -29,10 +29,15 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', 'AuthController@logout');
 });
 
-Route::middleware('jwt-auth')->prefix('messages')->group(function (){
+Route::middleware('jwt-auth')->group(function (){
     Route::get('/test', function (Request $request) {
         return auth()->user();
     });
 
-    Route::post('/', 'MessagesController@sendMessage');
+    Route::prefix('messages')->group(function () {
+        Route::post('/', 'MessagesController@sendMessage');
+    });
+    Route::prefix('chats')->group(function () {
+        Route::get('/', 'ChatsController@getChats');
+    });
 });

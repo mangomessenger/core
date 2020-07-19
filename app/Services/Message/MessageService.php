@@ -2,12 +2,11 @@
 
 namespace App\Services\Message;
 
-use App\Chat;
-use App\ChatMember;
 use App\Exceptions\Message\ChatTypeInvalidException;
 use App\Exceptions\Message\DestinationInvalidException;
 use App\Message;
 use App\Services\Auth\UserService;
+use App\Services\Chat\ChatService;
 use App\Services\ModelService;
 use Illuminate\Support\Facades\DB;
 
@@ -62,37 +61,45 @@ class MessageService extends ModelService
      */
     public function sendMessage(array $data): Message
     {
+        // Getting peer array
         $peer = $data['peer'];
-        $destUserId = $peer['destination_id'];
 
         switch ($peer['chat_type']) {
             case 'TYPE_USER':
                 if (!$this->userService
-                    ->exists($destUserId)) {
+                    ->exists($peer['destination_id'])) {
                     throw new DestinationInvalidException();
                 }
 
-                $chat = $this->chatService->findByUsers($destUserId, auth()->user()->id);
+                // Find chat that connects both users
+                $chat = $this->chatService->findByUsers($peer['destination_id'], auth()->user()->id);
 
-                if (is_null($chat)){
-                    $chat = $this->chatService->create([
-                        'user1_id' => $destUserId,
-                        'user2_id' => auth()->user()->id,
-                        'type' => $destUserId === auth()->user()->id ? 'TYPE_SELF' : 'TYPE_USER',
+                // Getting message out of transaction
+                $message = DB::transaction(function () use ($data, $peer, $chat) {
+                    // If chat does not exist - create it
+                    if (is_null($chat)) {
+                        $chat = $this->chatService->create([
+                            'user1_id' => $peer['destination_id'],
+                            'user2_id' => auth()->user()->id,
+                            'type' => $peer['destination_id'] == auth()->user()->id ? 'TYPE_SELF' : 'TYPE_USER',
+                        ]);
+                    }
+
+                    // Creating message instance
+                    return $this->create([
+                        'chat_id' => $chat->id,
+                        'user_id' => auth()->user()->id,
+                        'message' => $data['message'],
                     ]);
-                }
+                }, 5);
 
-                $message = $this->create([
-                    'chat_id' => $chat->id,
-                    'user_id' => auth()->user()->id,
-                    'message' => $data['message'],
-                ]);
+                // Update update_at column
+                $chat->touch();
 
                 break;
             default:
                 throw new ChatTypeInvalidException();
         }
-
 
         return $message;
     }

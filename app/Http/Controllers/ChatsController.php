@@ -3,83 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Http\Resources\ChatCollection;
+use App\Services\Chat\ChatService;
 use Illuminate\Http\Request;
 
-class ChatController extends Controller
+class ChatsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Instance of chat service.
      *
-     * @return \Illuminate\Http\Response
+     * @var ChatService $chatService
      */
-    public function index()
+    private ChatService $chatService;
+
+    /**
+     * MessagesController constructor.
+     *
+     * @param ChatService $chatService
+     */
+    public function __construct(ChatService $chatService)
     {
-        //
+        $this->chatService = $chatService;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Getting all user's chats
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return ChatCollection
      */
-    public function create()
+    public function getChats(Request $request)
     {
-        //
-    }
+        $chats = $this->chatService->getChats(auth()->user()->id);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Chat $chat)
-    {
-        //
+        return new ChatCollection($chats);
     }
 }

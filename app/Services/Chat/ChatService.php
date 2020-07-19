@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Services\Message;
+namespace App\Services\Chat;
 
 use App\Chat;
-use App\ChatMember;
-use App\Exceptions\Message\ChatTypeInvalidException;
-use App\Exceptions\Message\DestinationInvalidException;
-use App\Message;
-use App\Services\Auth\UserService;
 use App\Services\ModelService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class ChatService extends ModelService
 {
@@ -48,5 +43,17 @@ class ChatService extends ModelService
                 $query->where('user1_id', $id2)
                     ->where('user2_id', $id1);
             })->first();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getChats(int $id): Collection
+    {
+        return $this->model
+            ->where('user1_id', $id)
+            ->orWhere('user2_id', $id)
+            ->get();
     }
 }
