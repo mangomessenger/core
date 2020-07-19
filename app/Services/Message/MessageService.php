@@ -86,6 +86,9 @@ class MessageService extends ModelService
                         ]);
                     }
 
+                    // Update update_at column
+                    $chat->touch();
+
                     // Creating message instance
                     return $this->create([
                         'chat_id' => $chat->id,
@@ -94,8 +97,6 @@ class MessageService extends ModelService
                     ]);
                 }, 5);
 
-                // Update update_at column
-                $chat->touch();
 
                 break;
             default:
