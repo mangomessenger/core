@@ -39,6 +39,29 @@ class GetMessagesTest extends TestCase
             ->assertStatus(200);
     }
 
+    public function test_get_messages_returns_forbidden_when_try_to_read_others_messages()
+    {
+        $user = factory(User::class)->create();
+        $chat = factory(Chat::class)->create();
+        $message = factory(Message::class)->create();
+
+        $token = auth()->login($user);
+
+        $this->withHeader('Authorization', "Bearer $token")
+            ->json('GET', 'messages/', [
+                "chat_id" => 2,
+                "message_id" => 1
+            ])
+            ->assertStatus(403)
+            ->assertJson([
+                'type' => 'FORBIDDEN',
+            ])->assertJsonStructure([
+                'type',
+                'message',
+                'status',
+            ]);
+    }
+
     public function test_get_messages_requires_payload()
     {
         $user = factory(User::class)->create();
