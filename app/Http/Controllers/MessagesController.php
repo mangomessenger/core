@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\Message\ChatTypeInvalidException;
 use App\Exceptions\Message\DestinationInvalidException;
+use App\Http\Requests\Chat\GetMessagesRequest;
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Http\Resources\MessageCollection;
 use App\Http\Resources\MessageResource;
 use App\Services\Message\MessageService;
 use Illuminate\Http\Response;
@@ -42,6 +44,13 @@ class MessagesController extends Controller
         $message = $this->messageService->sendMessage($sendMessageRequest->validated());
 
         return new MessageResource($message);
+    }
+
+    public function getMessages(GetMessagesRequest $request)
+    {
+        $messages = $this->messageService->getMessages($request->validated()['chat_id']);
+
+        return new MessageCollection($messages);
     }
 
 }

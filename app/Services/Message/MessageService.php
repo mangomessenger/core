@@ -8,6 +8,7 @@ use App\Message;
 use App\Services\Auth\UserService;
 use App\Services\Chat\ChatService;
 use App\Services\ModelService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class MessageService extends ModelService
@@ -72,7 +73,7 @@ class MessageService extends ModelService
                 }
 
                 // Find chat that connects both users
-                $chat = $this->chatService->findByUsers($peer['destination_id'], auth()->user()->id);
+                $chat = $this->chatService->firstByUsers($peer['destination_id'], auth()->user()->id);
 
                 // Getting message out of transaction
                 $message = DB::transaction(function () use ($data, $peer, $chat) {
@@ -102,5 +103,16 @@ class MessageService extends ModelService
         }
 
         return $message;
+    }
+
+    /**
+     * @param int $chat_id
+     * @return mixed
+     */
+    public function getMessages(int $chat_id): Collection
+    {
+        return $this->model
+            ->where('chat_id', $chat_id)
+            ->get();
     }
 }

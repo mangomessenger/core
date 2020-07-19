@@ -32,7 +32,7 @@ class ChatService extends ModelService
      * @param int $id2
      * @return mixed
      */
-    public function findByUsers(int $id1, int $id2)
+    public function firstByUsers(int $id1, int $id2)
     {
         return $this->model
             ->where(function ($query) use ($id2, $id1) {
@@ -55,5 +55,21 @@ class ChatService extends ModelService
             ->where('user1_id', $id)
             ->orWhere('user2_id', $id)
             ->get();
+    }
+
+    /**
+     * @param int $id
+     * @param int $userId
+     * @return mixed
+     */
+    public function existsByUser(int $id, int $userId): bool
+    {
+        return $this->model
+            ->where('id', $id)
+            ->where(function ($query) use ($userId) {
+                $query->where('user1_id', $userId)
+                    ->orWhere('user2_id', $userId);
+            })
+            ->exists();
     }
 }
