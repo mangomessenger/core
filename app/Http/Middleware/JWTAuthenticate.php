@@ -4,11 +4,11 @@ namespace App\Http\Middleware;
 
 use App\Exceptions\JWT\TokenAbsentException;
 use App\Exceptions\JWT\UserNotFoundException;
+use Closure;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
-use Closure;
-use Illuminate\Http\Request;
 
 class JWTAuthenticate extends BaseMiddleware
 {
@@ -20,7 +20,6 @@ class JWTAuthenticate extends BaseMiddleware
      * @param null $optional
      * @return mixed
      * @throws TokenAbsentException
-     * @throws TokenInvalidException
      * @throws TokenExpiredException
      * @throws UserNotFoundException
      */
@@ -33,11 +32,11 @@ class JWTAuthenticate extends BaseMiddleware
                 throw new UserNotFoundException();
             }
         } catch (TokenExpiredException $e) {
-            throw new TokenExpiredException();
+            throw new \App\Exceptions\JWT\TokenExpiredException();
         } catch (TokenInvalidException $e) {
-            throw new TokenExpiredException();
+            throw new \App\Exceptions\JWT\TokenInvalidException();
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            if ($optional === null) throw new TokenAbsentException();
+            if ($optional === null) throw new \App\Exceptions\JWT\TokenAbsentException();
         }
 
         return $next($request);

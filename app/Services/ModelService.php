@@ -27,7 +27,7 @@ abstract class ModelService implements ApiService
      */
     public function find($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->find($id);
     }
 
     /**
@@ -57,5 +57,16 @@ abstract class ModelService implements ApiService
     public function firstWhere(string $column, string $value)
     {
         return $this->model->firstWhere($column, $value);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function exists(int $id): bool
+    {
+        return $this->model
+            ->where('id', $id)
+            ->exists();
     }
 }

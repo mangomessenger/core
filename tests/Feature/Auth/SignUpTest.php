@@ -22,11 +22,6 @@ class SignUpTest extends TestCase
         Artisan::call('migrate:fresh');
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_returns_session_on_success()
     {
         $authRequest = factory(AuthRequest::class)->create();
@@ -51,11 +46,6 @@ class SignUpTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_requires_payload()
     {
         $this->json('POST', 'auth/signUp')
@@ -70,11 +60,6 @@ class SignUpTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_returns_auth_request_expired()
     {
         $authRequest = factory(AuthRequest::class)->make();
@@ -97,11 +82,6 @@ class SignUpTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_returns_phone_number_occupied()
     {
         $user = factory(User::class)->create();
@@ -133,11 +113,6 @@ class SignUpTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_returns_phone_code_hash_invalid()
     {
         $authRequest = factory(AuthRequest::class)->create();
@@ -160,11 +135,6 @@ class SignUpTest extends TestCase
             ]);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_signup_returns_phone_code_invalid()
     {
         $authRequest = factory(AuthRequest::class)->create();

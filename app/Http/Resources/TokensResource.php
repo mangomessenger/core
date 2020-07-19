@@ -33,7 +33,7 @@ class TokensResource extends JsonResource
         return [
             'access_token' => $this->accessToken,
             'refresh_token' => $this->refresh_token,
-            'refresh_token_expires_in' => $this->expires_in,
+            'refresh_token_expires_in' => $this->expires_in->timestamp,
         ];
     }
 }
