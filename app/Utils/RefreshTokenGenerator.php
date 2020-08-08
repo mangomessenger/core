@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use Exception;
+use Illuminate\Support\Str;
 
 class RefreshTokenGenerator
 {
@@ -14,6 +15,6 @@ class RefreshTokenGenerator
      */
     public static function generate(): string
     {
-        return bin2hex(random_bytes(64));
+        return Str::uuid();
     }
 }
