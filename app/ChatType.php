@@ -14,4 +14,20 @@ class ChatType extends Model
     protected $fillable = [
         'name',
     ];
+
+    public $timestamps = false;
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'name';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 }
