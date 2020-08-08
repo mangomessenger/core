@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Facades\Snowflake;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -23,7 +24,7 @@ class Message extends Model
         parent::boot();
 
         static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Uuid::uuid4());
+            $model->setAttribute($model->getKeyName(), Snowflake::id());
         });
     }
 }

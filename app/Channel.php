@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Facades\Snowflake;
 use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
@@ -37,5 +38,17 @@ class Channel extends Model
     public function users()
     {
         return $this->belongsToMany('App\User', 'user_chat', 'chat_id', 'user_id');
+    }
+
+    /**
+     * Boot method
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Model $model) {
+            $model->setAttribute($model->getKeyName(), Snowflake::id());
+        });
     }
 }

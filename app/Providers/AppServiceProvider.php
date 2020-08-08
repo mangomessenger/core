@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Utils\Snowflake\RandomSequenceResolver;
+use App\Utils\Snowflake\Snowflake;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,9 +28,10 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-//        if ($this->app->isLocal()) {
-//            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-//            $this->app->register(TelescopeServiceProvider::class);
-//        }
+        $this->app->singleton('snowflake', function () {
+            return (new Snowflake())
+                ->setStartTimeStamp(strtotime('2000-10-10')*1000)
+                ->setSequenceResolver(new RandomSequenceResolver());
+        });
     }
 }

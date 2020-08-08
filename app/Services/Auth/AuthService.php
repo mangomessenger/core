@@ -168,6 +168,7 @@ class AuthService implements ApiService
         return DB::transaction(function () use ($request, $data, $fingerprint) {
             $user = $this->userService->create([
                 'name' => $data['name'],
+                'username' => NULL,
                 'phone_number' => $data['phone_number'],
                 'country_code' => $data['country_code'],
             ]);
