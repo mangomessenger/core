@@ -40,8 +40,6 @@ class CreateChatMembersTable extends Migration
      */
     public function down()
     {
-        Schema::table('chat_members', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('chat_members');
     }
 }
