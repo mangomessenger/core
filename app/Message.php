@@ -12,6 +12,6 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'chat_id', 'user_id', 'message'
+        'chat_id', 'from_id', 'reply_to_msg_id', 'message', 'is_read'
     ];
 }

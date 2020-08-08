@@ -4,21 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ChatMember extends Model
+class Channel extends Model
 {
-    /**
-     * The name of the "updated at" column.
-     *
-     * @var string
-     */
-    const UPDATED_AT = null;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'chat_id',
+        'title', 'creator_id', 'tag', 'photo_url', 'verified', 'members_count',
     ];
 }
