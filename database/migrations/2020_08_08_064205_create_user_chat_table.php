@@ -15,7 +15,7 @@ class CreateUserChatTable extends Migration
     {
         Schema::create('user_chat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('chat_id');
+            $table->unsignedBigInteger('chat_id');
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
