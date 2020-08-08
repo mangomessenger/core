@@ -14,4 +14,16 @@ class Message extends Model
     protected $fillable = [
         'chat_id', 'from_id', 'reply_to_msg_id', 'message', 'is_read'
     ];
+
+    /**
+     * Boot method
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Model $model) {
+            $model->setAttribute($model->getKeyName(), Uuid::uuid4());
+        });
+    }
 }
