@@ -25,7 +25,8 @@ class CreateChannelsTable extends Migration
 
             $table->foreign('creator_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

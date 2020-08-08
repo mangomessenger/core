@@ -16,20 +16,25 @@ class CreateChatMembersTable extends Migration
         Schema::create('chat_members', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('chat_id');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->timestamps();
 
             $table->foreign('chat_id', 'chat_members_chat_id_foreign_direct')
                 ->references('id')
-                ->on('direct_chats');
+                ->on('direct_chats')
+                ->onDelete('cascade');
 
             $table->foreign('chat_id', 'chat_members_chat_id_foreign_channels')
                 ->references('id')
-                ->on('channels');
+                ->on('channels')
+                ->onDelete('cascade');
 
             $table->foreign('chat_id', 'chat_members_chat_id_foreign_groups')
                 ->references('id')
-                ->on('groups');
+                ->on('groups')
+                ->onDelete('cascade');
         });
     }
 
