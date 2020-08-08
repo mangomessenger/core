@@ -39,4 +39,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * The user's chats
+     */
+    public function chats()
+    {
+        return $this->belongsToMany('App\Chat', 'user_chat', 'user_id', 'chat_id');
+    }
 }
