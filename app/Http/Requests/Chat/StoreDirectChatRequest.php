@@ -4,7 +4,7 @@ namespace App\Http\Requests\Chat;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChatRequest extends FormRequest
+class StoreDirectChatRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

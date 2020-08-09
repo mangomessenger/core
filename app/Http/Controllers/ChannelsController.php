@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Chat\ChannelCreateRequest;
 use App\Http\Requests\Chat\ChatRequest;
+use App\Http\Requests\Chat\StoreChannelRequest;
 use App\Models\Channel;
 use App\Models\DirectChat;
 use App\Services\Chat\ChannelService;
@@ -31,10 +33,10 @@ class ChannelsController extends Controller
     /**
      * Creating chat instance
      *
-     * @param ChatRequest $request
+     * @param StoreChannelRequest $request
      * @return Channel|DirectChat
      */
-    public function create(ChatRequest $request)
+    public function create(StoreChannelRequest $request)
     {
         return $this->directChatService->create($request->input('user_ids'), $request->validated());
     }
