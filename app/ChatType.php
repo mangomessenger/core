@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatType extends Model
 {
+
+    const DIRECT_CHAT = 'direct';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -30,4 +33,9 @@ class ChatType extends Model
      * @var string
      */
     protected $keyType = 'string';
+
+    public function isDirect(): bool
+    {
+        return $this->name === self::DIRECT_CHAT;
+    }
 }
