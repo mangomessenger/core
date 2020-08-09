@@ -8,6 +8,8 @@ class ChatType extends Model
 {
 
     const DIRECT_CHAT = 'direct';
+    const CHANNEL_CHAT = 'channel';
+    const GROUP_CHAT = 'group';
 
     /**
      * The attributes that are mass assignable.
@@ -38,4 +40,15 @@ class ChatType extends Model
     {
         return $this->name === self::DIRECT_CHAT;
     }
+
+    public function isChannel(): bool
+    {
+        return $this->name === self::CHANNEL_CHAT;
+    }
+
+    public function isGroup(): bool
+    {
+        return $this->name === self::GROUP_CHAT;
+    }
+
 }
