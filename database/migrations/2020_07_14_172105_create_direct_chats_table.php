@@ -14,7 +14,7 @@ class CreateDirectChatsTable extends Migration
     public function up()
     {
         Schema::create('direct_chats', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->index();
+            $table->unsignedBigInteger('id')->primary();
             $table->timestamps();
         });
     }
