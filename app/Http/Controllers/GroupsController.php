@@ -38,7 +38,7 @@ class GroupsController extends Controller
      * @param StoreGroupRequest $request
      * @return Group
      */
-    public function create(StoreGroupRequest $request)
+    public function store(StoreGroupRequest $request)
     {
         return $this->groupService->create($request->input('user_ids'), $request->validated());
     }
@@ -53,17 +53,6 @@ class GroupsController extends Controller
         //
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.

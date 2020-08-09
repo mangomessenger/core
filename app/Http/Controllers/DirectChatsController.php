@@ -32,9 +32,9 @@ class DirectChatsController extends Controller
      * Creating chat instance
      *
      * @param StoreDirectChatRequest $request
-     * @return Channel|DirectChat
+     * @return DirectChat
      */
-    public function create(StoreDirectChatRequest $request)
+    public function store(StoreDirectChatRequest $request)
     {
         return $this->directChatService->create($request->input('user_ids'), $request->validated());
     }

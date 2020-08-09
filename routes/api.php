@@ -36,8 +36,8 @@ Route::middleware('jwt-auth')->group(function (){
     });
 
     Route::prefix('chats')->group(function () {
-        Route::post('/direct/', 'DirectChatsController@create');
-        Route::post('/channel/', 'ChannelsController@create');
-        Route::post('/group/', 'GroupsController@create');
+        Route::post('/direct/', 'DirectChatsController@store');
+        Route::post('/channel/', 'ChannelsController@store');
+        Route::post('/group/', 'GroupsController@store');
     });
 });
