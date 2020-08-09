@@ -97,6 +97,10 @@ class Handler extends ExceptionHandler
         $response = [];
 
         switch ($statusCode) {
+            case 400:
+                $response['type'] = 'BAD_REQUEST';
+                $response['message'] = 'One of the request parameters is invalid.';
+                break;
             case 401:
                 $response['type'] = 'UNAUTHORIZED';
                 $response['message'] = 'Authentication is required and has failed or has not yet been provided.';
