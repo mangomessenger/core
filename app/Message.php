@@ -16,6 +16,8 @@ class Message extends Model
         'chat_id', 'from_id', 'reply_to_msg_id', 'message', 'is_read'
     ];
 
+    public $incrementing = false;
+
     /**
      * Boot method
      */

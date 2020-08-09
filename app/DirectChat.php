@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DirectChat extends Model
 {
+
+    public $incrementing = false;
+
     /**
      * Get the chat's members
      */

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
+
+    public $incrementing = false;
+
     /**
      * The attributes that are mass assignable.
      *
