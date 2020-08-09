@@ -11,6 +11,7 @@ use App\Exceptions\Auth\PhoneNumberUnoccupiedException;
 use App\Exceptions\JWT\FingerprintInvalidException;
 use App\Exceptions\JWT\RefreshTokenInvalidException;
 use App\Services\ApiService;
+use App\Services\User\UserService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;

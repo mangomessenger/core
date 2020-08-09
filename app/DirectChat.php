@@ -45,4 +45,16 @@ class DirectChat extends Model
             $model->setAttribute($model->getKeyName(), Snowflake::id());
         });
     }
+
+    public function addMembers($members)
+    {
+        $userIds = is_array($members) ? $members : (array) func_get_args();
+
+        collect($userIds)->each(function ($userId) {
+            $this->members()->firstOrCreate([
+                'user_id' => $userId,
+                'chat_id' => $this->id,
+            ]);
+        });
+    }
 }

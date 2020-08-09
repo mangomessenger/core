@@ -34,12 +34,8 @@ Route::middleware('jwt-auth')->group(function (){
         Route::post('/', 'MessagesController@sendMessage');
         Route::get('/', 'MessagesController@getMessages');
     });
-    Route::prefix('chats')->group(function () {
-        Route::get('/', 'ChatsController@getChats');
-    });
-});
 
-Route::get('/test', function (Request $request) {
-    return \App\DirectChat::create([
-    ]);
+    Route::prefix('chats')->group(function () {
+        Route::post('/{chat_type}/', 'ChatsController@create');
+    });
 });
