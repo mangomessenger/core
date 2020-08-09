@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(ChatTypeSeeder::class);
+        $this->call([
+            ChatTypeSeeder::class,
+            UserSeeder::class
+        ]);
     }
 }
