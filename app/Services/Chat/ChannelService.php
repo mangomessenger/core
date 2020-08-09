@@ -5,13 +5,10 @@ namespace App\Services\Chat;
 use App\Models\Channel;
 use App\Services\User\UserService;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-
 
 class ChannelService
 {
@@ -51,10 +48,10 @@ class ChannelService
     public function create(array $users, array $data): Channel
     {
         // Getting existing users
-        $users = User::find($users)->pluck('id');
+        $users = User::find($users)->pluck('id')->toArray();
 
         // Checking if less than 2 users
-        if ($users->count() <= 1) {
+        if (count($users) <= 1) {
             abort(400);
         }
 
@@ -70,7 +67,12 @@ class ChannelService
 
         // Creating chat & adding members
         return DB::transaction(function () use ($data, $users) {
-            $channel = $this->model->create($data);
+            $channel = $this->model->create([
+                'title' => $data['title'],
+                'creator_id' => auth()->user()->id,
+                'tag' => $data['tag'] ?? null,
+                'photo_url' => null, // to be implemented
+            ]);
 
             $channel->addMembers($users);
 

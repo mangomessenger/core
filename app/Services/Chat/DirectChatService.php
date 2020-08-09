@@ -44,10 +44,10 @@ class DirectChatService
     public function create(array $users): DirectChat
     {
         // Getting existing users
-        $users = User::find($users)->pluck('id');
+        $users = User::find($users)->pluck('id')->toArray();
 
         // Checking if only 2 users passed
-        if ($users->count() !== 2) {
+        if (count($users) !== 2) {
             abort(400);
         }
 
