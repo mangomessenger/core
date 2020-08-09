@@ -3,19 +3,20 @@
 namespace App\Services\Chat;
 
 use App\Models\Channel;
+use App\Models\Group;
 use App\Services\User\UserService;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-class ChannelService
+class GroupService
 {
     /**
      * Chat instance
      *
-     * @var Channel
+     * @var Group
      */
-    protected Channel $model;
+    protected Group $model;
 
     /**
      * UserService instance
@@ -28,10 +29,10 @@ class ChannelService
     /**
      * MessageService constructor.
      *
-     * @param Channel $chat
+     * @param Group $chat
      * @param UserService $userService
      */
-    public function __construct(Channel $chat, UserService $userService)
+    public function __construct(Group $chat, UserService $userService)
     {
         $this->model = $chat;
         $this->userService = $userService;
@@ -40,9 +41,9 @@ class ChannelService
     /**
      * @param array $users
      * @param array $data
-     * @return Channel
+     * @return Group
      */
-    public function create(array $users, array $data): Channel
+    public function create(array $users, array $data): Group
     {
         // Getting existing users
         $users = User::find($users)->pluck('id')->toArray();
@@ -53,27 +54,26 @@ class ChannelService
         }
 
         // Trying to retrieve already created chat
-        $channel = Channel::whereHas('members', function (Builder $q) use ($users) {
+        $group = Group::whereHas('members', function (Builder $q) use ($users) {
             $q->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
                 ->groupBy('chat_members.chat_id')
                 ->having('count', count($users));
         })->first();
 
         // Return chat if it is already created
-        if (!is_null($channel)) return $channel;
+        if (!is_null($group)) return $group;
 
         // Creating chat & adding members
         return DB::transaction(function () use ($data, $users) {
-            $channel = $this->model->create([
+            $group = $this->model->create([
                 'title' => $data['title'],
                 'creator_id' => auth()->user()->id,
-                'tag' => $data['tag'] ?? null,
                 'photo_url' => null, // to be implemented
             ]);
 
-            $channel->addMembers($users);
+            $group->addMembers($users);
 
-            return $channel;
+            return $group;
         });
     }
 }
