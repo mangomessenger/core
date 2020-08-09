@@ -45,23 +45,10 @@ class GroupService
      */
     public function create(array $users, array $data): Group
     {
+        // Adding creator to members
+        $users[] = auth()->user()->id;
         // Getting existing users
         $users = User::find($users)->pluck('id')->toArray();
-
-        // Checking if less than 2 users
-        if (count($users) <= 1) {
-            abort(400);
-        }
-
-        // Trying to retrieve already created chat
-        $group = Group::whereHas('members', function (Builder $q) use ($users) {
-            $q->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
-                ->groupBy('chat_members.chat_id')
-                ->having('count', count($users));
-        })->first();
-
-        // Return chat if it is already created
-        if (!is_null($group)) return $group;
 
         // Creating chat & adding members
         return DB::transaction(function () use ($data, $users) {

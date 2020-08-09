@@ -40,7 +40,7 @@ class GroupsController extends Controller
      */
     public function store(StoreGroupRequest $request)
     {
-        return $this->groupService->create($request->input('user_ids'), $request->validated());
+        return $this->groupService->create($request->input('user_ids') ?? [], $request->validated());
     }
 
     /**

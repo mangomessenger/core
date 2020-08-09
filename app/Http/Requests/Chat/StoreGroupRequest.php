@@ -24,7 +24,7 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => 'required|array',
+            'user_ids' => 'array',
             'title' => 'required',
             'photo' => 'image',
         ];
