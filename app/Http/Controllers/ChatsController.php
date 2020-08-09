@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\ChatType;
 use App\Http\Requests\Chat\ChatRequest;
 use App\Http\Resources\ChatCollection;
+use App\Models\DirectChat;
 use App\Services\Chat\ChannelService;
 use App\Services\Chat\ChatService;
 use App\Services\Chat\DirectChatService;
@@ -59,7 +61,7 @@ class ChatsController extends Controller
      *
      * @param ChatRequest $request
      * @param ChatType $chatType
-     * @return void
+     * @return Channel|DirectChat
      */
     public function create(ChatRequest $request, ChatType $chatType)
     {

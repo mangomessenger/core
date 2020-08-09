@@ -41,7 +41,7 @@ class DirectChatService
      * @param array $users
      * @return DirectChat
      */
-    public function create(array $users): ?DirectChat
+    public function create(array $users): DirectChat
     {
         // Getting existing users
         $users = User::find($users)->pluck('id');
