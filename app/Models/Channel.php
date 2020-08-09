@@ -1,21 +1,30 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Facades\Snowflake;
 use Illuminate\Database\Eloquent\Model;
 
-class DirectChat extends Model
+class Channel extends Model
 {
 
     public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'creator_id', 'tag', 'photo_url', 'verified', 'members_count',
+    ];
 
     /**
      * Get the chat's members
      */
     public function members()
     {
-        return $this->hasMany('App\ChatMember', 'chat_id', 'id');
+        return $this->hasMany('App\Models\ChatMember', 'chat_id', 'id');
     }
 
     /**
@@ -23,7 +32,7 @@ class DirectChat extends Model
      */
     public function messages()
     {
-        return $this->hasMany('App\Message', 'chat_id', 'id');
+        return $this->hasMany('App\Models\Message', 'chat_id', 'id');
     }
 
     /**
@@ -31,7 +40,7 @@ class DirectChat extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'user_chat', 'chat_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_chat', 'chat_id', 'user_id');
     }
 
     /**
@@ -43,18 +52,6 @@ class DirectChat extends Model
 
         static::creating(function (Model $model) {
             $model->setAttribute($model->getKeyName(), Snowflake::id());
-        });
-    }
-
-    public function addMembers($members)
-    {
-        $userIds = is_array($members) ? $members : (array) func_get_args();
-
-        collect($userIds)->each(function ($userId) {
-            $this->members()->firstOrCreate([
-                'user_id' => $userId,
-                'chat_id' => $this->id,
-            ]);
         });
     }
 }

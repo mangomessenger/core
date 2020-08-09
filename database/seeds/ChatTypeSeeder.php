@@ -11,15 +11,15 @@ class ChatTypeSeeder extends Seeder
      */
     public function run()
     {
-        \App\ChatType::create([
+        \App\Models\ChatType::create([
             'name' => 'direct'
         ]);
 
-        \App\ChatType::create([
+        \App\Models\ChatType::create([
             'name' => 'channel'
         ]);
 
-        \App\ChatType::create([
+        \App\Models\ChatType::create([
             'name' => 'group'
         ]);
     }

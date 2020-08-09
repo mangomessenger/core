@@ -3,7 +3,7 @@
 namespace App\Services\User;
 
 use App\Services\ModelService;
-use App\User;
+use App\Models\User;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
 class UserService extends ModelService

@@ -4,8 +4,8 @@ namespace Tests\Feature\Requests\Message;
 
 use App\Chat;
 use App\Http\Requests\Message\GetMessagesRequest;
-use App\Message;
-use App\User;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Str;
 use Tests\TestCase;

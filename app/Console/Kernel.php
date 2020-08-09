@@ -2,11 +2,11 @@
 
 namespace App\Console;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use App\Chat;
-use App\Message;
+use App\Models\Message;
 use App\Services\Auth\AuthService;
-use App\Session;
+use App\Models\Session;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Events\Dispatcher;

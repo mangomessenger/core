@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use App\Services\Auth\SessionService;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;

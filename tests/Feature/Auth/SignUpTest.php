@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\AuthRequest;
-use App\User;
+use App\Models\AuthRequest;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;

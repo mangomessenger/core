@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Facades\Snowflake;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    
+
     public $incrementing = false;
 
     /**
@@ -24,7 +24,7 @@ class Group extends Model
      */
     public function members()
     {
-        return $this->hasMany('App\ChatMember', 'chat_id', 'id');
+        return $this->hasMany('App\Models\ChatMember', 'chat_id', 'id');
     }
 
     /**
@@ -32,7 +32,7 @@ class Group extends Model
      */
     public function messages()
     {
-        return $this->hasMany('App\Message', 'chat_id', 'id');
+        return $this->hasMany('App\Models\Message', 'chat_id', 'id');
     }
 
     /**
@@ -40,7 +40,7 @@ class Group extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'user_chat', 'chat_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_chat', 'chat_id', 'user_id');
     }
 
     /**

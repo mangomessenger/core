@@ -2,7 +2,7 @@
 
 namespace App\Rules\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use Illuminate\Contracts\Validation\Rule;
 
 class PhoneCodeHashValid implements Rule

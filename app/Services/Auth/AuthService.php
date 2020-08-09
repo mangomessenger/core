@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use App\Exceptions\Auth\AuthRequestExpiredException;
 use App\Exceptions\Auth\PhoneCodeHashInvalidException;
 use App\Exceptions\Auth\PhoneCodeInvalidException;

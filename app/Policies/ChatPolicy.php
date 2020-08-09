@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Chat;
 use App\Services\Chat\ChatService;
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ChatPolicy

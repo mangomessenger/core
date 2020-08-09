@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Services\ModelService;
-use App\Session;
+use App\Models\Session;
 use App\Utils\RefreshTokenGenerator;
 use Illuminate\Http\Request;
 

@@ -4,7 +4,7 @@ namespace App\Services\Message;
 
 use App\Exceptions\Message\ChatTypeInvalidException;
 use App\Exceptions\Message\DestinationInvalidException;
-use App\Message;
+use App\Models\Message;
 use App\Services\Auth\UserService;
 use App\Services\Chat\ChatService;
 use App\Services\ModelService;

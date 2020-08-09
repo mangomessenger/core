@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use App\Services\Auth\SessionService;
-use App\Session;
-use App\User;
+use App\Models\Session;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

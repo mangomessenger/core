@@ -3,7 +3,7 @@
 namespace App\Rules\Auth;
 
 use App\Exceptions\Auth\PhoneNumberOccupiedException;
-use App\User;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
 class UnoccupiedPhone implements Rule

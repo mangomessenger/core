@@ -3,8 +3,8 @@
 namespace Tests\Feature\Message;
 
 use App\Chat;
-use App\Message;
-use App\User;
+use App\Models\Message;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

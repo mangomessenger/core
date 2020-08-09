@@ -2,7 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use App\Services\ModelService;
 use Propaganistas\LaravelPhone\PhoneNumber;
 

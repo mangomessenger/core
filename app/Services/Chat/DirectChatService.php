@@ -2,9 +2,9 @@
 
 namespace App\Services\Chat;
 
-use App\DirectChat;
+use App\Models\DirectChat;
 use App\Services\User\UserService;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 

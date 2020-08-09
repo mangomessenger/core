@@ -2,7 +2,7 @@
 
 namespace App\Rules\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 

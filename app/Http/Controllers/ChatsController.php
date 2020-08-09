@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ChatType;
+use App\Models\ChatType;
 use App\Http\Requests\Chat\ChatRequest;
 use App\Http\Resources\ChatCollection;
 use App\Services\Chat\ChatService;

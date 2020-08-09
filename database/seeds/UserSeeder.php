@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::create([
+        \App\Models\User::create([
             'name' => 'Donald',
             'username' => NULL,
             'phone_number' => '+380123123123',

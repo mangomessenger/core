@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
-$factory->define(\App\AuthRequest::class, function (Faker $faker) {
+$factory->define(\App\Models\AuthRequest::class, function (Faker $faker) {
     $randomNumber = \Tests\TestCase::randomNumber(7);
     return [
         'phone_number' => PhoneNumber::make("093{$randomNumber}", 'UA')->formatE164(),

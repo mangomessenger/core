@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\AuthRequest;
+use App\Models\AuthRequest;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
