@@ -37,6 +37,7 @@ class StoreDirectChatRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
+            '*.array' => 'The :attribute field must be an array.'
         ];
     }
 }

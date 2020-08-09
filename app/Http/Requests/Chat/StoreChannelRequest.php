@@ -24,7 +24,10 @@ class StoreChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => 'required|array'
+            'user_ids' => 'required|array',
+            'title' => 'required',
+            'tag' => '',
+            'photo' => 'image',
         ];
     }
 
@@ -37,6 +40,8 @@ class StoreChannelRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
+            '*.image' => 'The :attribute field  must be an image.',
+            '*.array' => 'The :attribute field must be an array.'
         ];
     }
 }
