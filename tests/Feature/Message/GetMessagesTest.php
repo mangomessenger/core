@@ -19,6 +19,8 @@ class GetMessagesTest extends TestCase
 
     public function setUp(): void
     {
+        $this->markTestSkipped('Skipped test');
+
         parent::setUp();
         Artisan::call('migrate:fresh');
     }
