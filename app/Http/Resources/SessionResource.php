@@ -18,15 +18,17 @@ class SessionResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
         return [
             'user' => new UserResource($this->user),
-            'access_token' => $this->accessToken,
-            'refresh_token' => $this->refresh_token,
+            'tokens' => [
+                'access_token' => $this->accessToken,
+                'refresh_token' => $this->refresh_token,
+            ]
         ];
     }
 }
