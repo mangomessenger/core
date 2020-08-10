@@ -20,12 +20,9 @@ use App\Http\Resources\TokensResource;
 use App\Services\Auth\AuthService;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
-    private const CODE_SEND_TIMEOUT = 120;
-
     /**
      * Service for auth
      *
@@ -53,7 +50,7 @@ class AuthController extends Controller
      */
     public function sendCode(SendCodeRequest $request)
     {
-        $authRequest = $this->authService->sendCode($request->validated(), self::CODE_SEND_TIMEOUT);
+        $authRequest = $this->authService->sendCode($request->validated());
 
         return new AuthRequestResource($authRequest);
     }

@@ -77,13 +77,11 @@ class AuthService
      * Sends the verification code for further login/register.
      *
      * @param array $data
-     * @param int $timeout
-     *
      * @return AuthRequest
      *
      * @throws Exception
      */
-    public function sendCode(array $data, int $timeout): AuthRequest
+    public function sendCode(array $data): AuthRequest
     {
         // We obtain auth request in order to delete
         // it in case it is already exists in database

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\BaseChat;
-
 class Channel extends BaseChat
 {
     /**

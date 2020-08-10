@@ -11,8 +11,11 @@ class ChatPolicy
 {
     use HandlesAuthorization;
 
-    use HandlesAuthorization;
-
+    /**
+     * Chat service instance.
+     *
+     * @var ChatService
+     */
     private ChatService $chatService;
 
     /**

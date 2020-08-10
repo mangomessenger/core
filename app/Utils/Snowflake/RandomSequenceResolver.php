@@ -2,10 +2,12 @@
 
 namespace App\Utils\Snowflake;
 
-class RandomSequenceResolver implements \App\Contracts\SequenceResolver
+use App\Contracts\SequenceResolver;
+
+class RandomSequenceResolver implements SequenceResolver
 {
     /**
-     * The las ttimestamp.
+     * The last timestamp.
      *
      * @var null
      */

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreDirectChatRequest;
 use App\Http\Resources\DirectChatResource;
-use App\Models\DirectChat;
 
 class DirectChatsController extends Controller
 {

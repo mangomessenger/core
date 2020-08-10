@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Chat;
 use App\Http\Resources\ChannelCollection;
 use App\Http\Resources\DirectChatCollection;
 use App\Http\Resources\GroupCollection;

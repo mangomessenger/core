@@ -3,7 +3,6 @@
 namespace App\Services\Message;
 
 use App\Models\BaseChat;
-use App\Models\ChatType;
 use App\Models\Message;
 use App\Services\User\UserService;
 use App\Services\ModelService;

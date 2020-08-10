@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Message;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class SendMessageRequest extends FormRequest
 {

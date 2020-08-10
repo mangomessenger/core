@@ -52,6 +52,7 @@ class Chat
      * @param DirectChatService $directChatService
      * @param GroupService $groupService
      * @param MessageService $messageService
+     * @param ChatService $chatService
      */
     public function __construct(
         ChannelService $channelService,

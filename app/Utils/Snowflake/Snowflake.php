@@ -3,6 +3,7 @@
 namespace App\Utils\Snowflake;
 
 use App\Contracts\SequenceResolver;
+use Exception;
 
 class Snowflake
 {
@@ -127,12 +128,14 @@ class Snowflake
      * Set start time (millisecond).
      *
      * @param int $startTime
+     * @return Snowflake
+     * @throws Exception
      */
     public function setStartTimeStamp(int $startTime)
     {
         $missTime = $this->getCurrentMicrotime() - $startTime;
         if ($missTime < 0 || $missTime > ($maxTimeDiff = ((1 << self::MAX_TIMESTAMP_LENGTH) - 1))) {
-            throw new \Exception('The starttime cannot be greater than current time and the maximum time difference is '.$maxTimeDiff);
+            throw new Exception('The start time cannot be greater than current time and the maximum time difference is '.$maxTimeDiff);
         }
 
         $this->startTime = $startTime;
@@ -161,6 +164,7 @@ class Snowflake
      * Set Sequence Resolver.
      *
      * @param SequenceResolver|callable $sequence
+     * @return Snowflake
      */
     public function setSequenceResolver($sequence)
     {
