@@ -25,6 +25,7 @@ class StoreGroupRequest extends FormRequest
     {
         return [
             'user_ids' => 'array',
+            'user_ids.*' => 'integer',
             'title' => 'required',
             'photo' => 'image',
         ];
@@ -40,7 +41,8 @@ class StoreGroupRequest extends FormRequest
         return [
             '*.required' => 'The :attribute field is required.',
             '*.image' => 'The :attribute field  must be an image.',
-            '*.array' => 'The :attribute field must be an array.'
+            '*.array' => 'The :attribute field must be an array.',
+            '*.integer' => 'The :attribute field must be an integer.'
         ];
     }
 }
