@@ -22,13 +22,4 @@ class Group extends BaseChat
     {
         return $this->hasOne('App\Models\User', 'id', 'creator_id');
     }
-
-    /**
-     * @param $value
-     * @return bool
-     */
-    public function getVerifiedAttribute($value)
-    {
-        return $value === "";
-    }
 }

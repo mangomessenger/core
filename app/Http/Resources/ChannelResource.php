@@ -23,7 +23,7 @@ class ChannelResource extends JsonResource
             'members' => new UserCollection($this->members),
             'tag' => $this->tag,
             'photo_url' => $this->photo_url,
-            'verified' => $this->verified,
+            'verified' => (bool)$this->verified,
             'members_count' => (int)$this->members_count,
             'updated_at' => $this->updated_at->timestamp
         ];
