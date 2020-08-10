@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Abstracts\AbstractChat;
+use App\Models\BaseChat;
 
-class DirectChat extends AbstractChat
+class DirectChat extends BaseChat
 {
     /**
      * Remove members from chat. (Unable in direct chat)

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Abstracts;
+namespace App\Models;
 
 use App\Facades\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-abstract class AbstractChat extends Model
+abstract class BaseChat extends Model
 {
     public $incrementing = false;
 

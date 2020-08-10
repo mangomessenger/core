@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Abstracts\AbstractChat;
+use App\Models\BaseChat;
 
-class Group extends AbstractChat
+class Group extends BaseChat
 {
     /**
      * The attributes that are mass assignable.
