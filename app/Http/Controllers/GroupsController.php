@@ -2,36 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Chat\StoreChannelRequest;
+use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreGroupRequest;
-use App\Models\Channel;
-use App\Models\DirectChat;
 use App\Models\Group;
-use App\Services\Chat\ChannelService;
-use App\Services\Chat\GroupService;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller
 {
-    /**
-     * Instance of channel chat service.
-     *
-     * @var GroupService $groupService
-     */
-    private GroupService $groupService;
-
-    /**
-     * MessagesController constructor.
-     *
-     * @param GroupService $groupService
-     */
-    public function __construct(
-        GroupService $groupService
-    )
-    {
-        $this->groupService = $groupService;
-    }
-
     /**
      * Creating chat instance
      *
@@ -40,7 +17,7 @@ class GroupsController extends Controller
      */
     public function store(StoreGroupRequest $request)
     {
-        return $this->groupService->create($request->input('user_ids') ?? [], $request->validated());
+        return Chat::groups()->create($request->input('user_ids') ?? [], $request->validated());
     }
 
     /**

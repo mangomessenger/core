@@ -5,7 +5,6 @@ namespace App\Services\Chat;
 use App\Models\Channel;
 use App\Services\User\UserService;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ChannelService
@@ -23,7 +22,6 @@ class ChannelService
      * @var UserService
      */
     protected UserService $userService;
-
 
     /**
      * MessageService constructor.

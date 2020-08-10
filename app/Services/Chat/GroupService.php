@@ -2,11 +2,9 @@
 
 namespace App\Services\Chat;
 
-use App\Models\Channel;
 use App\Models\Group;
 use App\Services\User\UserService;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class GroupService
@@ -24,7 +22,6 @@ class GroupService
      * @var UserService
      */
     protected UserService $userService;
-
 
     /**
      * MessageService constructor.

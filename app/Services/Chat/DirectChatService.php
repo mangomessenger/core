@@ -5,7 +5,6 @@ namespace App\Services\Chat;
 use App\Models\DirectChat;
 use App\Services\User\UserService;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class DirectChatService
@@ -23,7 +22,6 @@ class DirectChatService
      * @var UserService
      */
     protected UserService $userService;
-
 
     /**
      * MessageService constructor.

@@ -5,8 +5,7 @@ namespace App\Services\Message;
 use App\Exceptions\Message\ChatTypeInvalidException;
 use App\Exceptions\Message\DestinationInvalidException;
 use App\Models\Message;
-use App\Services\Auth\UserService;
-use App\Services\Chat\ChatService;
+use App\Services\User\UserService;
 use App\Services\ModelService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -28,26 +27,16 @@ class MessageService extends ModelService
     private UserService $userService;
 
     /**
-     * ChatService instance
-     *
-     * @var ChatService
-     */
-    private ChatService $chatService;
-
-    /**
      * MessageService constructor.
      *
      * @param Message $message
      * @param UserService $userService
-     * @param ChatService $chatService
      */
     public function __construct(Message $message,
-                                UserService $userService,
-                                ChatService $chatService)
+                                UserService $userService)
     {
         $this->model = $message;
         $this->userService = $userService;
-        $this->chatService = $chatService;
     }
 
 
