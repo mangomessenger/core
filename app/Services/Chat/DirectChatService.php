@@ -3,11 +3,13 @@
 namespace App\Services\Chat;
 
 use App\Models\DirectChat;
+use App\Services\ChatService;
 use App\Services\User\UserService;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class DirectChatService
+class DirectChatService extends ChatService
+
 {
     /**
      * Chat instance

@@ -3,11 +3,12 @@
 namespace App\Services\Chat;
 
 use App\Models\Channel;
+use App\Services\ChatService;
 use App\Services\User\UserService;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class ChannelService
+class ChannelService extends ChatService
 {
     /**
      * Chat instance
