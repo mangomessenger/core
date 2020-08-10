@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Facades\Snowflake;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Chat extends Model
 {
@@ -45,6 +47,11 @@ class Chat extends Model
         });
     }
 
+    /**
+     * Adding new members to chat
+     *
+     * @param $members
+     */
     public function addMembers($members)
     {
         $userIds = is_array($members) ? $members : (array) func_get_args();
@@ -54,6 +61,36 @@ class Chat extends Model
                 'user_id' => $userId,
                 'chat_id' => $this->id,
             ]);
+        });
+    }
+
+    /**
+     * Remove members from chat.
+     *
+     * @param $members
+     * @return void
+     */
+    public function removeMembers($members)
+    {
+        $userIds = is_array($members) ? $members : (array) func_get_args();
+
+        $this->members()->where('chat_id', $this->id)->whereIn('user_id', $userIds)->delete();
+    }
+
+    /**
+     * Returns threads between given user ids.
+     *
+     * @param Builder $query
+     * @param array $users
+     * @return Builder
+     */
+    public function scopeBetween(Builder $query, array $users)
+    {
+        // Trying to retrieve already created chat
+        return $query->whereHas('members', function (Builder $q) use ($users) {
+            $q->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
+                ->groupBy('chat_members.chat_id')
+                ->having('count', count($users));
         });
     }
 }
