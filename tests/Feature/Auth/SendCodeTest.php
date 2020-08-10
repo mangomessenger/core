@@ -33,7 +33,6 @@ class SendCodeTest extends TestCase
                 'phone_number' => PhoneNumber::make($payload['phone_number'], $payload['country_code'])->formatE164(),
                 'country_code' => $payload['country_code'],
                 'is_new' => true,
-                'timeout' => 120,
             ])->assertJsonStructure([
                 'phone_code_hash',
             ]);
@@ -53,7 +52,6 @@ class SendCodeTest extends TestCase
                 'phone_number' => $authRequest->phone_number,
                 'country_code' => $authRequest->country_code,
                 'is_new' => true,
-                'timeout' => 120,
             ])->assertJsonStructure([
                 'phone_code_hash',
             ]);

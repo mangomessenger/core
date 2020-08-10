@@ -108,7 +108,6 @@ class AuthService implements ApiService
             'country_code' => $data['country_code'],
             'phone_code_hash' => Hash::make($code),// $code
             'fingerprint' => $data['fingerprint'],
-            'timeout' => $timeout,
             'is_new' => !$this->userService->existsByPhone(
                 $data['phone_number'],
                 $data['country_code']

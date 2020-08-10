@@ -41,7 +41,6 @@ class SignInTest extends TestCase
             ->assertStatus(201)
             ->assertJson([
                 'user' => [
-                    'id' => 1,
                     'name' => $user->name,
                 ]
             ])->assertJsonStructure([
@@ -75,7 +74,6 @@ class SignInTest extends TestCase
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
-            'timeout' => 120,
             'is_new' => true,
         ]);
 
@@ -104,7 +102,6 @@ class SignInTest extends TestCase
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
-            'timeout' => 120,
             'is_new' => true,
         ]);
 
@@ -133,7 +130,6 @@ class SignInTest extends TestCase
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
-            'timeout' => 120,
             'is_new' => true,
         ]);
 
@@ -162,7 +158,6 @@ class SignInTest extends TestCase
             'country_code' => $user->country_code,
             'phone_code_hash' => Hash::make(22222),
             'fingerprint' => Str::random(25),
-            'timeout' => 120,
             'is_new' => true,
         ]);
 

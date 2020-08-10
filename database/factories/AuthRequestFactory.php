@@ -15,7 +15,6 @@ $factory->define(\App\Models\AuthRequest::class, function (Faker $faker) {
         'country_code' => 'UA',
         'phone_code_hash' => Hash::make(22222),
         'fingerprint' => Str::random(25),
-        'timeout' => 120,
         'is_new' => true,
     ];
 });
