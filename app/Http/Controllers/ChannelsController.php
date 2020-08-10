@@ -19,7 +19,7 @@ class ChannelsController extends Controller
     {
         return new ChannelResource(
             Chat::channels()->create(
-                $request->input('user_ids') ?? [],
+                $request->input('usernames') ?? [],
                 $request->validated()
             ));
     }

@@ -24,8 +24,8 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => 'array',
-            'user_ids.*' => 'integer',
+            'usernames' => 'array',
+            'usernames.*' => 'exists:users,username',
             'title' => 'required',
             'photo' => 'image',
         ];
@@ -42,7 +42,7 @@ class StoreGroupRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.image' => 'The :attribute field  must be an image.',
             '*.array' => 'The :attribute field must be an array.',
-            '*.*.integer' => 'The :attribute field must be an integer.'
+            'usernames.*.exists' => 'Username is not valid.'
         ];
     }
 }

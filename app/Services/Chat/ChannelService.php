@@ -44,9 +44,10 @@ class ChannelService extends ChatService
     public function create(array $users, array $data): Channel
     {
         // Adding creator to members
-        $users[] = auth()->user()->id;
+        $users[] = auth()->user()->username;
+
         // Getting existing users
-        $users = User::find($users)->pluck('id')->toArray();
+        $users = User::whereIn('username', $users)->pluck('id')->toArray();
 
         // Creating chat & adding members
         return DB::transaction(function () use ($data, $users) {
