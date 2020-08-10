@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-abstract class ModelService implements ApiService
+abstract class ModelService
 {
     /**
      * @return mixed

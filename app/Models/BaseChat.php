@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Contracts\Chat;
 use App\Facades\SnowflakeFacade;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-abstract class BaseChat extends Model
+abstract class BaseChat extends Model implements Chat
 {
     public $incrementing = false;
 

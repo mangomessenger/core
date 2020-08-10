@@ -17,6 +17,7 @@ class ChatsController extends Controller
     public function index()
     {
         $user = auth()->user();
+
         return [
             'direct' => new DirectChatCollection(
                 $user->directChats

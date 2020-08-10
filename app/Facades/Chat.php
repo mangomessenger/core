@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class ChatFacade extends Facade
+class Chat extends Facade
 {
     /**
      * Get the registered name of the component.

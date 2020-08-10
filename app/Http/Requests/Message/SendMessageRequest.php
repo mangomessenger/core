@@ -25,10 +25,7 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required|max:300',
-            'peer' => 'required|array',
-            'peer.destination_id' => 'required|integer',
-            'peer.chat_type' => 'required'
+            'message' => 'required|min:1|max:300',
         ];
     }
 
@@ -42,10 +39,7 @@ class SendMessageRequest extends FormRequest
         return [
             '*.required' => 'The :attribute field is required.',
             '*.max' => ':Attribute maximum length is :max.',
-            '*.array' => ':Attribute should be a type of array.',
-            'peer.destination_id.required' => 'Destination id is required.',
-            'peer.destination_id.integer' => 'Destination id should be a type of int.',
-            'peer.chat_type.required' => 'ChatFacade type is required.',
+            '*.min' => ':Attribute minimum length is :min.',
         ];
     }
 }

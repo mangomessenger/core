@@ -2,16 +2,44 @@
 
 namespace App\Services\Message;
 
-use App\Exceptions\Message\ChatTypeInvalidException;
-use App\Exceptions\Message\DestinationInvalidException;
+use App\Models\BaseChat;
+use App\Models\ChatType;
 use App\Models\Message;
 use App\Services\User\UserService;
 use App\Services\ModelService;
-use Illuminate\Database\Eloquent\Collection;
+use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class MessageService extends ModelService
 {
+    /**
+     * Message type
+     *
+     * @var string $type
+     */
+    protected string $type = 'text';
+
+    /**
+     * String message
+     *
+     * @var string $message
+     */
+    protected string $message;
+
+    /**
+     * Message sender
+     *
+     * @var Authenticatable $sender
+     */
+    protected ?Authenticatable $sender;
+
+    /**
+     * @var BaseChat $chat
+     */
+    protected ?BaseChat $chat;
+
     /**
      * Message instance
      *
@@ -39,79 +67,67 @@ class MessageService extends ModelService
         $this->userService = $userService;
     }
 
-
-    /**
-     * Sends message to destination.
-     *
-     * @param array $data
-     * @return Message
-     *
-     * @throws ChatTypeInvalidException
-     * @throws DestinationInvalidException
-     */
-    public function sendMessage(array $data): Message
+    public function setMessage(string $message)
     {
-        // Getting peer array
-        $peer = $data['peer'];
+        $this->message = $message;
 
-        switch ($peer['chat_type']) {
-            case 'TYPE_USER':
-                if (!$this->userService
-                    ->exists($peer['destination_id'])) {
-                    throw new DestinationInvalidException();
-                }
-
-                // Find chat that connects both users
-                $chat = $this->chatService->firstByUsers($peer['destination_id'], auth()->user()->id);
-
-                // Getting message out of transaction
-                $message = DB::transaction(function () use ($data, $peer, $chat) {
-                    // If chat does not exist - create it
-                    if (is_null($chat)) {
-                        $chat = $this->chatService->create([
-                            'user1_id' => $peer['destination_id'],
-                            'user2_id' => auth()->user()->id,
-                            'type' => $peer['destination_id'] == auth()->user()->id ? 'TYPE_SELF' : 'TYPE_USER',
-                        ]);
-                    }
-
-                    // Update update_at column
-                    $chat->touch();
-
-                    // Creating message instance
-                    return $this->create([
-                        'chat_id' => $chat->id,
-                        'user_id' => auth()->user()->id,
-                        'message' => $data['message'],
-                    ]);
-                }, 5);
-
-
-                break;
-            default:
-                throw new ChatTypeInvalidException();
-        }
-
-        return $message;
+        return $this;
     }
 
     /**
-     * @param int $chat_id
-     * @param int|null $messageId
-     * @return mixed
+     * Sets the participant that's sending the message.
+     *
+     * @param Authenticatable $sender
+     *
+     * @return $this
      */
-    public function getMessages(int $chat_id, int $messageId = null): Collection
+    public function from(?Authenticatable $sender): self
     {
-        if (is_null($messageId)){
-            return $this->model
-                ->where('chat_id', $chat_id)
-                ->get();
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     * Sets the participant to receive the message.
+     *
+     * @param BaseChat $chat
+     *
+     * @return $this
+     */
+    public function to(?BaseChat $chat): self
+    {
+        $this->chat = $chat;
+
+        return $this;
+    }
+
+    /**
+     * Sends the message.
+     *
+     * @return Model
+     * @throws Exception
+     */
+    public function send(): Model
+    {
+        if (is_null($this->sender) ||
+            strlen($this->message) == 0 ||
+            is_null($this->chat)) {
+            throw new Exception();
         }
-        else {
-            return $this->model
-                ->where('chat_id', $chat_id)
-                ->where('id', '>', $messageId)
-                ->get();
+
+        if (!$this->chat->members->contains($this->sender)) {
+            throw new Exception('User is not a member of chat.');
         }
+
+        return DB::transaction(function ()  {
+            $this->chat->touch();
+
+            return $this->chat->messages()->create([
+                'from_id' => $this->sender->id,
+                'chat_id' => $this->chat->id,
+                'message' => $this->message
+            ]);
+        });
     }
 }

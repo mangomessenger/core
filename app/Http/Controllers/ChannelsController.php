@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\ChatFacade;
+use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreChannelRequest;
 use App\Http\Resources\ChannelResource;
-use App\Models\Channel;
 
 class ChannelsController extends Controller
 {
@@ -18,7 +17,7 @@ class ChannelsController extends Controller
     public function store(StoreChannelRequest $request)
     {
         return new ChannelResource(
-            ChatFacade::channels()->create(
+            Chat::channels()->create(
                 $request->input('usernames') ?? [],
                 $request->validated()
             ));

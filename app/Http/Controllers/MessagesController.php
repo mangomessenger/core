@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\Message\ChatTypeInvalidException;
-use App\Exceptions\Message\DestinationInvalidException;
-use App\Http\Requests\Message\GetMessagesRequest;
+use App\Facades\Chat;
 use App\Http\Requests\Message\SendMessageRequest;
-use App\Http\Resources\MessageCollection;
-use App\Http\Resources\MessageResource;
+use App\Models\ChatType;
 use App\Services\Message\MessageService;
 
 class MessagesController extends Controller
@@ -32,32 +29,15 @@ class MessagesController extends Controller
     /**
      * Sending a message in chat
      *
-     * @param SendMessageRequest $sendMessageRequest
-     * @return MessageResource
-     *
-     * @throws ChatTypeInvalidException
-     * @throws DestinationInvalidException
+     * @param SendMessageRequest $request
+     * @param ChatType $chatType
+     * @param int $chatId
+     * @return void
      */
-    public function sendMessage(SendMessageRequest $sendMessageRequest)
+    public function sendMessage(SendMessageRequest $request, ChatType $chatType, int $chatId)
     {
-        $message = $this->messageService->sendMessage($sendMessageRequest->validated());
+        $chat = Chat::chats()->findChat($chatType, $chatId);
 
-        return new MessageResource($message);
+        return Chat::message($request->input('message'))->from(auth()->user())->to($chat)->send();
     }
-
-    /**
-     * Getting all messages by chat
-     *
-     * @param GetMessagesRequest $request
-     * @return MessageCollection
-     */
-    public function getMessages(GetMessagesRequest $request)
-    {
-        $validRequest = $request->validated();
-
-        $messages = $this->messageService->getMessages($validRequest['chat_id'], $validRequest['message_id'] ?? null);
-
-        return new MessageCollection($messages);
-    }
-
 }

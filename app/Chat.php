@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Services\Chat\ChannelService;
+use App\Services\Chat\ChatService;
 use App\Services\Chat\DirectChatService;
 use App\Services\Chat\GroupService;
 use App\Services\Message\MessageService;
@@ -38,7 +39,14 @@ class Chat
     protected MessageService $messageService;
 
     /**
-     * ChatFacade constructor.
+     * ChatService instance
+     *
+     * @var ChatService
+     */
+    protected ChatService $chatService;
+
+    /**
+     * Chat constructor.
      *
      * @param ChannelService $channelService
      * @param DirectChatService $directChatService
@@ -49,13 +57,15 @@ class Chat
         ChannelService $channelService,
         DirectChatService $directChatService,
         GroupService $groupService,
-        MessageService $messageService
+        MessageService $messageService,
+        ChatService $chatService
     )
     {
         $this->channelService = $channelService;
         $this->directChatService = $directChatService;
         $this->groupService = $groupService;
         $this->messageService = $messageService;
+        $this->chatService = $chatService;
     }
 
     /**
@@ -96,5 +106,27 @@ class Chat
     public function messages(): MessageService
     {
         return $this->messageService;
+    }
+
+    /**
+     * Gets ChatService.
+     *
+     * @return ChatService
+     */
+    public function chats(): ChatService
+    {
+        return $this->chatService;
+    }
+
+    /**
+     * Sets message.
+     *
+     * @param string $message
+     *
+     * @return MessageService
+     */
+    public function message($message)
+    {
+        return $this->messageService->setMessage($message);
     }
 }
