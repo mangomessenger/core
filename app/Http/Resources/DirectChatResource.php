@@ -16,7 +16,7 @@ class DirectChatResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id' => (int)$this->id,
             'members' => new UserCollection(User::find($this->members->pluck('user_id'))),
             'updated_at' => $this->updated_at->timestamp
         ];

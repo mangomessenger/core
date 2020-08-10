@@ -19,7 +19,6 @@ class AuthRequestResource extends JsonResource
             'country_code' => $this->country_code,
             'phone_code_hash' => $this->phone_code_hash,
             'is_new' => $this->is_new,
-            'timeout' => $this->timeout,
         ];
     }
 }
