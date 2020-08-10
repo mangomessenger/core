@@ -20,7 +20,7 @@ class CreateMessagesTable extends Migration
                 ->constrained('users')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('reply_to_msg_id')->nullable();
+            $table->unsignedBigInteger('reply_to_msg_id')->nullable();
             $table->string('message');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
