@@ -32,7 +32,7 @@ class SignInTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/sign-in', [
+        $this->json('POST', 'auth/login', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -53,7 +53,7 @@ class SignInTest extends TestCase
 
     public function test_signin_requires_payload()
     {
-        $this->json('POST', 'auth/sign-in')
+        $this->json('POST', 'auth/login')
             ->assertStatus(422)
             ->assertJson([
                 'type' => 'INVALID_PAYLOAD',
@@ -77,7 +77,7 @@ class SignInTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/sign-in', [
+        $this->json('POST', 'auth/login', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -105,7 +105,7 @@ class SignInTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/sign-in', [
+        $this->json('POST', 'auth/login', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -133,7 +133,7 @@ class SignInTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/sign-in', [
+        $this->json('POST', 'auth/login', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash . Str::random(5),
@@ -161,7 +161,7 @@ class SignInTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/sign-in', [
+        $this->json('POST', 'auth/login', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,

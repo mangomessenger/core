@@ -23,8 +23,8 @@ Route::prefix('auth')->group(function () {
     Route::middleware('throttle:20,2')->group(function () {
         Route::post('send-code', 'AuthController@sendCode');
     });
-    Route::post('sign-up', 'AuthController@signUp');
-    Route::post('sign-in', 'AuthController@signIn');
+    Route::post('register', 'AuthController@signUp');
+    Route::post('login', 'AuthController@signIn');
     Route::post('refresh-tokens', 'AuthController@refreshTokens');
     Route::post('logout', 'AuthController@logout');
 });

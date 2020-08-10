@@ -117,7 +117,7 @@ class RefreshTokensTest extends TestCase
 
     public function test_signin_requires_payload()
     {
-        $this->json('POST', 'auth/sign-in')
+        $this->json('POST', 'auth/login')
             ->assertStatus(422)
             ->assertJson([
                 'type' => 'INVALID_PAYLOAD',
