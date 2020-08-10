@@ -15,6 +15,6 @@ class RefreshTokenGenerator
      */
     public static function generate(): string
     {
-        return Str::uuid();
+        return base64_encode(Str::uuid());
     }
 }
