@@ -42,7 +42,7 @@ class StoreGroupRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.image' => 'The :attribute field  must be an image.',
             '*.array' => 'The :attribute field must be an array.',
-            '*.integer' => 'The :attribute field must be an integer.'
+            '*.*.integer' => 'The :attribute field must be an integer.'
         ];
     }
 }
