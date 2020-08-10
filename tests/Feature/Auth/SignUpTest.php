@@ -26,7 +26,7 @@ class SignUpTest extends TestCase
     {
         $authRequest = factory(AuthRequest::class)->create();
 
-        $this->json('POST', 'auth/signUp', [
+        $this->json('POST', 'auth/sign-up', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -41,14 +41,16 @@ class SignUpTest extends TestCase
                     'name' => 'Donald'
                 ]
             ])->assertJsonStructure([
-                'access_token',
-                'refresh_token',
+                'tokens' =>[
+                    'access_token',
+                    'refresh_token'
+                ],
             ]);
     }
 
     public function test_signup_requires_payload()
     {
-        $this->json('POST', 'auth/signUp')
+        $this->json('POST', 'auth/sign-up')
             ->assertStatus(422)
             ->assertJson([
                 'type' => 'INVALID_PAYLOAD',
@@ -64,7 +66,7 @@ class SignUpTest extends TestCase
     {
         $authRequest = factory(AuthRequest::class)->make();
 
-        $this->json('POST', 'auth/signUp', [
+        $this->json('POST', 'auth/sign-up', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -95,7 +97,7 @@ class SignUpTest extends TestCase
             'is_new' => true,
         ]);
 
-        $this->json('POST', 'auth/signUp', [
+        $this->json('POST', 'auth/sign-up', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,
@@ -117,7 +119,7 @@ class SignUpTest extends TestCase
     {
         $authRequest = factory(AuthRequest::class)->create();
 
-        $this->json('POST', 'auth/signUp', [
+        $this->json('POST', 'auth/sign-up', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash . Str::random(5),
@@ -139,7 +141,7 @@ class SignUpTest extends TestCase
     {
         $authRequest = factory(AuthRequest::class)->create();
 
-        $this->json('POST', 'auth/signUp', [
+        $this->json('POST', 'auth/sign-up', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'phone_code_hash' => $authRequest->phone_code_hash,

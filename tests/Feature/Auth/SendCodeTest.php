@@ -27,7 +27,7 @@ class SendCodeTest extends TestCase
             'fingerprint' => Str::random(25),
         ];
 
-        $this->json('POST', 'auth/sendCode', $payload)
+        $this->json('POST', 'auth/send-code', $payload)
             ->assertStatus(201)
             ->assertJson([
                 'phone_number' => PhoneNumber::make($payload['phone_number'], $payload['country_code'])->formatE164(),
@@ -43,7 +43,7 @@ class SendCodeTest extends TestCase
     {
         $authRequest = factory(AuthRequest::class)->create();
 
-        $this->json('POST', 'auth/sendCode', [
+        $this->json('POST', 'auth/send-code', [
             'phone_number' => $authRequest->phone_number,
             'country_code' => $authRequest->country_code,
             'fingerprint' => Str::random(25),
@@ -63,7 +63,7 @@ class SendCodeTest extends TestCase
 
     public function test_sendcode_requires_payload()
     {
-        $this->json('POST', 'auth/sendCode')
+        $this->json('POST', 'auth/send-code')
             ->assertStatus(422)
             ->assertJson([
                 'type' => 'INVALID_PAYLOAD',
