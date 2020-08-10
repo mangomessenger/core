@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Snowflake extends Facade
+class SnowflakeFacade extends Facade
 {
     /**
      * Get the registered name of the component.
