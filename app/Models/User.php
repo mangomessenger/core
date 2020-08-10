@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
+use App\Facades\Snowflake;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Propaganistas\LaravelPhone\PhoneNumber;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+
+    /**
+     * Primary id incrementing
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -46,5 +54,17 @@ class User extends Authenticatable implements JWTSubject
     public function chats()
     {
         return $this->belongsToMany('App\Chat', 'user_chat', 'user_id', 'chat_id');
+    }
+
+    /**
+     * Boot method
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Model $model) {
+            $model->setAttribute($model->getKeyName(), Snowflake::id());
+        });
     }
 }
