@@ -38,7 +38,7 @@ class Chat
     protected MessageService $messageService;
 
     /**
-     * Chat constructor.
+     * ChatFacade constructor.
      *
      * @param ChannelService $channelService
      * @param DirectChatService $directChatService

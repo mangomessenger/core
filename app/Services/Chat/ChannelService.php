@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ChannelService extends ChatService
 {
     /**
-     * Chat instance
+     * ChatFacade instance
      *
      * @var Channel
      */

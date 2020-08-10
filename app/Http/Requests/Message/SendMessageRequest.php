@@ -45,7 +45,7 @@ class SendMessageRequest extends FormRequest
             '*.array' => ':Attribute should be a type of array.',
             'peer.destination_id.required' => 'Destination id is required.',
             'peer.destination_id.integer' => 'Destination id should be a type of int.',
-            'peer.chat_type.required' => 'Chat type is required.',
+            'peer.chat_type.required' => 'ChatFacade type is required.',
         ];
     }
 }

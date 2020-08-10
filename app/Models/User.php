@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Facades\Snowflake;
+use App\Facades\SnowflakeFacade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -81,7 +81,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Snowflake::id());
+            $model->setAttribute($model->getKeyName(), SnowflakeFacade::id());
         });
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class GroupService extends ChatService
 {
     /**
-     * Chat instance
+     * ChatFacade instance
      *
      * @var Group
      */

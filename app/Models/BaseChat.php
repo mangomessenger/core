@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Facades\Snowflake;
+use App\Facades\SnowflakeFacade;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +43,7 @@ abstract class BaseChat extends Model
         parent::boot();
 
         static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Snowflake::id());
+            $model->setAttribute($model->getKeyName(), SnowflakeFacade::id());
         });
     }
 

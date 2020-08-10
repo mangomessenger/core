@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Chat;
+use App\Facades\ChatFacade;
 use App\Http\Requests\Chat\StoreDirectChatRequest;
 use App\Http\Resources\DirectChatResource;
 use App\Models\DirectChat;
@@ -18,7 +18,7 @@ class DirectChatsController extends Controller
     public function store(StoreDirectChatRequest $request)
     {
         return new DirectChatResource(
-            Chat::directChats()->create($request->validated()['username'])
+            ChatFacade::directChats()->create($request->validated()['username'])
         );
     }
 }

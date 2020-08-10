@@ -12,7 +12,7 @@ class DirectChatService extends ChatService
 
 {
     /**
-     * Chat instance
+     * ChatFacade instance
      *
      * @var DirectChat
      */

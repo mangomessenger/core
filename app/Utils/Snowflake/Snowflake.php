@@ -52,7 +52,7 @@ class Snowflake
     protected $defaultSequenceResolver;
 
     /**
-     * Build Snowflake Instance.
+     * Build SnowflakeFacade Instance.
      *
      * @param int $datacenter
      * @param int $workerid

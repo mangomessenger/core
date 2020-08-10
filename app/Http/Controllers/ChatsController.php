@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Chat;
+use App\Facades\ChatFacade;
 use App\Http\Resources\ChannelCollection;
 use App\Http\Resources\DirectChatCollection;
 use App\Http\Resources\GroupCollection;
@@ -18,15 +18,15 @@ class ChatsController extends Controller
     {
         return [
             'direct' => new DirectChatCollection(
-                Chat::directChats()
+                ChatFacade::directChats()
                     ->findByUserId(auth()->user()->id)
             ),
             'channels' => new ChannelCollection(
-                Chat::channels()
+                ChatFacade::channels()
                     ->findByUserId(auth()->user()->id)
             ),
             'groups' => new GroupCollection(
-                Chat::groups()
+                ChatFacade::groups()
                     ->findByUserId(auth()->user()->id)
             ),
         ];

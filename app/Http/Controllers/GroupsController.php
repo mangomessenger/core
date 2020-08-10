@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Chat;
+use App\Facades\ChatFacade;
 use App\Http\Requests\Chat\StoreGroupRequest;
 use App\Http\Resources\GroupResource;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class GroupsController extends Controller
     public function store(StoreGroupRequest $request)
     {
         return new GroupResource(
-            Chat::groups()->create($request->input('usernames') ?? [], $request->validated())
+            ChatFacade::groups()->create($request->input('usernames') ?? [], $request->validated())
         );
     }
 
