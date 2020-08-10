@@ -49,12 +49,29 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * The user's chats
+     * The user's direct chats
      */
-    public function chats()
+    public function directChats()
     {
-        return $this->belongsToMany('App\Chat', 'user_chat', 'user_id', 'chat_id');
+        return $this->belongsToMany('App\Models\DirectChat', 'chat_members', 'user_id', 'chat_id');
     }
+
+    /**
+     * The user's channels
+     */
+    public function channels()
+    {
+        return $this->belongsToMany('App\Models\Channel', 'chat_members', 'user_id', 'chat_id');
+    }
+
+    /**
+     * The user's groups
+     */
+    public function groups()
+    {
+        return $this->belongsToMany('App\Models\Group', 'chat_members', 'user_id', 'chat_id');
+    }
+
 
     /**
      * Boot method

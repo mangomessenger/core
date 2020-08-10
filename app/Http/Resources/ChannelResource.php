@@ -20,7 +20,7 @@ class ChannelResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'creator' => new UserResource($this->creator),
-            'members' => new UserCollection(User::find($this->members->pluck('user_id'))),
+            'members' => new UserCollection($this->members),
             'tag' => $this->tag,
             'photo_url' => $this->photo_url,
             'verified' => $this->verified,

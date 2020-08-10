@@ -16,7 +16,7 @@ abstract class AbstractChat extends Model
      */
     public function members()
     {
-        return $this->hasMany('App\Models\ChatMember', 'chat_id', 'id');
+        return $this->belongsToMany('App\Models\User', 'chat_members', 'chat_id', 'user_id');
     }
 
     /**
@@ -57,10 +57,7 @@ abstract class AbstractChat extends Model
         $userIds = is_array($members) ? $members : (array)func_get_args();
 
         collect($userIds)->each(function ($userId) {
-            $this->members()->firstOrCreate([
-                'user_id' => $userId,
-                'chat_id' => $this->id,
-            ]);
+            $this->members()->attach($userId);
 
             // members_count++;
             if(isset($this->members_count)) $this->increment('members_count');
@@ -77,7 +74,7 @@ abstract class AbstractChat extends Model
     {
         $userIds = is_array($members) ? $members : (array)func_get_args();
 
-        $this->members()->where('chat_id', $this->id)->whereIn('user_id', $userIds)->delete();
+//       To be updated
 
         // members_count--;
         if(isset($this->members_count)) $this->decrement('members_count');
