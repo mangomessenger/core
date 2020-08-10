@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Facades\Snowflake;
-use Illuminate\Database\Eloquent\Model;
+use App\Abstracts\AbstractChat;
 
-class DirectChat extends Chat
+class DirectChat extends AbstractChat
 {
     /**
      * Remove members from chat. (Unable in direct chat)

@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Facades\Snowflake;
-use Illuminate\Database\Eloquent\Model;
+use App\Abstracts\AbstractChat;
 
-class Channel extends Chat
+class Channel extends AbstractChat
 {
     /**
      * The attributes that are mass assignable.
