@@ -54,7 +54,7 @@ class Chat extends Model
      */
     public function addMembers($members)
     {
-        $userIds = is_array($members) ? $members : (array) func_get_args();
+        $userIds = is_array($members) ? $members : (array)func_get_args();
 
         collect($userIds)->each(function ($userId) {
             $this->members()->firstOrCreate([
@@ -72,7 +72,7 @@ class Chat extends Model
      */
     public function removeMembers($members)
     {
-        $userIds = is_array($members) ? $members : (array) func_get_args();
+        $userIds = is_array($members) ? $members : (array)func_get_args();
 
         $this->members()->where('chat_id', $this->id)->whereIn('user_id', $userIds)->delete();
     }
@@ -88,7 +88,8 @@ class Chat extends Model
     {
         // Trying to retrieve already created chat
         return $query->whereHas('members', function (Builder $q) use ($users) {
-            $q->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
+            $q->whereIn('user_id', $users)
+                ->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
                 ->groupBy('chat_members.chat_id')
                 ->having('count', count($users));
         });
