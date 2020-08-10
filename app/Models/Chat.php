@@ -94,4 +94,15 @@ class Chat extends Model
                 ->having('count', count($users));
         });
     }
+
+    /**
+     * Checks to see if a user is a current member of the chat.
+     *
+     * @param int $userId
+     * @return bool
+     */
+    public function hasMember(int $userId): bool
+    {
+        return $this->members()->where('user_id', '=', $userId)->exists();
+    }
 }
