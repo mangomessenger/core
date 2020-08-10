@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GroupResource extends JsonResource
@@ -19,6 +20,7 @@ class GroupResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'creator' => new UserResource($this->creator),
+            'members' => new UserCollection(User::find($this->members->pluck('user_id'))),
             'photo_url' => $this->photo_url,
             'members_count' => (int)$this->members_count,
             'updated_at' => $this->updated_at->timestamp

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ChannelResource extends JsonResource
@@ -19,6 +20,7 @@ class ChannelResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'creator' => new UserResource($this->creator),
+            'members' => new UserCollection(User::find($this->members->pluck('user_id'))),
             'tag' => $this->tag,
             'photo_url' => $this->photo_url,
             'verified' => $this->verified,
