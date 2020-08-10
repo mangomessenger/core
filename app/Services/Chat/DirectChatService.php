@@ -38,13 +38,13 @@ class DirectChatService extends ChatService
     }
 
     /**
-     * @param int $userId
+     * @param string $username
      * @return DirectChat
      */
-    public function create(int $userId): DirectChat
+    public function create(string $username): DirectChat
     {
         // Getting existing user
-        $user = User::firstWhere('id', $userId);
+        $user = User::firstWhere('username', $username);
 
         // Checking user exists or the same user
         if (is_null($user) || $user->is(auth()->user())) {

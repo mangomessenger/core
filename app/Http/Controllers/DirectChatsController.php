@@ -18,7 +18,7 @@ class DirectChatsController extends Controller
     public function store(StoreDirectChatRequest $request)
     {
         return new DirectChatResource(
-            Chat::directChats()->create($request->validated()['user_id'])
+            Chat::directChats()->create($request->validated()['username'])
         );
     }
 }
