@@ -40,4 +40,8 @@ Route::middleware('jwt-auth')->group(function (){
         Route::post('/channel/', 'ChannelsController@store');
         Route::get('/', 'ChatsController@index');
     });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/{username}/', 'UsersController@show');
+    });
 });
