@@ -36,6 +36,6 @@ class DirectChatsController extends Controller
      */
     public function store(StoreDirectChatRequest $request)
     {
-        return $this->directChatService->create($request->input('user_ids'), $request->validated());
+        return $this->directChatService->create($request->validated()['user_id']);
     }
 }

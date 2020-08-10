@@ -38,18 +38,21 @@ class DirectChatService
     }
 
     /**
-     * @param array $users
+     * @param int $userId
      * @return DirectChat
      */
-    public function create(array $users): DirectChat
+    public function create(int $userId): DirectChat
     {
-        // Getting existing users
-        $users = User::find($users)->pluck('id')->toArray();
+        // Getting existing user
+        $user = User::firstWhere('id', $userId);
 
-        // Checking if only 2 users passed
-        if (count($users) !== 2) {
+        // Checking user exists or the same user
+        if (is_null($user) || $user->is(auth()->user())) {
             abort(400);
         }
+
+        // Creating array of users
+        $users = [$user->id, auth()->user()->id];
 
         // Trying to retrieve already created chat
         $directChat = DirectChat::between($users)->first();

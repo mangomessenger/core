@@ -24,7 +24,7 @@ class StoreDirectChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_ids' => 'required|array'
+            'user_id' => 'required|integer'
         ];
     }
 
@@ -37,7 +37,7 @@ class StoreDirectChatRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
-            '*.array' => 'The :attribute field must be an array.'
+            '*.integer' => 'The :attribute field must be an integer.'
         ];
     }
 }
