@@ -13,6 +13,6 @@ class Group extends Chat
      * @var array
      */
     protected $fillable = [
-        'title', 'creator_id', 'photo_url', 'members_count',
+        'title', 'creator_id', 'photo_url', 'members_count', 'description',
     ];
 }

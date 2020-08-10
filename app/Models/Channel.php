@@ -13,6 +13,6 @@ class Channel extends Chat
      * @var array
      */
     protected $fillable = [
-        'title', 'creator_id', 'tag', 'photo_url', 'verified', 'members_count',
+        'title', 'creator_id', 'tag', 'photo_url', 'verified', 'members_count', 'description',
     ];
 }
