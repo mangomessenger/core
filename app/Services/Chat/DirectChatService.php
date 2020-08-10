@@ -52,11 +52,7 @@ class DirectChatService
         }
 
         // Trying to retrieve already created chat
-        $directChat = DirectChat::whereHas('members', function (Builder $q) use ($users) {
-            $q->select(DB::raw('count(chat_members.chat_id) AS count, chat_members.chat_id'))
-                ->groupBy('chat_members.chat_id')
-                ->having('count', count($users));
-        })->first();
+        $directChat = DirectChat::between($users)->first();
 
         // Return chat if it is already created
         if (!is_null($directChat)) return $directChat;
