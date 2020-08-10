@@ -60,7 +60,7 @@ abstract class AbstractChat extends Model
             $this->members()->attach($userId);
 
             // members_count++;
-            if(isset($this->members_count)) $this->increment('members_count');
+            if(in_array('members_count', $this->fillable)) $this->increment('members_count');
         });
     }
 
@@ -74,10 +74,12 @@ abstract class AbstractChat extends Model
     {
         $userIds = is_array($members) ? $members : (array)func_get_args();
 
-//       To be updated
+        collect($userIds)->each(function ($userId) {
+            $this->members()->detach($userId);
 
-        // members_count--;
-        if(isset($this->members_count)) $this->decrement('members_count');
+            // members_count--;
+            if(in_array('members_count', $this->fillable)) $this->decrement('members_count');
+        });
     }
 
     /**

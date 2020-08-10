@@ -43,11 +43,11 @@ class GroupService extends ChatService
      */
     public function create(array $users, array $data): Group
     {
-        // Adding creator to members
-        $users[] = auth()->user()->username;
-
         // Getting existing users
         $users = User::whereIn('username', $users)->pluck('id')->toArray();
+
+        // Adding creator to members
+        $users[] = auth()->user()->id;
 
         // Creating chat & adding members
         return DB::transaction(function () use ($data, $users) {
