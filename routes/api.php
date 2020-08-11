@@ -29,7 +29,7 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', 'AuthController@logout');
 });
 
-Route::middleware('jwt-auth')->group(function (){
+Route::middleware('jwt-auth')->group(function () {
     Route::prefix('chats')->group(function () {
         Route::post('/direct/', 'DirectChatsController@store');
         Route::post('/channel/', 'ChannelsController@store');
@@ -37,9 +37,9 @@ Route::middleware('jwt-auth')->group(function (){
         Route::get('/', 'ChatsController@index');
     });
 
-    Route::prefix('/chats/{chat_type}/{chat_id}')->group(function () {
-        Route::post('/messages', 'MessagesController@sendMessage');
-    });
+    Route::apiResources([
+        'messages' => 'MessagesController',
+    ]);
 
     Route::prefix('users')->group(function () {
         Route::get('/{username}/', 'UsersController@show');

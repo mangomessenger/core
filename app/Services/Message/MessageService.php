@@ -2,6 +2,7 @@
 
 namespace App\Services\Message;
 
+use App\Exceptions\Chat\ChatInvalidException;
 use App\Models\BaseChat;
 use App\Models\Message;
 use App\Services\User\UserService;
@@ -104,15 +105,18 @@ class MessageService extends ModelService
     /**
      * Sends the message.
      *
-     * @return Model
+     * @return Message
      * @throws Exception
      */
-    public function send(): Model
+    public function send(): Message
     {
         if (is_null($this->sender) ||
-            strlen($this->message) == 0 ||
-            is_null($this->chat)) {
+            strlen($this->message) == 0) {
             throw new Exception();
+        }
+
+        if (!$this->chat) {
+            throw new ChatInvalidException();
         }
 
         if (!$this->chat->members->contains($this->sender)) {

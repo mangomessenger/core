@@ -9,9 +9,9 @@ use App\Models\Group;
 
 class ChatService
 {
-    public function findChat(ChatType $chatType, int $chatId)
+    public function findChat(string $chatType, int $chatId)
     {
-        switch ($chatType->name) {
+        switch ($chatType) {
             case 'direct':
                 return DirectChat::find($chatId);
             case 'channel':

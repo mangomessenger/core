@@ -25,6 +25,8 @@ class SendMessageRequest extends FormRequest
     {
         return [
             'message' => 'required|min:1|max:300',
+            'chat_id' => "required",
+            'chat_type' => 'required|exists:chat_types,name',
         ];
     }
 
@@ -39,6 +41,7 @@ class SendMessageRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.max' => ':Attribute maximum length is :max.',
             '*.min' => ':Attribute minimum length is :min.',
+            '*.exists' => ':Attribute is invalid.',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\Message\SendMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\ChatType;
 use App\Services\Message\MessageService;
+use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
@@ -31,13 +32,15 @@ class MessagesController extends Controller
      * Sending a message in chat
      *
      * @param SendMessageRequest $request
-     * @param ChatType $chatType
-     * @param int $chatId
      * @return MessageResource
      */
-    public function sendMessage(SendMessageRequest $request, ChatType $chatType, int $chatId)
+    public function store(SendMessageRequest $request)
     {
-        $chat = Chat::chats()->findChat($chatType, $chatId);
+        $chat = Chat::chats()
+            ->findChat(
+                $request->input('chat_type'),
+                $request->input('chat_id')
+            );
 
         return new MessageResource(
             Chat::message(
@@ -46,5 +49,50 @@ class MessagesController extends Controller
                 ->to($chat)
                 ->send()
         );
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
