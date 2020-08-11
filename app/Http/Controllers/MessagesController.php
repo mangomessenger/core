@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Facades\Chat;
 use App\Http\Requests\Message\DestroyMessageRequest;
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Http\Requests\Message\ShowMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageResource;
+use App\Models\Message;
 use App\Services\Message\MessageService;
 use Illuminate\Http\Response;
 
@@ -80,22 +82,25 @@ class MessagesController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param ShowMessageRequest $request
+     * @param int $id
+     * @return MessageResource
+     */
+    public function show(ShowMessageRequest $request, $id)
+    {
+        return new MessageResource(
+            Chat::messages()->find($id)
+        );
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
     {
         //
     }
