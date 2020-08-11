@@ -115,10 +115,6 @@ class MessageService extends ModelService
             throw new Exception();
         }
 
-        if (!$this->chat) {
-            throw new ChatInvalidException();
-        }
-
         return DB::transaction(function ()  {
             $this->chat->touch();
 
