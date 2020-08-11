@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Message\DestroyMessageRequest;
+use App\Http\Requests\Message\IndexMessagesRequest;
 use App\Http\Requests\Message\SendMessageRequest;
 use App\Http\Requests\Message\ShowMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
+use App\Http\Resources\Message\MessageCollection;
 use App\Http\Resources\Message\MessageResource;
 use App\Models\Message;
 use App\Services\Message\MessageService;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 
 class MessagesController extends Controller
@@ -98,11 +101,17 @@ class MessagesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param IndexMessagesRequest $request
+     * @return MessageCollection
      */
-    public function index()
+    public function index(IndexMessagesRequest $request)
     {
-        //
+        $chat = Chat::chats()->findChat(
+            $request->input('chat_type'),
+            $request->input('chat_id')
+        );
+
+        return new MessageCollection($chat->messages);
     }
 
 }

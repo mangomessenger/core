@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Message;
 
-use App\Chat;
+use App\Facades\Chat;
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetMessagesRequest extends FormRequest
+class IndexMessagesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,10 +14,12 @@ class GetMessagesRequest extends FormRequest
      */
     public function authorize()
     {
-        if (isset($this->chat_id)) {
-            return auth()->user()->can('view', Chat::find($this->chat_id));
-        }
-        return true;
+        $chat = Chat::chats()->findChat(
+            $this->chat_type,
+            $this->chat_id
+        );
+
+        return $chat && $this->user()->can('access', $chat);
     }
 
     /**
@@ -28,8 +30,8 @@ class GetMessagesRequest extends FormRequest
     public function rules()
     {
         return [
-            'chat_id' => 'required|exists:chats,id',
-            'message_id' => 'exists:messages,id'
+            'chat_id' => "required",
+            'chat_type' => 'required|exists:chat_types,name',
         ];
     }
 
@@ -42,7 +44,10 @@ class GetMessagesRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
+            '*.max' => ':Attribute maximum length is :max.',
+            '*.min' => ':Attribute minimum length is :min.',
             '*.exists' => ':Attribute is invalid.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }
