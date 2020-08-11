@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreGroupRequest;
-use App\Http\Resources\GroupResource;
+use App\Http\Resources\Group\GroupResource;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller

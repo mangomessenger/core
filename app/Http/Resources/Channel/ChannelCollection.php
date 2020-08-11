@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Channel;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class MessageCollection extends ResourceCollection
+class ChannelCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return AnonymousResourceCollection
      */
     public function toArray($request)
     {
-        return MessageResource::collection($this->collection);
+        return ChannelResource::collection($this->collection);
     }
 }

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Message\SendMessageRequest;
-use App\Http\Resources\MessageResource;
-use App\Models\ChatType;
+use App\Http\Resources\Message\MessageResource;
 use App\Services\Message\MessageService;
 use Illuminate\Http\Request;
 

@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Token;
 
 use App\Models\Session;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TokensResource extends JsonResource
 {
+    /**
+     * Passed access token to return
+     *
+     * @var string
+     */
     private string $accessToken;
 
     /**

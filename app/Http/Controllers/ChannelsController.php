@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreChannelRequest;
-use App\Http\Resources\ChannelResource;
+use App\Http\Resources\Channel\ChannelResource;
 
 class ChannelsController extends Controller
 {

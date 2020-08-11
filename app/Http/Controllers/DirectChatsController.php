@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\StoreDirectChatRequest;
-use App\Http\Resources\DirectChatResource;
+use App\Http\Resources\DirectChat\DirectChatCollection;
 
 class DirectChatsController extends Controller
 {
@@ -12,11 +12,11 @@ class DirectChatsController extends Controller
      * Creating chat instance
      *
      * @param StoreDirectChatRequest $request
-     * @return DirectChatResource
+     * @return DirectChatCollection
      */
     public function store(StoreDirectChatRequest $request)
     {
-        return new DirectChatResource(
+        return new DirectChatCollection(
             Chat::directChats()->create($request->validated()['username'])
         );
     }

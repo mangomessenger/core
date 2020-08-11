@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ChannelCollection;
-use App\Http\Resources\DirectChatCollection;
-use App\Http\Resources\GroupCollection;
+use App\Http\Resources\Channel\ChannelCollection;
+use App\Http\Resources\DirectChat\DirectChatCollection;
+use App\Http\Resources\Group\GroupCollection;
 
 class ChatsController extends Controller
 {
