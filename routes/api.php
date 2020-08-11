@@ -34,9 +34,9 @@ Route::middleware('jwt-auth')->group(function () {
         Route::get('/', 'ChatsController@index');
 
         Route::apiResources([
-            'direct' => 'DirectChatsController',
-            'channel' => 'ChannelsController',
-            'group' => 'GroupsController',
+            'direct-chats' => 'DirectChatsController',
+            'channels' => 'ChannelsController',
+            'groups' => 'GroupsController',
         ]);
     });
 

@@ -18,7 +18,7 @@ class ChatsController extends Controller
         $user = auth()->user();
 
         return [
-            'direct' => new DirectChatCollection(
+            'direct-chats' => new DirectChatCollection(
                 $user->directChats
             ),
             'channels' => new ChannelCollection(
