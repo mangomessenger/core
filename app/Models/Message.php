@@ -22,4 +22,12 @@ class Message extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Get the chat's sender
+     */
+    public function sender()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'from_id');
+    }
 }

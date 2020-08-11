@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Http\Resources\MessageResource;
 use App\Models\ChatType;
 use App\Services\Message\MessageService;
 
@@ -32,12 +33,18 @@ class MessagesController extends Controller
      * @param SendMessageRequest $request
      * @param ChatType $chatType
      * @param int $chatId
-     * @return void
+     * @return MessageResource
      */
     public function sendMessage(SendMessageRequest $request, ChatType $chatType, int $chatId)
     {
         $chat = Chat::chats()->findChat($chatType, $chatId);
 
-        return Chat::message($request->input('message'))->from(auth()->user())->to($chat)->send();
+        return new MessageResource(
+            Chat::message(
+                $request->input('message'))
+                ->from(auth()->user())
+                ->to($chat)
+                ->send()
+        );
     }
 }
