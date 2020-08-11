@@ -19,7 +19,7 @@ class SendMessageRequest extends FormRequest
             $this->chat_id
         );
 
-        return $chat && $chat->members->contains(auth()->user());
+        return $chat && $this->user()->can('access', $chat);
     }
 
     /**
