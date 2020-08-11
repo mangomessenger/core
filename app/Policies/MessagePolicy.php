@@ -20,7 +20,7 @@ class MessagePolicy
      */
     public function access(User $user, Message $message)
     {
-        return $message->chat()->members->contains($user);
+        return $message->chat->members->contains($user);
     }
 
     /**
