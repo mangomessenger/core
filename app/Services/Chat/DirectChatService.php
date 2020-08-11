@@ -5,6 +5,7 @@ namespace App\Services\Chat;
 use App\Models\DirectChat;
 use App\Services\User\UserService;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class DirectChatService
@@ -49,7 +50,6 @@ class DirectChatService
         if (is_null($user) || $user->is(auth()->user())) {
             abort(400);
         }
-
         // Creating array of users
         $users = [$user->id, auth()->user()->id];
 
