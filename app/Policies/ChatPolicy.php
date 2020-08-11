@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Chat;
 use App\Models\BaseChat;
 use App\Models\Channel;
+use App\Models\Group;
 use App\Services\Chat\ChatService;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -40,5 +41,21 @@ class ChatPolicy
     public function access(User $user, BaseChat $chat)
     {
         return $chat->members->contains($user);
+    }
+
+    /**
+     * Determine if the given chat can be accessed by the user.
+     *
+     * @param User $user
+     * @param BaseChat $chat
+     * @return bool
+     */
+    public function edit(User $user, BaseChat $chat)
+    {
+        if ($chat instanceof Channel || $chat instanceof Group) {
+            return $chat->creator->is($user);
+        } else {
+            return false;
+        }
     }
 }
