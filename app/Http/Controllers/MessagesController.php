@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageResource;
 use App\Services\Message\MessageService;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MessagesController extends Controller
 {
@@ -50,9 +51,23 @@ class MessagesController extends Controller
     }
 
     /**
+     * Update the message
+     *
+     * @param UpdateMessageRequest $request
+     * @param int $messageId
+     * @return Response
+     */
+    public function update(UpdateMessageRequest $request, int $messageId)
+    {
+        Chat::messages()->update($messageId, $request->validated());
+
+        return response()->noContent();
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -63,7 +78,7 @@ class MessagesController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -72,22 +87,10 @@ class MessagesController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

@@ -2,7 +2,6 @@
 
 namespace App\Services\Message;
 
-use App\Exceptions\Chat\ChatInvalidException;
 use App\Models\BaseChat;
 use App\Models\Message;
 use App\Services\User\UserService;

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Message;
+
 abstract class ModelService
 {
     /**
