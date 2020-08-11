@@ -3,6 +3,8 @@
 namespace App\Policies;
 
 use App\Chat;
+use App\Models\BaseChat;
+use App\Models\Channel;
 use App\Services\Chat\ChatService;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -29,14 +31,14 @@ class ChatPolicy
     }
 
     /**
-     * Determine if the given post can be updated by the user.
+     * Determine if the given chat can be accessed by the user.
      *
      * @param User $user
-     * @param Chat $chat
+     * @param BaseChat $chat
      * @return bool
      */
-    public function view(User $user, Chat $chat)
+    public function access(User $user, BaseChat $chat)
     {
-        return $this->chatService->existsByUser($chat->id, $user->id);
+        return $chat->members->contains($user);
     }
 }
