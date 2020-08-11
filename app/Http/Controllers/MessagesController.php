@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Chat;
+use App\Http\Requests\Message\DestroyMessageRequest;
 use App\Http\Requests\Message\SendMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageResource;
@@ -54,12 +55,26 @@ class MessagesController extends Controller
      * Update the message
      *
      * @param UpdateMessageRequest $request
-     * @param int $messageId
+     * @param int $id
      * @return Response
      */
-    public function update(UpdateMessageRequest $request, int $messageId)
+    public function update(UpdateMessageRequest $request, int $id)
     {
-        Chat::messages()->update($messageId, $request->validated());
+        Chat::messages()->update($id, $request->validated());
+
+        return response()->noContent();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param DestroyMessageRequest $request
+     * @param int $id
+     * @return Response
+     */
+    public function destroy(DestroyMessageRequest $request, int $id)
+    {
+        Chat::messages()->delete($id);
 
         return response()->noContent();
     }
@@ -85,15 +100,4 @@ class MessagesController extends Controller
         //
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
