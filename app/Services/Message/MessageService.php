@@ -119,10 +119,6 @@ class MessageService extends ModelService
             throw new ChatInvalidException();
         }
 
-        if (!$this->chat->members->contains($this->sender)) {
-            throw new Exception('User is not a member of chat.');
-        }
-
         return DB::transaction(function ()  {
             $this->chat->touch();
 

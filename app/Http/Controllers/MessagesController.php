@@ -36,11 +36,10 @@ class MessagesController extends Controller
      */
     public function store(SendMessageRequest $request)
     {
-        $chat = Chat::chats()
-            ->findChat(
-                $request->input('chat_type'),
-                $request->input('chat_id')
-            );
+        $chat = Chat::chats()->findChat(
+            $request->input('chat_type'),
+            $request->input('chat_id')
+        );
 
         return new MessageResource(
             Chat::message(

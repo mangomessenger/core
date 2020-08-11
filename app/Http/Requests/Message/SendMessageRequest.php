@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Message;
 
+use App\Facades\Chat;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SendMessageRequest extends FormRequest
@@ -13,7 +14,12 @@ class SendMessageRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $chat = Chat::chats()->findChat(
+            $this->chat_type,
+            $this->chat_id
+        );
+
+        return $chat && $chat->members->contains(auth()->user());
     }
 
     /**
