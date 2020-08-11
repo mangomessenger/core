@@ -31,10 +31,13 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('jwt-auth')->group(function () {
     Route::prefix('chats')->group(function () {
-        Route::post('/direct/', 'DirectChatsController@store');
-        Route::post('/channel/', 'ChannelsController@store');
-        Route::post('/group/', 'GroupsController@store');
         Route::get('/', 'ChatsController@index');
+
+        Route::apiResources([
+            'direct' => 'DirectChatsController',
+            'channel' => 'ChannelsController',
+            'group' => 'GroupsController',
+        ]);
     });
 
     Route::apiResources([
