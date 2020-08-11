@@ -29,9 +29,10 @@ class SignUpRequest extends FormRequest
                 'phone:country_code',
             ],
             'country_code' => 'required_with:phone',
-            'name' => 'required|max:100',
+            'name' => 'required|string|max:100',
             'phone_code_hash' => [
                 'required',
+                'string',
                 'max:255',
             ],
             'phone_code' => [
@@ -58,7 +59,8 @@ class SignUpRequest extends FormRequest
             'phone_code.digits' => ':Attribute must have an exact length of :digits.',
             'phone_code_hash.max' => ':Attribute maximum length is :max.',
             'terms_of_service_accepted.accepted' => 'The :attribute must be accepted.',
-            'numeric' => ':Attribute should not contain any characters.'
+            'numeric' => ':Attribute should not contain any characters.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }

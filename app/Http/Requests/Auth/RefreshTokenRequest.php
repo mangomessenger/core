@@ -24,8 +24,8 @@ class RefreshTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token'    => 'required',
-            'fingerprint'    => 'required|min:10|max:255',
+            'refresh_token'    => 'required|string',
+            'fingerprint'    => 'required|string|min:10|max:255',
         ];
     }
 
@@ -40,6 +40,7 @@ class RefreshTokenRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.min' => ':Attribute minimum length is :min.',
             '*.max' => ':Attribute maximum length is :max.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }

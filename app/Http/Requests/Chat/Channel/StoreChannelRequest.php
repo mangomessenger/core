@@ -26,8 +26,8 @@ class StoreChannelRequest extends FormRequest
         return [
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
-            'title' => 'required',
-            'tag' => '',
+            'title' => 'required|string',
+            'tag' => 'string',
             'photo' => 'image',
         ];
     }
@@ -43,7 +43,8 @@ class StoreChannelRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.image' => 'The :attribute field  must be an image.',
             '*.array' => 'The :attribute field must be an array.',
-            'usernames.*.exists' => 'Username is not valid.'
+            'usernames.*.exists' => 'Username is not valid.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }

@@ -24,7 +24,7 @@ class LogoutRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token' => 'required',
+            'refresh_token' => 'required|string',
         ];
     }
 
@@ -37,6 +37,7 @@ class LogoutRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }

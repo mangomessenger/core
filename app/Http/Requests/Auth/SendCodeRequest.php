@@ -26,7 +26,7 @@ class SendCodeRequest extends FormRequest
         return [
             'phone_number' => 'required|phone:country_code',
             'country_code'    => 'required_with:phone',
-            'fingerprint'    => 'required|min:10|max:255',
+            'fingerprint'    => 'required|string|min:10|max:255',
         ];
     }
 
@@ -42,7 +42,8 @@ class SendCodeRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.min' => ':Attribute minimum length is :min.',
             '*.max' => ':Attribute maximum length is :max.',
-            'numeric' => ':Attribute should not contain any characters.'
+            'numeric' => ':Attribute should not contain any characters.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }

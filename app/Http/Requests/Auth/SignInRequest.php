@@ -32,6 +32,7 @@ class SignInRequest extends FormRequest
             'country_code' => 'required_with:phone',
             'phone_code_hash' => [
                 'required',
+                'string',
                 'max:255',
             ],
             'phone_code' => [
@@ -53,6 +54,7 @@ class SignInRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             'phone_code.digits' => ':Attribute must have an exact length of :digits.',
             'phone_code_hash.max' => ':Attribute maximum length is :max.',
+            '*.string' => ':Attribute field must be a string.',
         ];
     }
 }
