@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chat;
+namespace App\Http\Requests\Chat\Group;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDirectChatRequest extends FormRequest
+class StoreGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class StoreDirectChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|exists:users,username'
+            'usernames' => 'array',
+            'usernames.*' => 'exists:users,username',
+            'title' => 'required',
+            'photo' => 'image',
         ];
     }
 
@@ -37,8 +40,9 @@ class StoreDirectChatRequest extends FormRequest
     {
         return [
             '*.required' => 'The :attribute field is required.',
-            '*.integer' => 'The :attribute field must be an integer.',
-            'username.exists' => 'Username is not valid.',
+            '*.image' => 'The :attribute field  must be an image.',
+            '*.array' => 'The :attribute field must be an array.',
+            'usernames.*.exists' => 'Username is not valid.'
         ];
     }
 }

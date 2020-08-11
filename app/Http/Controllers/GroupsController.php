@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Chat;
-use App\Http\Requests\Chat\StoreGroupRequest;
+use App\Http\Requests\Chat\Group\StoreGroupRequest;
 use App\Http\Resources\Group\GroupResource;
 use Illuminate\Http\Request;
 

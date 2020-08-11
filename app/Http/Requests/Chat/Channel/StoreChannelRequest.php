@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chat;
+namespace App\Http\Requests\Chat\Channel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGroupRequest extends FormRequest
+class StoreChannelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,7 @@ class StoreGroupRequest extends FormRequest
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
             'title' => 'required',
+            'tag' => '',
             'photo' => 'image',
         ];
     }

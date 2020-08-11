@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Chat;
-use App\Http\Requests\Chat\StoreChannelRequest;
+use App\Http\Requests\Chat\Channel\StoreChannelRequest;
 use App\Http\Resources\Channel\ChannelResource;
 
 class ChannelsController extends Controller

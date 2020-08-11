@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Chat;
-use App\Http\Requests\Chat\StoreDirectChatRequest;
+use App\Http\Requests\Chat\DirectChat\StoreDirectChatRequest;
 use App\Http\Resources\DirectChat\DirectChatCollection;
 
 class DirectChatsController extends Controller
