@@ -12,6 +12,14 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'chat_id', 'from_id', 'reply_to_msg_id', 'message', 'is_read'
+        'chat_id', 'chat_type', 'from_id', 'reply_to_msg_id', 'message', 'is_read'
     ];
+
+    /**
+     * Get the owning chat model.
+     */
+    public function chat()
+    {
+        return $this->morphTo();
+    }
 }

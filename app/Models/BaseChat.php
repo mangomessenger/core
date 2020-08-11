@@ -25,7 +25,7 @@ abstract class BaseChat extends Model implements Chat
      */
     public function messages()
     {
-        return $this->hasMany('App\Models\Message', 'chat_id', 'id');
+        return $this->morphMany('App\Models\Message', 'chat');
     }
 
     /**
