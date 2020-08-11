@@ -10,30 +10,10 @@ use App\Http\Requests\Message\ShowMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageCollection;
 use App\Http\Resources\Message\MessageResource;
-use App\Models\Message;
-use App\Services\Message\MessageService;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 
 class MessagesController extends Controller
 {
-    /**
-     * Instance of message service.
-     *
-     * @var MessageService $messageService
-     */
-    private MessageService $messageService;
-
-    /**
-     * MessagesController constructor.
-     *
-     * @param MessageService $messageService
-     */
-    public function __construct(MessageService $messageService)
-    {
-        $this->messageService = $messageService;
-    }
-
     /**
      * Sending a message in chat
      *
@@ -71,7 +51,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Removes messages from chat.
      *
      * @param DestroyMessageRequest $request
      * @param int $id
@@ -85,7 +65,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Displays message
      *
      * @param ShowMessageRequest $request
      * @param int $id
@@ -99,7 +79,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a list of messages from chat
      *
      * @param IndexMessagesRequest $request
      * @return MessageCollection
