@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\Group\StoreGroupRequest;
+use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Group\GroupResource;
 use App\Models\Group;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -42,11 +43,15 @@ class GroupsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return GroupCollection
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        return new GroupCollection(
+            auth()->user()->groups
+        );
     }
 
     /**

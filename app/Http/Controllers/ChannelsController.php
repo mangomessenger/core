@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\Channel\StoreChannelRequest;
+use App\Http\Resources\Channel\ChannelCollection;
 use App\Http\Resources\Channel\ChannelResource;
 use App\Models\Channel;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -38,5 +39,17 @@ class ChannelsController extends Controller
         $this->authorize('access', $chat);
 
         return new ChannelResource($chat);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return ChannelCollection
+     */
+    public function index()
+    {
+        return new ChannelCollection(
+            auth()->user()->channels
+        );
     }
 }
