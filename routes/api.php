@@ -46,5 +46,6 @@ Route::middleware('jwt-auth')->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/{username}/', 'UsersController@show');
+        Route::put('/{user_id}', 'UsersController@update');
     });
 });
