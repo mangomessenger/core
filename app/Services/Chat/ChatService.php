@@ -3,7 +3,6 @@
 namespace App\Services\Chat;
 
 use App\Models\Channel;
-use App\Models\ChatType;
 use App\Models\DirectChat;
 use App\Models\Group;
 

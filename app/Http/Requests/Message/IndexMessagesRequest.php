@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Message;
 
 use App\Facades\Chat;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class IndexMessagesRequest extends FormRequest
 {

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Message;
 
 use App\Models\Message;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\FormRequest;
 
 class DestroyMessageRequest extends FormRequest
 {

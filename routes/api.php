@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('auth')->group(function () {
-    Route::middleware('throttle:20,2')->group(function () {
+    Route::middleware('throttle:20,1')->group(function () {
         Route::post('send-code', 'AuthController@sendCode');
     });
     Route::post('register', 'AuthController@signUp');
