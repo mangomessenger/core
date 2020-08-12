@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Chat\Channel;
 
-use App\Http\Requests\FormRequest;
-use App\Models\User;
+use App\Models\Channel;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class UpdateChannelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,9 +15,9 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = User::find($this->route('user_id'));
+        $chat = Channel::find($this->route('channel'));
 
-        return $user && $user->is($this->user());
+        return $chat && $this->user()->can('access', $chat);
     }
 
     /**
@@ -28,15 +28,15 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|min:1|max:60',
-            'bio' => 'max:255',
-            'username' => [
+            'title' => 'string|min:1|max:100',
+            'description' => 'max:255',
+            'tag' => [
                 'nullable',
                 'string',
                 'regex:/(^[A-Za-z0-9]+$)+/',
                 'min:3',
                 'max:20',
-                Rule::unique('users')->ignore($this->user()->id, 'id')
+                Rule::unique('channels')->ignore(Channel::find($this->route('channel'))->id, 'id')
             ],
         ];
     }
