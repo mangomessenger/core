@@ -10,6 +10,8 @@ use App\Http\Requests\Message\ShowMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageCollection;
 use App\Http\Resources\Message\MessageResource;
+use App\Models\Message;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Response;
 
 class MessagesController extends Controller
@@ -53,13 +55,16 @@ class MessagesController extends Controller
     /**
      * Removes messages from chat.
      *
-     * @param DestroyMessageRequest $request
      * @param int $id
      * @return Response
+     * @throws AuthorizationException
      */
-    public function destroy(DestroyMessageRequest $request, int $id)
+    public function destroy(int $id)
     {
-        Chat::messages()->delete($id);
+        $chat = Message::find($id);
+        $this->authorize('delete', $chat);
+
+        $chat->delete();
 
         return response()->noContent();
     }
@@ -67,12 +72,15 @@ class MessagesController extends Controller
     /**
      * Displays message
      *
-     * @param ShowMessageRequest $request
      * @param int $id
      * @return MessageResource
+     * @throws AuthorizationException
      */
-    public function show(ShowMessageRequest $request, $id)
+    public function show($id)
     {
+        $chat = Message::find($id);
+        $this->authorize('access', $chat);
+
         return new MessageResource(
             Chat::messages()->find($id)
         );
