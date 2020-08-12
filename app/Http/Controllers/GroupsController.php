@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Facades\Chat;
 use App\Http\Requests\Chat\Group\StoreGroupRequest;
 use App\Http\Resources\Group\GroupResource;
+use App\Models\Group;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller
@@ -23,23 +25,26 @@ class GroupsController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return GroupResource
+     * @throws AuthorizationException
+     */
+    public function show(int $id)
+    {
+        $chat = Group::find($id);
+        $this->authorize('access', $chat);
+
+        return new GroupResource($chat);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
     {
         //
     }

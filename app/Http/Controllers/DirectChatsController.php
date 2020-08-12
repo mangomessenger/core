@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Facades\Chat;
 use App\Http\Requests\Chat\DirectChat\StoreDirectChatRequest;
 use App\Http\Resources\DirectChat\DirectChatResource;
+use App\Models\DirectChat;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class DirectChatsController extends Controller
 {
@@ -19,5 +21,20 @@ class DirectChatsController extends Controller
         return new DirectChatResource(
             Chat::directChats()->create($request->validated()['username'])
         );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return DirectChatResource
+     * @throws AuthorizationException
+     */
+    public function show(int $id)
+    {
+        $chat = DirectChat::find($id);
+        $this->authorize('access', $chat);
+
+        return new DirectChatResource($chat);
     }
 }
