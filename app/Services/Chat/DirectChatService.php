@@ -3,6 +3,7 @@
 namespace App\Services\Chat;
 
 use App\Models\DirectChat;
+use App\Services\ModelService;
 use App\Services\User\UserService;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

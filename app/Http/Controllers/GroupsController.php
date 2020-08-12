@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Facades\Chat;
 use App\Http\Requests\Chat\Group\StoreGroupRequest;
+use App\Http\Requests\Chat\Group\UpdateGroupRequest;
 use App\Http\Resources\Group\GroupCollection;
 use App\Http\Resources\Group\GroupResource;
 use App\Models\Group;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GroupsController extends Controller
 {
@@ -55,33 +56,24 @@ class GroupsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateGroupRequest $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGroupRequest $request, int $id)
     {
-        //
+        Group::find($id)->update($request->validated());
+
+        return response()->noContent();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function destroy($id)
     {

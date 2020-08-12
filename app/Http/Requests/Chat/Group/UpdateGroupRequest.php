@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Chat\Group;
 
 use App\Http\Requests\FormRequest;
-use App\Models\User;
-use Illuminate\Validation\Rule;
+use App\Models\Group;
 
-class UpdateUserRequest extends FormRequest
+class UpdateGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,8 +14,9 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = User::find($this->route('user_id'));
-        return $user && $user->is($this->user());
+        $chat = Group::find($this->route('group'));
+
+        return $chat && $this->user()->can('access', $chat);
     }
 
     /**
@@ -27,15 +27,8 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|min:1|max:60',
-            'bio' => 'max:255',
-            'username' => [
-                'string',
-                'regex:/(^[A-Za-z0-9]+$)+/',
-                'min:3',
-                'max:20',
-                Rule::unique('users')->ignore($this->user()->id, 'id')
-            ],
+            'title' => 'string|min:1|max:100',
+            'description' => 'max:255',
         ];
     }
 
@@ -51,8 +44,6 @@ class UpdateUserRequest extends FormRequest
             '*.max' => ':Attribute maximum length is :max.',
             '*.min' => ':Attribute minimum length is :min.',
             '*.string' => ':Attribute field must be a string.',
-            '*.regex' => ':Attribute does contain forbidden symbols.',
-            '*.unique' => ':Attribute is already occupied.',
         ];
     }
 }
