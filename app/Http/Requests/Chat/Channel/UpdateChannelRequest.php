@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Chat\Channel;
 
+use App\ConfigurationManager;
 use App\Models\Channel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,16 +29,14 @@ class UpdateChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string|min:1|max:100',
-            'description' => 'max:255',
-            'tag' => [
-                'nullable',
-                'string',
-                'regex:/(^[A-Za-z0-9]+$)+/',
-                'min:3',
-                'max:20',
-                Rule::unique('channels')->ignore(Channel::find($this->route('channel'))->id, 'id')
-            ],
+            'title' => ConfigurationManager::CHANNEL_RULES['title'],
+            'description' => ConfigurationManager::CHANNEL_RULES['description'],
+            'tag' => array_merge(ConfigurationManager::CHANNEL_RULES['tag'],
+                [
+                    Rule::unique('channels')
+                        ->ignore(Channel::find($this->route('channel'))->id, 'id')
+                ]),
+            'photo' => ConfigurationManager::CHANNEL_RULES['photo'],
         ];
     }
 

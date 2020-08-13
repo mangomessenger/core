@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Chat\Channel;
 
+use App\ConfigurationManager;
+use App\Models\Channel;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreChannelRequest extends FormRequest
 {
@@ -26,9 +29,11 @@ class StoreChannelRequest extends FormRequest
         return [
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
-            'title' => 'required|string',
-            'tag' => 'string',
-            'photo' => 'image',
+            'title' => ConfigurationManager::CHANNEL_RULES['title'],
+            'description' => ConfigurationManager::CHANNEL_RULES['description'],
+            'tag' => array_merge(ConfigurationManager::CHANNEL_RULES['tag'],
+                ['unique:channels,tag']),
+            'photo' => ConfigurationManager::CHANNEL_RULES['photo'],
         ];
     }
 
@@ -45,6 +50,7 @@ class StoreChannelRequest extends FormRequest
             '*.array' => 'The :attribute field must be an array.',
             'usernames.*.exists' => 'Username is not valid.',
             '*.string' => ':Attribute field must be a string.',
+            '*.unique' => ':Attribute is already occupied.',
         ];
     }
 }
