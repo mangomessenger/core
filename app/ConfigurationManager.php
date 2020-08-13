@@ -86,6 +86,24 @@ class ConfigurationManager
         'photo' => 'photo'
     ];
 
+    const AUTH_RULES = [
+        'fingerprint' => 'required|string|min:10|max:255',
+        'refresh_token' => 'required|string',
+        'phone_code_hash' => [
+            'required',
+            'string',
+            'max:255',
+        ],
+        'phone_code' => [
+            'required',
+            'digits:5',
+        ],
+        'terms_of_service_accepted' => [
+            'required',
+            'accepted',
+        ],
+    ];
+
     const CHANNEL_RULES = [
         'title' => [
             'string',
@@ -105,6 +123,15 @@ class ConfigurationManager
         ],
         'description' => 'max:255',
         'photo' => 'photo'
+    ];
+
+    const MESSAGE_RULES = [
+        'message' => [
+            'required',
+            'string',
+            'min:' . self::MESSAGE_LIMITS['message']['min'],
+            'max:' . self::MESSAGE_LIMITS['message']['max'],
+        ]
     ];
 
     public static function limits()

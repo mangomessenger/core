@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Chat\Group;
 
+use App\ConfigurationManager;
 use App\Http\Requests\FormRequest;
 use App\Models\Group;
 
@@ -27,8 +28,9 @@ class UpdateGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string|min:1|max:100',
-            'description' => 'max:255',
+            'title' => ConfigurationManager::GROUP_RULES['title'],
+            'description' => ConfigurationManager::GROUP_RULES['description'],
+            'photo' => ConfigurationManager::GROUP_RULES['photo'],
         ];
     }
 

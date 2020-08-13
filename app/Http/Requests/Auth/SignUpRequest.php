@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\ConfigurationManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SignUpRequest extends FormRequest
@@ -24,25 +25,15 @@ class SignUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => [
-                'required',
-                'phone:country_code',
-            ],
-            'country_code' => 'required_with:phone',
-            'name' => 'required|string|max:100',
-            'phone_code_hash' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-            'phone_code' => [
-                'required',
-                'digits:5',
-            ],
-            'terms_of_service_accepted' => [
-                'required',
-                'accepted',
-            ],
+            'phone_number' => ConfigurationManager::USER_RULES['phone_number'],
+            'country_code' => ConfigurationManager::USER_RULES['country_code'],
+            'name' => ConfigurationManager::USER_RULES['name'],
+            'username' => array_merge(ConfigurationManager::USER_RULES['username'],
+                ['unique:users,username']
+            ),
+            'phone_code_hash' => ConfigurationManager::AUTH_RULES['phone_code_hash'],
+            'phone_code' => ConfigurationManager::AUTH_RULES['phone_code'],
+            'terms_of_service_accepted' => ConfigurationManager::AUTH_RULES['terms_of_service_accepted'],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\ConfigurationManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SendCodeRequest extends FormRequest
@@ -24,9 +25,9 @@ class SendCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => 'required|phone:country_code',
-            'country_code'    => 'required_with:phone',
-            'fingerprint'    => 'required|string|min:10|max:255',
+            'phone_number' => ConfigurationManager::USER_RULES['phone_number'],
+            'country_code' => ConfigurationManager::USER_RULES['country_code'],
+            'fingerprint' => ConfigurationManager::AUTH_RULES['fingerprint'],
         ];
     }
 

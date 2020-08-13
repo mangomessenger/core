@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Message;
 
+use App\ConfigurationManager;
 use App\Facades\Chat;
 use App\Http\Requests\FormRequest;
 
@@ -30,7 +31,7 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required|string|min:1|max:300',
+            'message' => ConfigurationManager::MESSAGE_RULES['message'],
             'chat_id' => "required",
             'chat_type' => 'required|exists:chat_types,name',
         ];

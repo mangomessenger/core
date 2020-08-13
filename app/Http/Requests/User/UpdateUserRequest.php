@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\ConfigurationManager;
 use App\Http\Requests\FormRequest;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -28,16 +29,12 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|min:1|max:60',
-            'bio' => 'max:255',
-            'username' => [
-                'nullable',
-                'string',
-                'regex:/(^[A-Za-z0-9]+$)+/',
-                'min:3',
-                'max:20',
-                Rule::unique('users')->ignore($this->user()->id, 'id')
-            ],
+            'name' => ConfigurationManager::USER_RULES['name'],
+            'bio' => ConfigurationManager::USER_RULES['bio'],
+            'username' => array_merge(ConfigurationManager::USER_RULES['username'],
+                [Rule::unique('users')->ignore($this->user()->id, 'id')]
+            ),
+            'photo' => ConfigurationManager::USER_RULES['photo'],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Message;
 
+use App\ConfigurationManager;
 use App\Models\Message;
 use App\Http\Requests\FormRequest;
 
@@ -27,7 +28,7 @@ class UpdateMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required|string|min:1|max:300',
+            'message' => ConfigurationManager::MESSAGE_RULES['message'],
         ];
     }
 

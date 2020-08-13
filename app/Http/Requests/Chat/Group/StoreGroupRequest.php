@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Chat\Group;
 
+use App\ConfigurationManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreGroupRequest extends FormRequest
@@ -26,8 +27,9 @@ class StoreGroupRequest extends FormRequest
         return [
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
-            'title' => 'required|string',
-            'photo' => 'image',
+            'title' => ConfigurationManager::GROUP_RULES['title'],
+            'description' => ConfigurationManager::GROUP_RULES['description'],
+            'photo' => ConfigurationManager::GROUP_RULES['photo'],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\ConfigurationManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LogoutRequest extends FormRequest
@@ -24,7 +25,7 @@ class LogoutRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token' => 'required|string',
+            'refresh_token' => ConfigurationManager::AUTH_RULES['refresh_token'],
         ];
     }
 

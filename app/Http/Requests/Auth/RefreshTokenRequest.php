@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\ConfigurationManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RefreshTokenRequest extends FormRequest
@@ -24,8 +25,8 @@ class RefreshTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token'    => 'required|string',
-            'fingerprint'    => 'required|string|min:10|max:255',
+            'refresh_token' => ConfigurationManager::AUTH_RULES['refresh_token'],
+            'fingerprint' => ConfigurationManager::AUTH_RULES['fingerprint'],
         ];
     }
 
