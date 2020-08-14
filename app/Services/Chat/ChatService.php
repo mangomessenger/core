@@ -11,7 +11,7 @@ class ChatService
     public function findChat(string $chatType, int $chatId)
     {
         switch ($chatType) {
-            case 'direct':
+            case 'direct-chat':
                 return DirectChat::find($chatId);
             case 'channel':
                 return Channel::find($chatId);

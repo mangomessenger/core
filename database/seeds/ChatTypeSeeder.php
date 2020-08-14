@@ -12,7 +12,7 @@ class ChatTypeSeeder extends Seeder
     public function run()
     {
         \App\Models\ChatType::create([
-            'name' => 'direct-chats'
+            'name' => 'direct-chat'
         ]);
 
         \App\Models\ChatType::create([
