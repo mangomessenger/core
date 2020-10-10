@@ -28,7 +28,7 @@ class UpdateMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => ConfigurationManager::MESSAGE_RULES['message'],
+            'message' => config('rules.messages.message'),
         ];
     }
 

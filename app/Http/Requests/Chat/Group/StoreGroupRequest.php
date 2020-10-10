@@ -27,9 +27,9 @@ class StoreGroupRequest extends FormRequest
         return [
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
-            'title' => ConfigurationManager::GROUP_RULES['title'],
-            'description' => ConfigurationManager::GROUP_RULES['description'],
-            'photo' => ConfigurationManager::GROUP_RULES['photo'],
+            'title' => config('rules.groups.title'),
+            'description' => config('rules.groups.description'),
+            'photo' => config('rules.groups.photo'),
         ];
     }
 

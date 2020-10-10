@@ -26,10 +26,10 @@ class SignInRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => ConfigurationManager::USER_RULES['phone_number'],
-            'country_code'    => ConfigurationManager::USER_RULES['country_code'],
-            'phone_code_hash' => ConfigurationManager::AUTH_RULES['phone_code_hash'],
-            'phone_code' => ConfigurationManager::AUTH_RULES['phone_code'],
+            'phone_number' => config('rules.users.phone_number'),
+            'country_code'    => config('rules.users.country_code'),
+            'phone_code_hash' => config('rules.auth.phone_code_hash'),
+            'phone_code' => config('rules.auth.phone_code'),
         ];
     }
 

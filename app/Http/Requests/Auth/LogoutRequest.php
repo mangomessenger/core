@@ -25,7 +25,7 @@ class LogoutRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token' => ConfigurationManager::AUTH_RULES['refresh_token'],
+            'refresh_token' => config('rules.auth.refresh_token'),
         ];
     }
 

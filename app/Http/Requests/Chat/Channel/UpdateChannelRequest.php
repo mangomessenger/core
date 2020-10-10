@@ -29,14 +29,14 @@ class UpdateChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ConfigurationManager::CHANNEL_RULES['title'],
-            'description' => ConfigurationManager::CHANNEL_RULES['description'],
-            'tag' => array_merge(ConfigurationManager::CHANNEL_RULES['tag'],
+            'title' => config('rules.channels.title'),
+            'description' => config('rules.channels.description'),
+            'tag' => array_merge(config('rules.channels.tag'),
                 [
                     Rule::unique('channels')
                         ->ignore(Channel::find($this->route('channel'))->id, 'id')
                 ]),
-            'photo' => ConfigurationManager::CHANNEL_RULES['photo'],
+            'photo' => config('rules.channels.photo'),
         ];
     }
 

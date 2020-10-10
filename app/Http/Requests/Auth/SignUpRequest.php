@@ -25,15 +25,15 @@ class SignUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => ConfigurationManager::USER_RULES['phone_number'],
-            'country_code' => ConfigurationManager::USER_RULES['country_code'],
-            'name' => ConfigurationManager::USER_RULES['name'],
-            'username' => array_merge(ConfigurationManager::USER_RULES['username'],
+            'phone_number' => config('rules.users.phone_number'),
+            'country_code' => config('rules.users.country_code'),
+            'name' => array_merge(config('rules.users.name'), ['required']),
+            'username' => array_merge(config('rules.users.username'),
                 ['unique:users,username']
             ),
-            'phone_code_hash' => ConfigurationManager::AUTH_RULES['phone_code_hash'],
-            'phone_code' => ConfigurationManager::AUTH_RULES['phone_code'],
-            'terms_of_service_accepted' => ConfigurationManager::AUTH_RULES['terms_of_service_accepted'],
+            'phone_code_hash' => config('rules.auth.phone_code_hash'),
+            'phone_code' => config('rules.auth.phone_code'),
+            'terms_of_service_accepted' => config('rules.auth.terms_of_service_accepted'),
         ];
     }
 

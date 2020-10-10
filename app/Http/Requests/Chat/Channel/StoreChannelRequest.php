@@ -29,11 +29,11 @@ class StoreChannelRequest extends FormRequest
         return [
             'usernames' => 'array',
             'usernames.*' => 'exists:users,username',
-            'title' => ConfigurationManager::CHANNEL_RULES['title'],
-            'description' => ConfigurationManager::CHANNEL_RULES['description'],
-            'tag' => array_merge(ConfigurationManager::CHANNEL_RULES['tag'],
+            'title' => config('rules.channels.title'),
+            'description' => config('rules.channels.description'),
+            'tag' => array_merge(config('rules.channels.tag'),
                 ['unique:channels,tag']),
-            'photo' => ConfigurationManager::CHANNEL_RULES['photo'],
+            'photo' => config('rules.channels.photo'),
         ];
     }
 

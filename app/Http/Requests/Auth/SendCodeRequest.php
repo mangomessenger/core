@@ -25,9 +25,9 @@ class SendCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => ConfigurationManager::USER_RULES['phone_number'],
-            'country_code' => ConfigurationManager::USER_RULES['country_code'],
-            'fingerprint' => ConfigurationManager::AUTH_RULES['fingerprint'],
+            'phone_number' => config('rules.users.phone_number'),
+            'country_code' => config('rules.users.country_code'),
+            'fingerprint' => config('rules.auth.fingerprint'),
         ];
     }
 

@@ -10,6 +10,7 @@ abstract class FormRequest extends BaseFormRequest
 {
     /**
      * Validate the class instance.
+     * Note: Authorization made after validation
      *
      * @return void
      * @throws AuthorizationException

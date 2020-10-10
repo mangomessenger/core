@@ -31,7 +31,7 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('jwt-auth')->group(function () {
     Route::get('/', 'ChatsController@index');
-    Route::get('/limits', 'LimitsController@index');
+//    Route::get('/limits', 'LimitsController@index');
 
     Route::prefix('chats')->group(function () {
 

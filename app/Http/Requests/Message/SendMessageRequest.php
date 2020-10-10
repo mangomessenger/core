@@ -31,7 +31,7 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => ConfigurationManager::MESSAGE_RULES['message'],
+            'message' => config('rules.messages.message'),
             'chat_id' => "required",
             'chat_type' => 'required|exists:chat_types,name',
         ];

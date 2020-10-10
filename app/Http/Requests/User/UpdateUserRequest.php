@@ -29,12 +29,12 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ConfigurationManager::USER_RULES['name'],
-            'bio' => ConfigurationManager::USER_RULES['bio'],
-            'username' => array_merge(ConfigurationManager::USER_RULES['username'],
+            'name' => config('rules.users.name'),
+            'bio' => config('rules.users.bio'),
+            'username' => array_merge(config('rules.users.username'),
                 [Rule::unique('users')->ignore($this->user()->id, 'id')]
             ),
-            'photo' => ConfigurationManager::USER_RULES['photo'],
+            'photo' => config('rules.users.photo'),
         ];
     }
 

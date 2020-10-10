@@ -25,8 +25,8 @@ class RefreshTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token' => ConfigurationManager::AUTH_RULES['refresh_token'],
-            'fingerprint' => ConfigurationManager::AUTH_RULES['fingerprint'],
+            'refresh_token' => config('rules.auth.refresh_token'),
+            'fingerprint' => config('rules.auth.fingerprint'),
         ];
     }
 
