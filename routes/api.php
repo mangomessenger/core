@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,23 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-
 Route::prefix('auth')->group(function () {
     Route::middleware('throttle:20,1')->group(function () {
-        Route::post('send-code', 'AuthController@sendCode');
+        Route::post('send-code', [AuthController::class, 'sendCode']);
     });
-    Route::post('register', 'AuthController@signUp');
-    Route::post('login', 'AuthController@signIn');
-    Route::post('refresh-tokens', 'AuthController@refreshTokens');
-    Route::post('logout', 'AuthController@logout');
+    Route::post('register', [AuthController::class, 'signUp']);
+    Route::post('login', [AuthController::class, 'signIn']);
+    Route::post('refresh-tokens', [AuthController::class, 'refreshTokens']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 
 Route::middleware('jwt-auth')->group(function () {
-    Route::get('/', 'ChatsController@index');
+    Route::get('/', [ChatsController::class, 'index']);
 //    Route::get('/limits', 'LimitsController@index');
 
     Route::prefix('chats')->group(function () {
@@ -47,7 +44,7 @@ Route::middleware('jwt-auth')->group(function () {
     ]);
 
     Route::prefix('users')->group(function () {
-        Route::get('/{username}/', 'UsersController@show');
-        Route::put('/{user_id}', 'UsersController@update');
+        Route::get('/{username}/', [UsersController::class, 'show']);
+        Route::put('/{user_id}', [UsersController::class, 'update']);
     });
 });

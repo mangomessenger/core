@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Chat;
-use App\Http\Requests\Message\DestroyMessageRequest;
 use App\Http\Requests\Message\IndexMessagesRequest;
 use App\Http\Requests\Message\SendMessageRequest;
-use App\Http\Requests\Message\ShowMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Http\Resources\Message\MessageCollection;
 use App\Http\Resources\Message\MessageResource;
