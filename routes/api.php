@@ -27,10 +27,10 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('jwt-auth')->group(function () {
-    Route::get('/', [ChatsController::class, 'index']);
 //    Route::get('/limits', 'LimitsController@index');
 
     Route::prefix('chats')->group(function () {
+        Route::get('/', [ChatsController::class, 'index']);
 
         Route::apiResources([
             'direct-chats' => 'DirectChatsController',
