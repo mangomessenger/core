@@ -48,3 +48,7 @@ Route::middleware('jwt-auth')->group(function () {
         Route::put('/{user_id}', [UsersController::class, 'update']);
     });
 });
+
+Route::get('supported-countries', function() {
+   return config('countries');
+});
